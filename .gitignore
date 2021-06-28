@@ -1,0 +1,7 @@
+.idea
+.vscode
+*.log
+*.iml
+*.zip
+src/Test.php
+vendor/
