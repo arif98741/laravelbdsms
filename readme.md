@@ -31,6 +31,7 @@ $status = $sender->send();
 #### Currently Supported SMS Gateways
 * BDBulkSMS
 * BulkSMSBD
+* Dianahost
 * MDLSMS
 * OnnoRokomSMS
 * SSLSms
