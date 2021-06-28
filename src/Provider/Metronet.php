@@ -15,7 +15,7 @@ use GuzzleHttp\Client;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
-class DianaHost extends AbstractProvider
+class Metronet extends AbstractProvider
 {
     /**
      * DianaHost constructor.
@@ -36,17 +36,16 @@ class DianaHost extends AbstractProvider
         $config = $this->senderObject->getConfig();
 
         $client = new Client([
-            'base_uri' => 'http://esms.dianahost.com/smsapi',
+            'base_uri' => '202.164.208.212/smsnet/bulk/api',
             'timeout' => 10.0,
         ]);
 
         $response = $client->request('GET', '', [
             'query' => [
                 'api_key' => $config['api_key'],
-                'type' => $config['type'],
-                'senderid' => $config['senderid'],
-                'contacts' => $number,
-                'msg' => $text,
+                'mask' => $config['mask'],
+                'recipient' => $number,
+                'message' => $text,
             ]
         ]);
         $body = $response->getBody();
@@ -54,7 +53,7 @@ class DianaHost extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report =  $this->generateReport($smsResult, $data);
+        $report = $this->generateReport($smsResult, $data);
         return $report->getContent();
     }
 
@@ -67,16 +66,10 @@ class DianaHost extends AbstractProvider
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
             throw new RenderException('api_key is absent in configuration');
         }
-        if (!array_key_exists('type', $this->senderObject->getConfig())) {
-            throw new RenderException('type key is absent in configuration');
-        }
-        if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
-            throw new RenderException('senderid key is absent in configuration');
+        if (!array_key_exists('mask', $this->senderObject->getConfig())) {
+            throw new RenderException('mask key is absent in configuration');
         }
 
-        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
-            throw new RenderException('Invalid mobile number. It should be 11 digit');
-        }
         if (empty($this->senderObject->getMessage())) {
             throw new RenderException('Message should not be empty');
         }

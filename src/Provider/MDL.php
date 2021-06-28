@@ -1,5 +1,13 @@
 <?php
-
+/*
+ *  Last Modified: 6/28/21, 11:18 PM
+ *  Copyright (c) 2021
+ *  -created by Ariful Islam
+ *  -All Rights Preserved By
+ *  -If you have any query then knock me at
+ *  arif98741@gmail.com
+ *  See my profile @ https://github.com/arif98741
+ */
 
 namespace Xenon\LaravelBDSms\Provider;
 
@@ -53,19 +61,19 @@ class MDL extends AbstractProvider
     public function errorException()
     {
         if (!is_array($this->senderObject->getConfig())) {
-            throw new XenonException('Configuration is not provided. Use setConfig() in method chain');
+            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
         }
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
-            throw new XenonException('api_key is absent in configuration');
+            throw new RenderException('api_key is absent in configuration');
         }
         if (!array_key_exists('type', $this->senderObject->getConfig())) {
-            throw new XenonException('type key is absent in configuration');
+            throw new RenderException('type key is absent in configuration');
         }
         if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
-            throw new XenonException('Invalid mobile number. It should be 11 digit');
+            throw new RenderException('Invalid mobile number. It should be 11 digit');
         }
         if (empty($this->senderObject->getMessage())) {
-            throw new XenonException('Message should not be empty');
+            throw new RenderException('Message should not be empty');
         }
     }
 
