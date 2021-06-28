@@ -33,6 +33,7 @@ $status = $sender->send();
 * BulkSMSBD
 * Dianahost
 * MDLSMS
+* Metronet
 * OnnoRokomSMS
 * SSLSms
 
