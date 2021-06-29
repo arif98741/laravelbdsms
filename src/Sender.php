@@ -1,5 +1,13 @@
 <?php
-
+/*
+ *  Last Modified: 6/28/21, 11:18 PM
+ *  Copyright (c) 2021
+ *  -created by Ariful Islam
+ *  -All Rights Preserved By
+ *  -If you have any query then knock me at
+ *  arif98741@gmail.com
+ *  See my profile @ https://github.com/arif98741
+ */
 
 namespace Xenon\LaravelBDSms;
 
@@ -13,6 +21,23 @@ class Sender
     private $message;
     private $mobile;
     private $config;
+    private $method;
+
+    /**
+     * @return mixed
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param mixed $method
+     */
+    public function setMethod($method): void
+    {
+        $this->method = $method;
+    }
     private static $instance = null;
 
     /**
@@ -76,6 +101,7 @@ class Sender
     public function send()
     {
         try {
+
             $this->provider->errorException();
             return $this->provider->sendRequest();
         } catch (XenonException $exception) {
@@ -133,11 +159,11 @@ class Sender
      * @param $ProviderClass
      * @return Sender
      */
-    public function selectProvider($ProviderClass): Sender
+    public function setProvider($ProviderClass)
     {
         try {
             if (!class_exists($ProviderClass)) {
-                throw new XenonException('Provider ' . $ProviderClass . ' not found');
+                throw new RenderException('Provider ' . $ProviderClass . ' not found');
             }
         } catch (XenonException $exception) {
 

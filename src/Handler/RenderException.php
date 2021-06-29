@@ -9,29 +9,28 @@
  *  See my profile @ https://github.com/arif98741
  */
 
-namespace Xenon\LaravelBDSms;
+namespace Xenon\LaravelBDSms\Handler;
 
-use Illuminate\Support\ServiceProvider;
 
-class LaravelBDSmsServiceProvider extends ServiceProvider
+class RenderException extends \Exception
 {
     /**
-     * Register services.
+     * Report the exception.
      *
      * @return void
      */
-    public function register()
+    public function report()
     {
-        //
     }
 
     /**
-     * Bootstrap services.
+     * Render the exception into an HTTP response.
      *
-     * @return void
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
-    public function boot()
+    public function render($request)
     {
-        //
+       // return response(...);
     }
 }
