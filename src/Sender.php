@@ -14,6 +14,7 @@ namespace Xenon\LaravelBDSms;
 
 use Exception;
 use Xenon\LaravelBDSms\Handler\XenonException;
+use Xenon\LaravelBDSms\Handler\RenderException;
 
 class Sender
 {
@@ -38,6 +39,7 @@ class Sender
     {
         $this->method = $method;
     }
+
     private static $instance = null;
 
     /**
@@ -82,6 +84,7 @@ class Sender
      */
     public function setConfig($config): Sender
     {
+
         try {
             if (!is_array($config)) {
                 throw  new XenonException('config must be an array');

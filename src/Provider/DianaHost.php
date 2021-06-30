@@ -13,6 +13,7 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
 use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Helper\Helper;
 use Xenon\LaravelBDSms\Sender;
 
 class DianaHost extends AbstractProvider
@@ -54,7 +55,7 @@ class DianaHost extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report =  $this->generateReport($smsResult, $data);
+        $report = $this->generateReport($smsResult, $data);
         return $report->getContent();
     }
 
@@ -77,6 +78,11 @@ class DianaHost extends AbstractProvider
         if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
             throw new RenderException('Invalid mobile number. It should be 11 digit');
         }
+
+        if (Helper::numberValidation($this->senderObject->getMobile()) == false) {
+            throw new RenderException('Invalid Mobile Number');
+        }
+
         if (empty($this->senderObject->getMessage())) {
             throw new RenderException('Message should not be empty');
         }
