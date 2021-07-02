@@ -1,7 +1,7 @@
 Xenon\LaravelBDSms is a sms gateway package for sending text message to Bangladeshi mobile numbers using several gateways using <strong>Laravel</strong>
 
 ### Installation
-#step 1
+# step
 ```
 composer require xenon/laravelbdsms
 ```
@@ -14,7 +14,7 @@ use Xenon\LaravelBDSms\Sender;
 
 
 $sender = Sender::getInstance();
-$sender->selectProvider(DianaHost::class); //this is demo for Dianahost
+$sender->setProvider(DianaHost::class); //this is demo for Dianahost
 $sender->setMobile('017XXYYZZAA');
 $sender->setMessage('helloooooooo boss!');
 $sender->setConfig(
@@ -33,9 +33,10 @@ $status = $sender->send();
 * BulkSMSBD
 * Dianahost
 * MDLSMS
+* Metronet
 * OnnoRokomSMS
 * SSLSms
 
-We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you fee something is missing then make a issue regarding that.
-If you want to contribute in this library, then you are highly welcome to do that.
+We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel something is missing then make a issue regarding that.
+If you want to contribute in this library, then you are highly welcome to do that....
 
