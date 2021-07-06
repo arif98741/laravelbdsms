@@ -14,7 +14,7 @@ use Xenon\LaravelBDSms\Sender;
 
 
 $sender = Sender::getInstance();
-$sender->setProvider(DianaHost::class); //this is demo for Dianahost
+$sender->setProvider(DianaHost::class); 
 $sender->setMobile('017XXYYZZAA');
 $sender->setMessage('helloooooooo boss!');
 $sender->setConfig(
@@ -35,7 +35,7 @@ use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Sender;
 
 $sender = Sender::getInstance();
-$sender->setProvider(Ssl::class); //this is demo for Dianahost
+$sender->setProvider(Ssl::class); 
 $sender->setMobile('017XXYYZZAA');
 $sender->setMessage('helloooooooo boss!');
 $sender->setConfig(
