@@ -12,6 +12,7 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
+use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -85,7 +86,7 @@ class DianaHost extends AbstractProvider
     /**
      * @param $result
      * @param $data
-     * @return array
+     * @return JsonResponse
      */
     public function generateReport($result, $data)
     {

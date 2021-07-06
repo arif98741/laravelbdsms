@@ -13,6 +13,7 @@ namespace Xenon\LaravelBDSms\Provider;
 
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Handler\XenonException;
 use Xenon\LaravelBDSms\Sender;
@@ -31,6 +32,8 @@ class Ssl extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @return array
+     * @throws GuzzleException
      */
     public function sendRequest()
     {

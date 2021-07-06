@@ -1,6 +1,6 @@
 <?php
 /*
- *  Last Modified: 6/28/21, 11:18 PM
+ *  Last Modified: 6/29/21, 12:06 AM
  *  Copyright (c) 2021
  *  -created by Ariful Islam
  *  -All Rights Preserved By
@@ -11,14 +11,14 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-
-use Xenon\Handler\XenonException;
-use Xenon\Sender;
+use GuzzleHttp\Client;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Sender;
 
 class GreenWeb extends AbstractProvider
 {
     /**
-     * Green web SMS constructor.
+     * DianaHost constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -27,35 +27,43 @@ class GreenWeb extends AbstractProvider
     }
 
     /**
-     * Request To Green Web Server
+     * Send Request To Api and Send Message
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function sendRequest()
     {
-        $to = $this->senderObject->getMobile();
+        $number = $this->senderObject->getMobile();
+        $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $token = $config['token'];
-        $message = $this->senderObject->getMessage();
 
-        $url = "https://api.greenweb.com.bd/api.php?json";
+        $client = new Client([
+            'base_uri' => 'http://esms.dianahost.com/smsapi',
+            'timeout' => 10.0,
+        ]);
 
-        $data = array(
-            'to' => "$to",
-            'message' => "$message",
-            'token' => "$token"
-        );
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_ENCODING, '');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $smsResult = curl_exec($ch);
-        if ($smsResult == false) {
-            $smsResult = curl_error($ch);
-        }
-        curl_close($ch);
-        $data['number'] = $to;
-        return $this->generateReport($smsResult, $data);
+        $response = $client->request('GET', '', [
+            'query' => [
+                'token' => $config['token'],
+                'to' => $number,
+                'message' => $text,
+            ]
+        ]);
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
+
+        $data['number'] = $number;
+        $data['message'] = $text;
+        $report =  $this->generateReport($smsResult, $data);
+        return $report->getContent();
+    }
+
+    /**
+     * @throws RenderException
+     */
+    public function errorException()
+    {
+        if (!array_key_exists('token', $this->senderObject->getConfig()))
+            throw new RenderException('token key is absent in configuration');
     }
 
     /**
@@ -63,28 +71,15 @@ class GreenWeb extends AbstractProvider
      * @param $data
      * @return array
      */
-    public function generateReport($result, $data): array
+    public function generateReport($result, $data)
     {
-        return [
+        return response()->json([
             'status' => 'response',
             'response' => $result,
             'provider' => self::class,
             'send_time' => date('Y-m-d H:i:s'),
             'mobile' => $data['number'],
             'message' => $data['message']
-        ];
-    }   // TODO: Implement generateReport() method.
-
-
-    /**
-     * @throws XenonException
-     */
-    public function errorException()
-    {
-        if (!array_key_exists('to', $this->senderObject->getConfig()))
-            throw new RenderException('to key is absent in configuration');
-        if (!array_key_exists('token', $this->senderObject->getConfig()))
-            throw new RenderException('token key is absent in configuration');
-
+        ]);
     }
 }

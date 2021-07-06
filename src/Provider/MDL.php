@@ -13,6 +13,7 @@ namespace Xenon\LaravelBDSms\Provider;
 
 
 use Xenon\Handler\XenonException;
+use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\Sender;
 
 class MDL extends AbstractProvider
