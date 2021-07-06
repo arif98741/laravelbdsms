@@ -6,7 +6,7 @@ Xenon\LaravelBDSms is a sms gateway package for sending text message to Banglade
 composer require xenon/laravelbdsms
 ```
 
-### Sample Code
+### Sample Code DianaHost
 
 <pre>
 use Xenon\LaravelBDSms\Provider\DianaHost;
@@ -14,7 +14,7 @@ use Xenon\LaravelBDSms\Sender;
 
 
 $sender = Sender::getInstance();
-$sender->setProvider(DianaHost::class); //this is demo for Dianahost
+$sender->setProvider(DianaHost::class); 
 $sender->setMobile('017XXYYZZAA');
 $sender->setMessage('helloooooooo boss!');
 $sender->setConfig(
@@ -26,6 +26,28 @@ $sender->setConfig(
 );
 $status = $sender->send();
 </pre>
+
+
+### Sample Code SSLCommerz
+
+<pre>
+use Xenon\LaravelBDSms\Provider\Ssl;
+use Xenon\LaravelBDSms\Sender;
+
+$sender = Sender::getInstance();
+$sender->setProvider(Ssl::class); 
+$sender->setMobile('017XXYYZZAA');
+$sender->setMessage('helloooooooo boss!');
+$sender->setConfig(
+   [
+       'api_token' => 'api token goes here',
+       'sid' => 'text',
+       'csms_id' => 'sender_id'
+   ]
+);
+$status = $sender->send();
+</pre>
+
 
 
 #### Currently Supported SMS Gateways
