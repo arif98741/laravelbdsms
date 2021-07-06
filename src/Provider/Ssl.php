@@ -12,7 +12,9 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 
-use Xenon\Handler\XenonException;
+use GuzzleHttp\Client;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Handler\XenonException;
 use Xenon\LaravelBDSms\Sender;
 
 
@@ -30,16 +32,18 @@ class Ssl extends AbstractProvider
     /**
      * Send Request To Api and Send Message
      */
-    public function sendRequest(): array
+    public function sendRequest()
     {
         $mobile = $this->senderObject->getMobile();
+        $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
+        // dd($config);
         $apiToken = $config['api_token'];
         $sid = $config['sid'];
         $csms_id = $config['csms_id'];
 
-        $data = [
+        /*$data = [
             'number' => $mobile,
             'message' => $this->senderObject->getMessage()
         ];
@@ -54,12 +58,35 @@ class Ssl extends AbstractProvider
             $smsResult = curl_error($ch);
         }
         curl_close($ch);
-        return $this->generateReport($smsResult, $data);
+        return $this->generateReport($smsResult, $data);*/
+
+        $client = new Client([
+            'base_uri' => 'https://smsplus.sslwireless.com/api/v3/send-sms',
+            'timeout' => 10.0,
+            'verify' => false
+        ]);
+
+        $response = $client->request('GET', '', [
+            'query' => [
+                'api_token' => $config['api_token'],
+                'sid' => $config['sid'],
+                'csms_id' => $config['csms_id'],
+                'msisdn' => $mobile,
+                'sms' => $text,
+            ]
+        ]);
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
+        $data['number'] = $mobile;
+        $data['message'] = $text;
+        $report = $this->generateReport($smsResult, $data);
+        return $report;
 
     }
 
     /**
      * @throws XenonException
+     * @throws RenderException
      */
     public function errorException()
     {
@@ -67,7 +94,7 @@ class Ssl extends AbstractProvider
             throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
 
         if (!array_key_exists('api_token', $this->senderObject->getConfig()))
-            throw new RenderException('api_token key is absent in configuration');
+            throw new RenderException('apiToken key is absent in configuration');
 
         if (!array_key_exists('sid', $this->senderObject->getConfig()))
             throw new RenderException('sid key is absent in configuration');
