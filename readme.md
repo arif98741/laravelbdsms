@@ -1,4 +1,4 @@
-Xenon\LaravelBDSms is a sms gateway package for sending text message to Bangladeshi mobile numbers using several gateways using <strong>Laravel</strong>
+Xenon\LaravelBDSms is a sms gateway package for sending text message to Bangladeshi mobile numbers using several gateways using <strong>Laravel</strong>. You should use <strong>composer 2</strong> for latest update of this package.
 
 ### Installation
 # step
@@ -48,7 +48,17 @@ $sender->setConfig(
 $status = $sender->send();
 </pre>
 
-
+### Demo Response Using SSL
+<pre>
+array:6 [▼
+  "status" => "response"
+  "response" => "{"status":"FAILED","status_code":4003,"error_message":"IP Blacklisted"}"
+  "provider" => "Xenon\LaravelBDSms\Provider\Ssl"
+  "send_time" => "2021-07-06 08:03:23"
+  "mobile" => "017XXYYZZAA"
+  "message" => "helloooooooo boss!"
+]
+</pre>
 
 #### Currently Supported SMS Gateways
 * BDBulkSMS
@@ -62,3 +72,4 @@ $status = $sender->send();
 We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel something is missing then make a issue regarding that.
 If you want to contribute in this library, then you are highly welcome to do that....
 
+For clear documentation read this blog for clear documentation read this blog  [Click here to read!](https://send-sms-using-laravelbdsms.medium.com/laravel-sms-gateway-package-for-bangladesh-e70af99f2060)
