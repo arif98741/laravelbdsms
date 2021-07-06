@@ -13,7 +13,8 @@ namespace Xenon\LaravelBDSms\Provider;
 
 
 use SoapClient;
-use Xenon\Handler\XenonException;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Handler\XenonException;
 use Xenon\Sender;
 
 class Onnorokom extends AbstractProvider
@@ -72,7 +73,7 @@ class Onnorokom extends AbstractProvider
     }
 
     /**
-     * @throws XenonException
+     * @throws RenderException
      */
     public function errorException()
     {

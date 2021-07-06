@@ -12,6 +12,7 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -28,7 +29,7 @@ class GreenWeb extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function sendRequest()
     {
@@ -37,7 +38,7 @@ class GreenWeb extends AbstractProvider
         $config = $this->senderObject->getConfig();
 
         $client = new Client([
-            'base_uri' => 'http://esms.dianahost.com/smsapi',
+            'base_uri' => 'https://api.greenweb.com.bd/api.php?json',
             'timeout' => 10.0,
         ]);
 
@@ -53,7 +54,7 @@ class GreenWeb extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report =  $this->generateReport($smsResult, $data);
+        $report =  $this->generateReport( $smsResult, $data);
         return $report->getContent();
     }
 

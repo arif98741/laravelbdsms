@@ -29,7 +29,7 @@ class Alpha implements ProviderRoadmap
     {
         $username = "YOUR_API_USERNAME";
         $hash = "YOUR_API_HASH_TOKEN";
-        $numbers = "017xxxxxxxx,018xxxxxxxx"; //Recipient Phone Number multiple number must be separated by comma
+        $numbers = "017xxxxxxxx,018xxxxxxxx";
         $message = "Simple text message.";
 
 
