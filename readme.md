@@ -48,7 +48,17 @@ $sender->setConfig(
 $status = $sender->send();
 </pre>
 
-
+### Demo Response Using SSL
+<pre>
+array:6 [▼
+  "status" => "response"
+  "response" => "{"status":"FAILED","status_code":4003,"error_message":"IP Blacklisted"}"
+  "provider" => "Xenon\LaravelBDSms\Provider\Ssl"
+  "send_time" => "2021-07-06 08:03:23"
+  "mobile" => "017XXYYZZAA"
+  "message" => "helloooooooo boss!"
+]
+</pre>
 
 #### Currently Supported SMS Gateways
 * BDBulkSMS
