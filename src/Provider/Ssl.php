@@ -38,28 +38,6 @@ class Ssl extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        // dd($config);
-        $apiToken = $config['api_token'];
-        $sid = $config['sid'];
-        $csms_id = $config['csms_id'];
-
-        /*$data = [
-            'number' => $mobile,
-            'message' => $this->senderObject->getMessage()
-        ];
-
-        $message = $this->senderObject->getMessage();
-        $url = "https://smsplus.sslwireless.com/api/v3/send-sms?api_token=$apiToken&sid=$sid&sms=$message&msisdn=$mobile&csms_id=$csms_id";
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $smsResult = curl_exec($ch);
-        if ($smsResult == false) {
-            $smsResult = curl_error($ch);
-        }
-        curl_close($ch);
-        return $this->generateReport($smsResult, $data);*/
-
         $client = new Client([
             'base_uri' => 'https://smsplus.sslwireless.com/api/v3/send-sms',
             'timeout' => 10.0,
