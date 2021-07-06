@@ -17,10 +17,10 @@ use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
-class BulkSmsBD extends AbstractProvider
+class Adn extends AbstractProvider
 {
     /**
-     * BulksmsBD constructor.
+     * Adn constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -30,7 +30,6 @@ class BulkSmsBD extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
      */
     public function sendRequest()
     {
@@ -39,24 +38,35 @@ class BulkSmsBD extends AbstractProvider
         $config = $this->senderObject->getConfig();
 
         $client = new Client([
-            'base_uri' => 'http://66.45.237.70/api.php',
             'timeout' => 10.0,
+            'verify' => false
         ]);
 
-        $response = $client->request('GET', '', [
-            'query' => [
-                'username' => $config['username'],
-                'password' => $config['password'],
-                'contacts' => $number,
-                'msg' => $text,
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', 'https://portal.adnsms.com',
+                [
+                'form_params' => [
+                    'api_key' => $config['api_key'],
+                    'type' => $config['type'],
+                    'senderid' => $config['senderid'],
+                    'mobile' => $number,
+                    'message_body' => $text,
+                ],
+                'headers' => [
+                    'Accept' => 'application/json'
+                ],
+                'debug' => false
+            ]);
+        } catch (GuzzleException $e) {
+            return $e->getMessage();
+        }
+
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report =  $this->generateReport($smsResult, $data);
+        $report = $this->generateReport($smsResult, $data);
         return $report->getContent();
     }
 
@@ -65,15 +75,21 @@ class BulkSmsBD extends AbstractProvider
      */
     public function errorException()
     {
-        if (!is_array($this->senderObject->getConfig())) {
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
+
+        if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
+            throw new RenderException('api_key is absent in configuration');
         }
-        if (!array_key_exists('username', $this->senderObject->getConfig())) {
-            throw new RenderException('username key is absent in configuration');
+        if (!array_key_exists('api_secret', $this->senderObject->getConfig())) {
+            throw new RenderException('api_secret key is absent in configuration');
         }
-        if (!array_key_exists('password', $this->senderObject->getConfig())) {
-            throw new RenderException('password key is absent in configuration');
+        if (!array_key_exists('request_type', $this->senderObject->getConfig())) {
+            throw new RenderException('request_type key is absent in configuration');
         }
+        if (!array_key_exists('message_type', $this->senderObject->getConfig())) {
+            throw new RenderException('message_type key is absent in configuration');
+        }
+
+
         if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
             throw new RenderException('Invalid mobile number. It should be 11 digit');
         }

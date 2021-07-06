@@ -12,13 +12,16 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 
-use Xenon\Handler\XenonException;
-use Xenon\Sender;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Handler\XenonException;
+use Xenon\LaravelBDSms\Sender;
 
 class BDBulkSms extends AbstractProvider
 {
     /**
-     * BulkSmsBD constructor.
+     * DianaHost constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -28,22 +31,24 @@ class BDBulkSms extends AbstractProvider
 
     /**
      * Send Request TO Server
+     * @throws GuzzleException
      */
     public function sendRequest()
     {
-        $config = $this->senderObject->getConfig();
+        /*$config = $this->senderObject->getConfig();
         $token = $config['token'];
         $number = $this->formatNumber($this->senderObject->getMobile());
         $message = $this->senderObject->getMessage();
 
         $url = "http://api.greenweb.com.bd/api2.php";
+        //https://api.greenweb.com.bd/api.php?json
         $data = [
             'number' => $number,
             'message' => $message
         ];
 
         $smsParams = array(
-            'to' => "$number", //accept comma seperate number
+            'to' => "$number", //accept comma separate number
             'message' => "$message",
             'token' => "$token"
         ); // Add parameters in key value
@@ -54,7 +59,32 @@ class BDBulkSms extends AbstractProvider
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $smsResult = curl_exec($ch);
         curl_close($ch);
+        return $this->generateReport($smsResult, $data);*/
+
+        $number = $this->senderObject->getMobile();
+        $text = $this->senderObject->getMessage();
+        $config = $this->senderObject->getConfig();
+
+        $client = new Client([
+            'base_uri' => 'http://api.greenweb.com.bd/api2.php',
+            'timeout' => 10.0,
+        ]);
+
+        $response = $client->request('GET', '', [
+            'query' => [
+                'token' => $config['token'],
+                'to' => $number,
+                'message' => $text,
+            ]
+        ]);
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
+
+        $data['number'] = $number;
+        $data['message'] = $text;
         return $this->generateReport($smsResult, $data);
+
+
     }
 
     /**
@@ -69,8 +99,6 @@ class BDBulkSms extends AbstractProvider
         } else {
             return $mobile;
         }
-        //todo:: format mobile number if accepts multiple numbers
-
     }
 
     /**
@@ -93,6 +121,7 @@ class BDBulkSms extends AbstractProvider
     /**
      * @return mixed
      * @throws XenonException
+     * @throws RenderException
      */
     public function errorException()
     {

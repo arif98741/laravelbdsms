@@ -1,6 +1,6 @@
 <?php
 /*
- *  Last Modified: 6/28/21, 11:18 PM
+ *  Last Modified: 6/29/21, 12:06 AM
  *  Copyright (c) 2021
  *  -created by Ariful Islam
  *  -All Rights Preserved By
@@ -11,15 +11,16 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Sender;
 
-use Xenon\Sender;
-
-class Sms4BD implements ProviderRoadmap
+class Sms4BD extends AbstractProvider
 {
-    private $senderObject;
-
     /**
-     * Sms4BD constructor.
+     * SMS4BD constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -27,28 +28,93 @@ class Sms4BD implements ProviderRoadmap
         $this->senderObject = $sender;
     }
 
-    public function getData()
-    {
-        // TODO: Implement getData() method.
-    }
-
-    public function setData()
-    {
-        // TODO: Implement setData() method.
-    }
-
+    /**
+     * Send Request To Api and Send Message
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function sendRequest()
     {
-        // TODO: Implement sendRequest() method.
+        $number = $this->senderObject->getMobile();
+        $text = $this->senderObject->getMessage();
+        $config = $this->senderObject->getConfig();
+
+        $client = new Client([
+            'base_uri' => 'http://www.sms4bd.net',
+            'timeout' => 10.0,
+        ]);
+
+        try {
+            $response = $client->request('GET', '', [
+                'query' => [
+                    'publickey' => $config['publickey'],
+                    'privatekey' => $config['privatekey'],
+                    'type' => $config['type'],
+                    'sender' => $config['sender'],
+                    'delay' => $config['delay'],
+                    'receiver' => $number,
+                    'message' => $text,
+                ]
+            ]);
+        } catch (GuzzleException $e) {
+
+            $data['number'] = $number;
+            $data['message'] = $text;
+            $report = $this->generateReport($e->getMessage(), $data);
+            return $report->getContent();
+        }
+
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
+        $data['number'] = $number;
+        $data['message'] = $text;
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
+    }
+
+    /**
+     * @throws RenderException
+     */
+    public function errorException()
+    {
+
+        if (!array_key_exists('publickey', $this->senderObject->getConfig())) {
+            throw new RenderException('publickey is absent in configuration');
+        }
+        if (!array_key_exists('privatekey', $this->senderObject->getConfig())) {
+            throw new RenderException('privatekey is absent in configuration');
+        }
+        if (!array_key_exists('type', $this->senderObject->getConfig())) {
+            throw new RenderException('type key is absent in configuration');
+        }
+        if (!array_key_exists('sender', $this->senderObject->getConfig())) {
+            throw new RenderException('sender key is absent in configuration');
+        }
+        if (!array_key_exists('delay', $this->senderObject->getConfig())) {
+            throw new RenderException('delay key is absent in configuration');
+        }
+
+        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
+            throw new RenderException('Invalid mobile number. It should be 11 digit');
+        }
+        if (empty($this->senderObject->getMessage())) {
+            throw new RenderException('Message should not be empty');
+        }
     }
 
     /**
      * @param $result
      * @param $data
-     * @return void
+     * @return JsonResponse
      */
-    public function generateReport($result, $data)
+    public function generateReport($result, $data): JsonResponse
     {
-        // TODO: Implement generateReport() method.
+        return response()->json([
+            'status' => 'response',
+            'response' => $result,
+            'provider' => self::class,
+            'send_time' => date('Y-m-d H:i:s'),
+            'mobile' => $data['number'],
+            'message' => $data['message']
+        ]);
     }
 }

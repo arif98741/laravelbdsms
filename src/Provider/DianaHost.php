@@ -29,6 +29,7 @@ class DianaHost extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function sendRequest()
     {

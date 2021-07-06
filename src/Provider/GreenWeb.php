@@ -40,6 +40,7 @@ class GreenWeb extends AbstractProvider
         $client = new Client([
             'base_uri' => 'https://api.greenweb.com.bd/api.php?json',
             'timeout' => 10.0,
+            'verify'=> false
         ]);
 
         $response = $client->request('GET', '', [
