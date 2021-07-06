@@ -1,4 +1,4 @@
-Xenon\LaravelBDSms is a sms gateway package for sending text message to Bangladeshi mobile numbers using several gateways using <strong>Laravel</strong>. You should use <strong>composer 2</strong> for latest update of this package.
+Xenon\LaravelBDSms is a sms gateway package for sending text message to Bangladeshi mobile numbers using several gateways for <strong>Laravel</strong>. You should use <strong>composer 2</strong> for latest updates of this package.
 
 ### Installation
 # step
