@@ -62,3 +62,4 @@ $status = $sender->send();
 We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel something is missing then make a issue regarding that.
 If you want to contribute in this library, then you are highly welcome to do that....
 
+For clear documentation read this blog for clear documentation read this blog  [Click here to read!](https://send-sms-using-laravelbdsms.medium.com/laravel-sms-gateway-package-for-bangladesh-e70af99f2060)
