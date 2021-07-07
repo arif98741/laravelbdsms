@@ -20,7 +20,7 @@ use Xenon\LaravelBDSms\Sender;
 class BulkSmsBD extends AbstractProvider
 {
     /**
-     * BulksmsBD constructor.
+     * BulkSmsBD constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -56,7 +56,7 @@ class BulkSmsBD extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report =  $this->generateReport($smsResult, $data);
+        $report = $this->generateReport($smsResult, $data);
         return $report->getContent();
     }
 
@@ -87,7 +87,7 @@ class BulkSmsBD extends AbstractProvider
      * @param $data
      * @return JsonResponse
      */
-    public function generateReport($result, $data)
+    public function generateReport($result, $data): JsonResponse
     {
         return response()->json([
             'status' => 'response',

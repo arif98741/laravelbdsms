@@ -39,6 +39,7 @@ class Sender
     {
         $this->method = $method;
     }
+
     private static $instance = null;
 
     /**

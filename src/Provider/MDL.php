@@ -55,7 +55,7 @@ class MDL extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report =  $this->generateReport($smsResult, $data);
+        $report = $this->generateReport($smsResult, $data);
         return $report->getContent();
     }
 
@@ -88,7 +88,7 @@ class MDL extends AbstractProvider
      * @param $data
      * @return JsonResponse
      */
-    public function generateReport($result, $data)
+    public function generateReport($result, $data): JsonResponse
     {
         return response()->json([
             'status' => 'response',

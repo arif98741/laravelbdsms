@@ -14,14 +14,14 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Handler\XenonException;
 use Xenon\LaravelBDSms\Sender;
 
 class BDBulkSms extends AbstractProvider
 {
     /**
-     * DianaHost constructor.
+     * BDBulkSms constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -35,32 +35,6 @@ class BDBulkSms extends AbstractProvider
      */
     public function sendRequest()
     {
-        /*$config = $this->senderObject->getConfig();
-        $token = $config['token'];
-        $number = $this->formatNumber($this->senderObject->getMobile());
-        $message = $this->senderObject->getMessage();
-
-        $url = "http://api.greenweb.com.bd/api2.php";
-        //https://api.greenweb.com.bd/api.php?json
-        $data = [
-            'number' => $number,
-            'message' => $message
-        ];
-
-        $smsParams = array(
-            'to' => "$number", //accept comma separate number
-            'message' => "$message",
-            'token' => "$token"
-        ); // Add parameters in key value
-        $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_ENCODING, '');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($smsParams));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $smsResult = curl_exec($ch);
-        curl_close($ch);
-        return $this->generateReport($smsResult, $data);*/
-
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
@@ -104,23 +78,22 @@ class BDBulkSms extends AbstractProvider
     /**
      * @param $result
      * @param $data
-     * @return mixed
+     * @return JsonResponse
      */
-    public function generateReport($result, $data): array
+    public function generateReport($result, $data): JsonResponse
     {
-        return [
+        return response()->json([
             'status' => 'response',
             'response' => $result,
             'provider' => self::class,
             'send_time' => date('Y-m-d H:i:s'),
             'mobile' => $data['number'],
             'message' => $data['message']
-        ];
+        ]);
     }
 
     /**
-     * @return mixed
-     * @throws XenonException
+     * @return void
      * @throws RenderException
      */
     public function errorException()

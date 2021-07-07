@@ -45,18 +45,18 @@ class Adn extends AbstractProvider
         try {
             $response = $client->request('POST', 'https://portal.adnsms.com',
                 [
-                'form_params' => [
-                    'api_key' => $config['api_key'],
-                    'type' => $config['type'],
-                    'senderid' => $config['senderid'],
-                    'mobile' => $number,
-                    'message_body' => $text,
-                ],
-                'headers' => [
-                    'Accept' => 'application/json'
-                ],
-                'debug' => false
-            ]);
+                    'form_params' => [
+                        'api_key' => $config['api_key'],
+                        'type' => $config['type'],
+                        'senderid' => $config['senderid'],
+                        'mobile' => $number,
+                        'message_body' => $text,
+                    ],
+                    'headers' => [
+                        'Accept' => 'application/json'
+                    ],
+                    'debug' => false
+                ]);
         } catch (GuzzleException $e) {
             return $e->getMessage();
         }

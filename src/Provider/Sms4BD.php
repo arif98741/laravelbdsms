@@ -30,7 +30,7 @@ class Sms4BD extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function sendRequest()
     {

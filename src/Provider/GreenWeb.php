@@ -13,13 +13,14 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
 class GreenWeb extends AbstractProvider
 {
     /**
-     * DianaHost constructor.
+     * GreenWeb constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -40,7 +41,7 @@ class GreenWeb extends AbstractProvider
         $client = new Client([
             'base_uri' => 'https://api.greenweb.com.bd/api.php?json',
             'timeout' => 10.0,
-            'verify'=> false
+            'verify' => false
         ]);
 
         $response = $client->request('GET', '', [
@@ -55,7 +56,7 @@ class GreenWeb extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report =  $this->generateReport( $smsResult, $data);
+        $report = $this->generateReport($smsResult, $data);
         return $report->getContent();
     }
 
@@ -71,9 +72,9 @@ class GreenWeb extends AbstractProvider
     /**
      * @param $result
      * @param $data
-     * @return array
+     * @return JsonResponse
      */
-    public function generateReport($result, $data)
+    public function generateReport($result, $data): JsonResponse
     {
         return response()->json([
             'status' => 'response',
