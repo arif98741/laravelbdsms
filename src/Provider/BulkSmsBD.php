@@ -1,6 +1,6 @@
 <?php
 /*
- *  Last Modified: 6/28/21, 11:18 PM
+ *  Last Modified: 6/29/21, 12:06 AM
  *  Copyright (c) 2021
  *  -created by Ariful Islam
  *  -All Rights Preserved By
@@ -11,9 +11,11 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-
-use Xenon\Handler\XenonException;
-use Xenon\Sender;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Sender;
 
 class BulkSmsBD extends AbstractProvider
 {
@@ -28,31 +30,38 @@ class BulkSmsBD extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @throws GuzzleException
      */
-    public function sendRequest(): array
+    public function sendRequest()
     {
-        $url = "http://66.45.237.70/api.php";
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $data = array(
-            'username' => $config['username'],
-            'password' => $config['password'],
-            'number' => $number,
-            'message' => $text
-        );
-        $ch = curl_init(); // Initialize cURL
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $smsResult = curl_exec($ch);
-        curl_close($ch);
-        return $this->generateReport($smsResult, $data);
+        $client = new Client([
+            'base_uri' => 'http://66.45.237.70/api.php',
+            'timeout' => 10.0,
+        ]);
+
+        $response = $client->request('GET', '', [
+            'query' => [
+                'username' => $config['username'],
+                'password' => $config['password'],
+                'contacts' => $number,
+                'msg' => $text,
+            ]
+        ]);
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
+
+        $data['number'] = $number;
+        $data['message'] = $text;
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
     }
 
     /**
-     * @throws XenonException
+     * @throws RenderException
      */
     public function errorException()
     {
@@ -76,17 +85,17 @@ class BulkSmsBD extends AbstractProvider
     /**
      * @param $result
      * @param $data
-     * @return array
+     * @return JsonResponse
      */
-    public function generateReport($result, $data): array
+    public function generateReport($result, $data): JsonResponse
     {
-        return [
+        return response()->json([
             'status' => 'response',
             'response' => $result,
             'provider' => self::class,
             'send_time' => date('Y-m-d H:i:s'),
             'mobile' => $data['number'],
             'message' => $data['message']
-        ];
+        ]);
     }
 }

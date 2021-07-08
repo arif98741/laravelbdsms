@@ -12,6 +12,9 @@
 namespace Xenon\LaravelBDSms\Handler;
 
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 class RenderException extends \Exception
 {
     /**
@@ -26,11 +29,11 @@ class RenderException extends \Exception
     /**
      * Render the exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function render($request)
     {
-       // return response(...);
+
     }
 }

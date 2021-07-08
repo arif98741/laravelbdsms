@@ -1,4 +1,4 @@
-Xenon\LaravelBDSms is a sms gateway package for sending text message to Bangladeshi mobile numbers using several gateways using <strong>Laravel</strong>
+Xenon\LaravelBDSms is a sms gateway package for sending text message to Bangladeshi mobile numbers using several gateways for <strong>Laravel</strong>. You should use <strong>composer 2</strong> for latest updates of this package.
 
 ### Installation
 # step
@@ -6,7 +6,7 @@ Xenon\LaravelBDSms is a sms gateway package for sending text message to Banglade
 composer require xenon/laravelbdsms
 ```
 
-### Sample Code
+### Sample Code DianaHost
 
 <pre>
 use Xenon\LaravelBDSms\Provider\DianaHost;
@@ -14,7 +14,7 @@ use Xenon\LaravelBDSms\Sender;
 
 
 $sender = Sender::getInstance();
-$sender->setProvider(DianaHost::class); //this is demo for Dianahost
+$sender->setProvider(DianaHost::class); 
 $sender->setMobile('017XXYYZZAA');
 $sender->setMessage('helloooooooo boss!');
 $sender->setConfig(
@@ -28,6 +28,38 @@ $status = $sender->send();
 </pre>
 
 
+### Sample Code SSLCommerz
+
+<pre>
+use Xenon\LaravelBDSms\Provider\Ssl;
+use Xenon\LaravelBDSms\Sender;
+
+$sender = Sender::getInstance();
+$sender->setProvider(Ssl::class); 
+$sender->setMobile('017XXYYZZAA');
+$sender->setMessage('helloooooooo boss!');
+$sender->setConfig(
+   [
+       'api_token' => 'api token goes here',
+       'sid' => 'text',
+       'csms_id' => 'sender_id'
+   ]
+);
+$status = $sender->send();
+</pre>
+
+### Demo Response Using SSL
+<pre>
+array:6 [▼
+  "status" => "response"
+  "response" => "{"status":"FAILED","status_code":4003,"error_message":"IP Blacklisted"}"
+  "provider" => "Xenon\LaravelBDSms\Provider\Ssl"
+  "send_time" => "2021-07-06 08:03:23"
+  "mobile" => "017XXYYZZAA"
+  "message" => "helloooooooo boss!"
+]
+</pre>
+
 #### Currently Supported SMS Gateways
 * BDBulkSMS
 * BulkSMSBD
@@ -40,3 +72,4 @@ $status = $sender->send();
 We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel something is missing then make a issue regarding that.
 If you want to contribute in this library, then you are highly welcome to do that....
 
+For clear documentation read this blog in  [Medium!](https://send-sms-using-laravelbdsms.medium.com/laravel-sms-gateway-package-for-bangladesh-e70af99f2060)

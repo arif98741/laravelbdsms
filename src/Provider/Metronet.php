@@ -12,13 +12,14 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
+use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
 class Metronet extends AbstractProvider
 {
     /**
-     * DianaHost constructor.
+     * MentroNet constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -78,9 +79,9 @@ class Metronet extends AbstractProvider
     /**
      * @param $result
      * @param $data
-     * @return array
+     * @return JsonResponse
      */
-    public function generateReport($result, $data)
+    public function generateReport($result, $data): JsonResponse
     {
         return response()->json([
             'status' => 'response',

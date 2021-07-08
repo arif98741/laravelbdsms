@@ -1,6 +1,6 @@
 <?php
 /*
- *  Last Modified: 6/28/21, 11:18 PM
+ *  Last Modified: 6/29/21, 12:06 AM
  *  Copyright (c) 2021
  *  -created by Ariful Islam
  *  -All Rights Preserved By
@@ -11,14 +11,15 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-
-use Xenon\Handler\XenonException;
-use Xenon\Sender;
+use GuzzleHttp\Client;
+use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Sender;
 
 class MDL extends AbstractProvider
 {
     /**
-     * BulkSmsBD constructor.
+     * MDL constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -35,40 +36,45 @@ class MDL extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $url = "http://premium.mdlsms.com/smsapi";
-        $data = [
-            "api_key" => $config['api_key'],
-            "type" => $config['type'],
-            "contacts" => $number,
-            "senderid" => $config['senderid'],
-            "msg" => $text,
-        ];
+        $client = new Client([
+            'base_uri' => 'http://premium.mdlsms.com/smsapi',
+            'timeout' => 10.0,
+        ]);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $smsResult = curl_exec($ch);
-        curl_close($ch);
-        return $this->generateReport($smsResult, $data);
+        $response = $client->request('GET', '', [
+            'query' => [
+                'api_key' => $config['api_key'],
+                'type' => $config['type'],
+                'senderid' => $config['senderid'],
+                'contacts' => $number,
+                'msg' => $text,
+            ]
+        ]);
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
+
+        $data['number'] = $number;
+        $data['message'] = $text;
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
     }
 
     /**
-     * @throws XenonException
+     * @throws RenderException
      */
     public function errorException()
     {
-        if (!is_array($this->senderObject->getConfig())) {
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
-        }
+
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
             throw new RenderException('api_key is absent in configuration');
         }
         if (!array_key_exists('type', $this->senderObject->getConfig())) {
             throw new RenderException('type key is absent in configuration');
         }
+        if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
+            throw new RenderException('senderid key is absent in configuration');
+        }
+
         if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
             throw new RenderException('Invalid mobile number. It should be 11 digit');
         }
@@ -80,17 +86,17 @@ class MDL extends AbstractProvider
     /**
      * @param $result
      * @param $data
-     * @return array
+     * @return JsonResponse
      */
-    public function generateReport($result, $data): array
+    public function generateReport($result, $data): JsonResponse
     {
-        return [
+        return response()->json([
             'status' => 'response',
             'response' => $result,
             'provider' => self::class,
             'send_time' => date('Y-m-d H:i:s'),
             'mobile' => $data['number'],
             'message' => $data['message']
-        ];
+        ]);
     }
 }

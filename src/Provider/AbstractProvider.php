@@ -12,7 +12,6 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 
-
 abstract class AbstractProvider implements ProviderRoadmap
 {
     protected $senderObject;

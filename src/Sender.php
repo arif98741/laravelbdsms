@@ -13,6 +13,7 @@ namespace Xenon\LaravelBDSms;
 
 
 use Exception;
+use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Handler\XenonException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 
@@ -161,6 +162,7 @@ class Sender
      * Return this class object
      * @param $ProviderClass
      * @return Sender
+     * @throws RenderException
      */
     public function setProvider($ProviderClass)
     {

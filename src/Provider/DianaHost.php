@@ -12,6 +12,8 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Helper\Helper;
 use Xenon\LaravelBDSms\Sender;
@@ -29,6 +31,7 @@ class DianaHost extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @throws GuzzleException
      */
     public function sendRequest()
     {
@@ -91,9 +94,9 @@ class DianaHost extends AbstractProvider
     /**
      * @param $result
      * @param $data
-     * @return array
+     * @return JsonResponse
      */
-    public function generateReport($result, $data)
+    public function generateReport($result, $data): JsonResponse
     {
         return response()->json([
             'status' => 'response',
