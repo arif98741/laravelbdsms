@@ -76,6 +76,8 @@ class Sms4BD extends AbstractProvider
      */
     public function errorException()
     {
+        if (!is_array($this->senderObject->getConfig()))
+            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
 
         if (!array_key_exists('publickey', $this->senderObject->getConfig())) {
             throw new RenderException('publickey is absent in configuration');
