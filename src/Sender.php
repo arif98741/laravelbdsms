@@ -15,14 +15,28 @@ namespace Xenon\LaravelBDSms;
 use Exception;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Handler\XenonException;
-use Xenon\LaravelBDSms\Handler\RenderException;
 
 class Sender
 {
+    /**
+     * @var
+     */
     private $provider;
+    /**
+     * @var
+     */
     private $message;
+    /**
+     * @var
+     */
     private $mobile;
+    /**
+     * @var
+     */
     private $config;
+    /**
+     * @var
+     */
     private $method;
 
     /**
@@ -41,15 +55,11 @@ class Sender
         $this->method = $method;
     }
 
+    /**
+     * @var null
+     */
     private static $instance = null;
 
-    /**
-     * The Singleton's constructor should always be private to prevent direct
-     * construction calls with the `new` operator.
-     */
-    protected function __construct()
-    {
-    }
 
     /**
      * This is the static method that controls the access to the singleton
@@ -91,8 +101,8 @@ class Sender
                 throw  new XenonException('config must be an array');
             }
             $this->config = $config;
-        } catch (XenonException $e) {
-            $e->showException();
+        } catch (RenderException $e) {
+            return $e->getMessage();
         }
 
         return $this;
@@ -108,8 +118,8 @@ class Sender
 
             $this->provider->errorException();
             return $this->provider->sendRequest();
-        } catch (XenonException $exception) {
-            $exception->showException();
+        } catch (RenderException $exception) {
+            return $exception->getMessage();
         }
     }
 
@@ -164,7 +174,7 @@ class Sender
      * @return Sender
      * @throws RenderException
      */
-    public function setProvider($ProviderClass)
+    public function setProvider($ProviderClass): Sender
     {
         try {
             if (!class_exists($ProviderClass)) {
