@@ -114,13 +114,8 @@ class Sender
      */
     public function send()
     {
-        try {
-
-            $this->provider->errorException();
-            return $this->provider->sendRequest();
-        } catch (RenderException $exception) {
-            return $exception->getMessage();
-        }
+        $this->provider->errorException();
+        return $this->provider->sendRequest();
     }
 
     /**

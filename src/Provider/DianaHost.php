@@ -70,7 +70,6 @@ class DianaHost extends AbstractProvider
         if (!is_array($this->senderObject->getConfig()))
             throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
 
-
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
             throw new RenderException('api_key is absent in configuration');
         }

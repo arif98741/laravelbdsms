@@ -14,8 +14,12 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use SoapClient;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\Sender;
+use Xenon\LaravelBDSms\Sender;
 
+/**
+ * Class Onnorokom
+ * @package Xenon\LaravelBDSms\Provider
+ */
 class Onnorokom extends AbstractProvider
 {
     /**
