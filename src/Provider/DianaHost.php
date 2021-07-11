@@ -67,9 +67,6 @@ class DianaHost extends AbstractProvider
      */
     public function errorException()
     {
-        if (!is_array($this->senderObject->getConfig()))
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
-
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
             throw new RenderException('api_key is absent in configuration');
         }
@@ -78,18 +75,6 @@ class DianaHost extends AbstractProvider
         }
         if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
             throw new RenderException('senderid key is absent in configuration');
-        }
-
-        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
-            throw new RenderException('Invalid mobile number. It should be 11 digit');
-        }
-
-        if (Helper::numberValidation($this->senderObject->getMobile()) == false) {
-            throw new RenderException('Invalid Mobile Number');
-        }
-
-        if (empty($this->senderObject->getMessage())) {
-            throw new RenderException('Message should not be empty');
         }
     }
 

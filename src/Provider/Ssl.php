@@ -11,7 +11,6 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Helper\Helper;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\RenderException;
@@ -70,9 +69,6 @@ class Ssl extends AbstractProvider
      */
     public function errorException()
     {
-        if (!is_array($this->senderObject->getConfig()))
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
-
         if (!array_key_exists('api_token', $this->senderObject->getConfig()))
             throw new RenderException('apiToken key is absent in configuration');
 
@@ -81,15 +77,6 @@ class Ssl extends AbstractProvider
 
         if (!array_key_exists('csms_id', $this->senderObject->getConfig()))
             throw new RenderException('csms_id key is absent in configuration');
-
-        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11)
-            throw new RenderException('Invalid mobile number. It should be 11 digit');
-
-        if (Helper::numberValidation($this->senderObject->getMobile()) == false) {
-            throw new RenderException('Invalid Mobile Number');
-        }
-        if (empty($this->senderObject->getMessage()))
-            throw new RenderException('Message should not be empty');
 
     }
 

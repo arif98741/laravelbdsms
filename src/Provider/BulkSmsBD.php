@@ -65,20 +65,11 @@ class BulkSmsBD extends AbstractProvider
      */
     public function errorException()
     {
-        if (!is_array($this->senderObject->getConfig())) {
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
-        }
         if (!array_key_exists('username', $this->senderObject->getConfig())) {
             throw new RenderException('username key is absent in configuration');
         }
         if (!array_key_exists('password', $this->senderObject->getConfig())) {
             throw new RenderException('password key is absent in configuration');
-        }
-        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
-            throw new RenderException('Invalid mobile number. It should be 11 digit');
-        }
-        if (empty($this->senderObject->getMessage())) {
-            throw new RenderException('Message should not be empty');
         }
     }
 

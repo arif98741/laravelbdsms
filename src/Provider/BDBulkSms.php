@@ -98,36 +98,7 @@ class BDBulkSms extends AbstractProvider
      */
     public function errorException()
     {
-        if (!is_array($this->senderObject->getConfig()))
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
-
         if (!array_key_exists('token', $this->senderObject->getConfig()))
             throw new RenderException('token key is absent in configuration');
-
-        if (is_array($this->senderObject->getMobile())) {
-            $errorNumbers = [];
-            foreach ($this->senderObject->getMobile() as $key => $mobile) {
-                if (strlen($mobile) > 11 || strlen($mobile) < 11) {
-                    $errorNumbers[] = $mobile;
-                }
-            }
-
-            if (count($errorNumbers) > 0) {
-                $mobile = $this->formatNumber($errorNumbers);
-                throw new RenderException('Invalid mobile number. It should be 11 digit. Error Numbers are ' . $mobile);
-            }
-        } else {
-
-            if (preg_match("/[a-z]/i", $this->senderObject->getMobile()))
-                throw new RenderException('Number should not contain alphabets');
-
-            if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11)
-                throw new RenderException('Invalid mobile number. It should be 11 digit');
-        }
-
-
-        if (empty($this->senderObject->getMessage()))
-            throw new RenderException('Message should not be empty');
-
     }
 }

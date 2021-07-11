@@ -76,9 +76,6 @@ class Sms4BD extends AbstractProvider
      */
     public function errorException()
     {
-        if (!is_array($this->senderObject->getConfig()))
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
-
         if (!array_key_exists('publickey', $this->senderObject->getConfig())) {
             throw new RenderException('publickey is absent in configuration');
         }
@@ -95,12 +92,6 @@ class Sms4BD extends AbstractProvider
             throw new RenderException('delay key is absent in configuration');
         }
 
-        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
-            throw new RenderException('Invalid mobile number. It should be 11 digit');
-        }
-        if (empty($this->senderObject->getMessage())) {
-            throw new RenderException('Message should not be empty');
-        }
     }
 
     /**

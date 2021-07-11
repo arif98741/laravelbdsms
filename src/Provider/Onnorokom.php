@@ -66,9 +66,6 @@ class Onnorokom extends AbstractProvider
         if (!extension_loaded('soap'))
             throw new RenderException('Soap client is not installed or loaded');
 
-        if (!is_array($this->senderObject->getConfig()))
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
-
         if (!array_key_exists('userName', $this->senderObject->getConfig()))
             throw new RenderException('userName key is absent in configuration');
 
@@ -84,13 +81,6 @@ class Onnorokom extends AbstractProvider
         if (!array_key_exists('campaignName', $this->senderObject->getConfig()))
             throw new RenderException('campaignName key is absent in configuration');
 
-
-        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
-            throw new RenderException('Invalid mobile number. It should be 11 digit');
-        }
-        if (empty($this->senderObject->getMessage())) {
-            throw new RenderException('Message should not be empty');
-        }
     }
 
     /**

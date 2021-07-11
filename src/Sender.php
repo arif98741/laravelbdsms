@@ -15,6 +15,7 @@ namespace Xenon\LaravelBDSms;
 use Exception;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Handler\XenonException;
+use Xenon\LaravelBDSms\Helper\Helper;
 
 class Sender
 {
@@ -111,9 +112,22 @@ class Sender
 
     /**
      * Send Message Finally
+     * @throws RenderException
      */
     public function send()
     {
+        if (!is_array($this->getConfig()))
+            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
+
+        if (Helper::numberValidation($this->getMobile()) == false) {
+            throw new RenderException('Invalid Mobile Number');
+        }
+        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
+            throw new RenderException('Invalid mobile number. It should be 11 digit');
+        }
+        if (empty($this->getMessage()))
+            throw new RenderException('Message should not be empty');
+
         $this->provider->errorException();
         return $this->provider->sendRequest();
     }

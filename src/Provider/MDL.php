@@ -64,7 +64,6 @@ class MDL extends AbstractProvider
      */
     public function errorException()
     {
-
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
             throw new RenderException('api_key is absent in configuration');
         }
@@ -75,12 +74,6 @@ class MDL extends AbstractProvider
             throw new RenderException('senderid key is absent in configuration');
         }
 
-        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
-            throw new RenderException('Invalid mobile number. It should be 11 digit');
-        }
-        if (empty($this->senderObject->getMessage())) {
-            throw new RenderException('Message should not be empty');
-        }
     }
 
     /**
