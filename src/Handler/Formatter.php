@@ -11,7 +11,12 @@
 
 namespace Xenon\LaravelBDSms\Handler;
 
-
+/**
+ * @since v1.0.6
+ * @deprecated
+ * Class Formatter
+ * @package Xenon\LaravelBDSms\Handler
+ */
 class Formatter
 {
 

@@ -15,12 +15,20 @@ namespace Xenon\LaravelBDSms\Handler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class RenderException extends \Exception
+/**
+ * Class ParameterException
+ * @package Xenon\LaravelBDSms\Handler
+ * @version v1.0.20
+ * @since v1.0.20
+ */
+class ParameterException extends \Exception
 {
     /**
      * Report the exception.
      *
      * @return void
+     * @version v1.0.20
+     * @since v1.0.20
      */
     public function report()
     {
@@ -31,8 +39,10 @@ class RenderException extends \Exception
      *
      * @param Request $request
      * @return Response
+     * @version v1.0.20
+     * @since v1.0.20
      */
-    public function render(Request $request)
+    public function render($request)
     {
 
     }

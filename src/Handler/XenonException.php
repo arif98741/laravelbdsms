@@ -11,12 +11,29 @@
 
 namespace Xenon\LaravelBDSms\Handler;
 
-
+/**
+ * Class XenonException
+ * @package Xenon\LaravelBDSms\Handler
+ * @version v1.0.10
+ * @since v1.0.10
+ * @deprecated
+ */
 class XenonException extends \Exception
 {
+    /**
+     * @var
+     */
     protected $message;
+    /**
+     * @var
+     */
     protected $code;
 
+    /**
+     * XenonException constructor.
+     * @param $message
+     * @param null $code
+     */
     public function __construct($message, $code = null)
     {
         parent::__construct($message, $code);

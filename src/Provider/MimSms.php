@@ -1,6 +1,6 @@
 <?php
 /*
- *  Last Modified: 6/28/21, 11:18 PM
+ *  Last Modified: 6/29/21, 12:06 AM
  *  Copyright (c) 2021
  *  -created by Ariful Islam
  *  -All Rights Preserved By
@@ -11,19 +11,25 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\ParameterException;
-use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
-class BDBulkSms extends AbstractProvider
+/**
+ * Class MimSms
+ * @package Xenon\LaravelBDSms\Provider
+ * @version v1.0.20
+ * @since v1.0.20
+ */
+class MimSms extends AbstractProvider
 {
     /**
-     * BDBulkSms constructor.
+     * Mimsms constructor.
      * @param Sender $sender
+     * @version v1.0.20
+     * @since v1.0.20
      */
     public function __construct(Sender $sender)
     {
@@ -31,8 +37,10 @@ class BDBulkSms extends AbstractProvider
     }
 
     /**
-     * Send Request TO Server
+     * Send Request To Api and Send Message
      * @throws GuzzleException
+     * @version v1.0.20
+     * @since v1.0.20
      */
     public function sendRequest()
     {
@@ -41,15 +49,18 @@ class BDBulkSms extends AbstractProvider
         $config = $this->senderObject->getConfig();
 
         $client = new Client([
-            'base_uri' => 'http://api.greenweb.com.bd/api2.php',
+            'base_uri' => 'https://esms.mimsms.com/smsapi',
             'timeout' => 10.0,
+            'verify' => false
         ]);
 
         $response = $client->request('GET', '', [
             'query' => [
-                'token' => $config['token'],
-                'to' => $number,
-                'message' => $text,
+                'api_key' => $config['api_key'],
+                'type' => $config['type'],
+                'senderid' => $config['senderid'],
+                'contacts' => $number,
+                'msg' => $text,
             ]
         ]);
         $body = $response->getBody();
@@ -57,22 +68,25 @@ class BDBulkSms extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        return $this->generateReport($smsResult, $data);
-
-
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
     }
 
     /**
-     * For mobile number
-     * @param $mobile
-     * @return string
+     * @throws ParameterException
+     * @version v1.0.20
+     * @since v1.0.20
      */
-    private function formatNumber($mobile): string
+    public function errorException()
     {
-        if (is_array($mobile)) {
-            return implode(',', $mobile);
-        } else {
-            return $mobile;
+        if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
+            throw new ParameterException('api_key is absent in configuration');
+        }
+        if (!array_key_exists('type', $this->senderObject->getConfig())) {
+            throw new ParameterException('type key is absent in configuration');
+        }
+        if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
+            throw new ParameterException('senderid key is absent in configuration');
         }
     }
 
@@ -80,6 +94,8 @@ class BDBulkSms extends AbstractProvider
      * @param $result
      * @param $data
      * @return JsonResponse
+     * @since v1.0.20
+     * @version v1.0.20
      */
     public function generateReport($result, $data): JsonResponse
     {
@@ -91,15 +107,5 @@ class BDBulkSms extends AbstractProvider
             'mobile' => $data['number'],
             'message' => $data['message']
         ]);
-    }
-
-    /**
-     * @return void
-     * @throws ParameterException
-     */
-    public function errorException()
-    {
-        if (!array_key_exists('token', $this->senderObject->getConfig()))
-            throw new ParameterException('token key is absent in configuration');
     }
 }

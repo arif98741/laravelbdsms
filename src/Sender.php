@@ -13,8 +13,9 @@ namespace Xenon\LaravelBDSms;
 
 
 use Exception;
+use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Handler\XenonException;
+use Xenon\LaravelBDSms\Handler\ValidationException;
 use Xenon\LaravelBDSms\Helper\Helper;
 
 class Sender
@@ -96,37 +97,30 @@ class Sender
      */
     public function setConfig($config): Sender
     {
-
-        try {
-            if (!is_array($config)) {
-                throw  new XenonException('config must be an array');
-            }
-            $this->config = $config;
-        } catch (RenderException $e) {
-            return $e->getMessage();
-        }
-
+        $this->config = $config;
         return $this;
     }
 
 
     /**
      * Send Message Finally
-     * @throws RenderException
+     * @throws ParameterException
+     * @throws ValidationException
      */
     public function send()
     {
-        if (!is_array($this->getConfig()))
-            throw new RenderException('Configuration is not provided. Use setConfig() in method chain');
+        if (!is_array($this->getConfig())) {
+            throw  new ParameterException('config must be an array');
+        }
 
         if (Helper::numberValidation($this->getMobile()) == false) {
-            throw new RenderException('Invalid Mobile Number');
+            throw new ValidationException('Invalid Mobile Number');
         }
         if (strlen($this->getMobile()) > 11 || strlen($this->getMobile()) < 11) {
-            throw new RenderException('Invalid mobile number. It should be 11 digit');
+            throw new ParameterException('Invalid mobile number. It should be 11 digit');
         }
         if (empty($this->getMessage()))
-            throw new RenderException('Message should not be empty');
+            throw new ParameterException('Message should not be empty');
 
         $this->provider->errorException();
         return $this->provider->sendRequest();

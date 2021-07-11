@@ -14,6 +14,7 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -71,21 +72,21 @@ class Adn extends AbstractProvider
     }
 
     /**
-     * @throws RenderException
+     * @throws ParameterException
      */
     public function errorException()
     {
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
-            throw new RenderException('api_key is absent in configuration');
+            throw new ParameterException('api_key is absent in configuration');
         }
         if (!array_key_exists('api_secret', $this->senderObject->getConfig())) {
-            throw new RenderException('api_secret key is absent in configuration');
+            throw new ParameterException('api_secret key is absent in configuration');
         }
         if (!array_key_exists('request_type', $this->senderObject->getConfig())) {
-            throw new RenderException('request_type key is absent in configuration');
+            throw new ParameterException('request_type key is absent in configuration');
         }
         if (!array_key_exists('message_type', $this->senderObject->getConfig())) {
-            throw new RenderException('message_type key is absent in configuration');
+            throw new ParameterException('message_type key is absent in configuration');
         }
 
     }

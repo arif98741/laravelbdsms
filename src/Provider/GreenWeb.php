@@ -14,6 +14,7 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -61,12 +62,12 @@ class GreenWeb extends AbstractProvider
     }
 
     /**
-     * @throws RenderException
+     * @throws ParameterException
      */
     public function errorException()
     {
         if (!array_key_exists('token', $this->senderObject->getConfig()))
-            throw new RenderException('token key is absent in configuration');
+            throw new ParameterException('token key is absent in configuration');
     }
 
     /**

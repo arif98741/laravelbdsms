@@ -14,8 +14,8 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Helper\Helper;
 use Xenon\LaravelBDSms\Sender;
 
 class DianaHost extends AbstractProvider
@@ -63,18 +63,18 @@ class DianaHost extends AbstractProvider
     }
 
     /**
-     * @throws RenderException
+     * @throws ParameterException
      */
     public function errorException()
     {
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
-            throw new RenderException('api_key is absent in configuration');
+            throw new ParameterException('api_key is absent in configuration');
         }
         if (!array_key_exists('type', $this->senderObject->getConfig())) {
-            throw new RenderException('type key is absent in configuration');
+            throw new ParameterException('type key is absent in configuration');
         }
         if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
-            throw new RenderException('senderid key is absent in configuration');
+            throw new ParameterException('senderid key is absent in configuration');
         }
     }
 

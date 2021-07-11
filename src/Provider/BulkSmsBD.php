@@ -14,6 +14,7 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -61,15 +62,15 @@ class BulkSmsBD extends AbstractProvider
     }
 
     /**
-     * @throws RenderException
+     * @throws ParameterException
      */
     public function errorException()
     {
         if (!array_key_exists('username', $this->senderObject->getConfig())) {
-            throw new RenderException('username key is absent in configuration');
+            throw new ParameterException('username key is absent in configuration');
         }
         if (!array_key_exists('password', $this->senderObject->getConfig())) {
-            throw new RenderException('password key is absent in configuration');
+            throw new ParameterException('password key is absent in configuration');
         }
     }
 
