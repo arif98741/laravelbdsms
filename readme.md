@@ -55,7 +55,7 @@ use Xenon\LaravelBDSms\Sender;
 
 $sender = Sender::getInstance();
 $sender->setProvider(MimSms::class);
-$sender->setMobile('01733499574');
+$sender->setMobile('017XXYYZZAA');
 $sender->setMessage('This is test message');
 $sender->setConfig(
    [
