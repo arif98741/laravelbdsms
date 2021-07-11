@@ -122,7 +122,7 @@ class Sender
         if (Helper::numberValidation($this->getMobile()) == false) {
             throw new RenderException('Invalid Mobile Number');
         }
-        if (strlen($this->senderObject->getMobile()) > 11 || strlen($this->senderObject->getMobile()) < 11) {
+        if (strlen($this->getMobile()) > 11 || strlen($this->getMobile()) < 11) {
             throw new RenderException('Invalid mobile number. It should be 11 digit');
         }
         if (empty($this->getMessage()))
