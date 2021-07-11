@@ -48,6 +48,26 @@ $sender->setConfig(
 $status = $sender->send();
 </pre>
 
+### Sample Code MimSMS
+<pre>
+use Xenon\LaravelBDSms\Provider\MimSms;
+use Xenon\LaravelBDSms\Sender;
+
+$sender = Sender::getInstance();
+$sender->setProvider(MimSms::class);
+$sender->setMobile('01733499574');
+$sender->setMessage('This is test message');
+$sender->setConfig(
+   [
+       'api_key' => 'api_key_goes_here',
+       'type' => 'text',
+       'senderid' => 'approved_send_id',
+   ]
+);
+
+$status = $sender->send();
+</pre>
+
 ### Demo Response Using SSL
 <pre>
 array:6 [▼
