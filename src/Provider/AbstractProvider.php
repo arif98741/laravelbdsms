@@ -12,6 +12,8 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 
+use Illuminate\Http\JsonResponse;
+
 abstract class AbstractProvider implements ProviderRoadmap
 {
     protected $senderObject;
@@ -32,9 +34,21 @@ abstract class AbstractProvider implements ProviderRoadmap
     /**
      * @param $result
      * @param $data
-     * @return mixed
+     * @return JsonResponse
+     * @since v1.0.20
+     * @version v1.0.20
      */
-    abstract public function generateReport($result, $data);
+    public function generateReport($result, $data): JsonResponse
+    {
+        return response()->json([
+            'status' => 'response',
+            'response' => $result,
+            'provider' => self::class,
+            'send_time' => date('Y-m-d H:i:s'),
+            'mobile' => $data['number'],
+            'message' => $data['message']
+        ]);
+    }
 
     /**
      * @return mixed
@@ -53,6 +67,7 @@ abstract class AbstractProvider implements ProviderRoadmap
 
     /**
      * Return Report As Json
+     * @deprecated
      */
     public function toJson()
     {

@@ -12,7 +12,6 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
-use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -74,22 +73,5 @@ class MDL extends AbstractProvider
             throw new RenderException('senderid key is absent in configuration');
         }
 
-    }
-
-    /**
-     * @param $result
-     * @param $data
-     * @return JsonResponse
-     */
-    public function generateReport($result, $data): JsonResponse
-    {
-        return response()->json([
-            'status' => 'response',
-            'response' => $result,
-            'provider' => self::class,
-            'send_time' => date('Y-m-d H:i:s'),
-            'mobile' => $data['number'],
-            'message' => $data['message']
-        ]);
     }
 }

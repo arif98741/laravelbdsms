@@ -79,21 +79,4 @@ class Ssl extends AbstractProvider
             throw new RenderException('csms_id key is absent in configuration');
 
     }
-
-    /**
-     * @param $result
-     * @param $data
-     * @return array
-     */
-    public function generateReport($result, $data): array
-    {
-        return [
-            'status' => 'response',
-            'response' => $result,
-            'provider' => self::class,
-            'send_time' => date('Y-m-d H:i:s'),
-            'mobile' => $data['number'],
-            'message' => $data['message']
-        ];
-    }
 }

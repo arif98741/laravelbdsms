@@ -94,6 +94,7 @@ class Sender
      * @param mixed $config
      * @return Sender
      * @throws Exception
+     * @since v1.0.0
      */
     public function setConfig($config): Sender
     {
@@ -106,6 +107,7 @@ class Sender
      * Send Message Finally
      * @throws ParameterException
      * @throws ValidationException
+     * @since v1.0.5
      */
     public function send()
     {
@@ -128,6 +130,7 @@ class Sender
 
     /**
      * @return mixed
+     * @since v1.0.0
      */
     public function getMobile()
     {
@@ -137,6 +140,7 @@ class Sender
     /**
      * @param mixed $mobile
      * @return Sender
+     * @since v1.0.0
      */
     public function setMobile($mobile): Sender
     {
@@ -146,6 +150,7 @@ class Sender
 
     /**
      * @return mixed
+     * @since v1.0.0
      */
     public function getMessage()
     {
@@ -155,6 +160,7 @@ class Sender
     /**
      * @param mixed $message
      * @return Sender
+     * @since v1.0.0
      */
     public function setMessage($message = ''): Sender
     {
@@ -165,6 +171,7 @@ class Sender
 
     /**
      * @return mixed
+     * @since v1.0.0
      */
     public function getProvider()
     {
@@ -176,6 +183,7 @@ class Sender
      * @param $ProviderClass
      * @return Sender
      * @throws RenderException
+     * @since v1.0.0
      */
     public function setProvider($ProviderClass): Sender
     {

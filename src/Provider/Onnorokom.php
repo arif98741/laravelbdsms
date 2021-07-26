@@ -83,20 +83,4 @@ class Onnorokom extends AbstractProvider
 
     }
 
-    /**
-     * @param $result
-     * @param $data
-     * @return mixed
-     */
-    public function generateReport($result, $data): array
-    {
-        return [
-            'status' => 'response',
-            'response' => $result,
-            'provider' => self::class,
-            'send_time' => date('Y-m-d H:i:s'),
-            'mobile' => $data['number'],
-            'message' => $data['message']
-        ];
-    }
 }
