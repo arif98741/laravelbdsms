@@ -16,7 +16,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
-class Mobirech extends AbstractProvider
+class Mobireach extends AbstractProvider
 {
     /**
      * DianaHost constructor.
