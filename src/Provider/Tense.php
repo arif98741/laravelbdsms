@@ -49,6 +49,7 @@ class Tense extends AbstractProvider
                 'user' => $config['user'],
                 'password' => $config['password'],
                 'campaign' => $config['campaign'],
+                'masking' => $config['masking'],
                 'number' => $number,
                 'text' => $text,
             ]
@@ -77,6 +78,9 @@ class Tense extends AbstractProvider
         }
         if (!array_key_exists('campaign', $this->senderObject->getConfig())) {
             throw new ParameterException('campaign key is absent in configuration');
+        }
+        if (!array_key_exists('masking', $this->senderObject->getConfig())) {
+            throw new ParameterException('masking key is absent in configuration');
         }
     }
 
