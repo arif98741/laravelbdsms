@@ -9,9 +9,9 @@ class SMS
     private static $sender;
 
 
-    public function __construct(Sender  $sender)
+    public function __construct(Sender $sender)
     {
-        dd($sender);
+        self::$sender = $sender;
     }
 
     /**

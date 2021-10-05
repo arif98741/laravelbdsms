@@ -45,6 +45,9 @@ class BoomCast extends AbstractProvider
         return $this->generateReport($response, $data);
     }
 
+    /**
+     * @throws RenderException
+     */
     public function errorException()
     {
         $config = $this->senderObject->getConfig();
