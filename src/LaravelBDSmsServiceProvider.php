@@ -22,7 +22,13 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('laravelbdsms', function () {
+            $provider = config('sms.default_provider');
+            $sender = Sender::getInstance();
+            $sender->setProvider($provider);
+            $sender->setConfig(config('sms.providers')[$provider]);
+            return new SMS($sender);
+        });
     }
 
     /**
@@ -32,6 +38,8 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__.'/Config/sms.php' => config_path('sms.php'),
+        ]);
     }
 }
