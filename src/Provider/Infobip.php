@@ -3,6 +3,8 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -16,6 +18,10 @@ class Infobip extends AbstractProvider
         $this->senderObject = $sender;
     }
 
+    /**
+     * @param $config
+     * @return string[]
+     */
     private function getHeaders($config): array
     {
         return [
@@ -25,6 +31,10 @@ class Infobip extends AbstractProvider
         ];
     }
 
+    /**
+     * @return JsonResponse
+     * @throws GuzzleException
+     */
     public function sendRequest()
     {
         $mobile = $this->senderObject->getMobile();
@@ -50,6 +60,9 @@ class Infobip extends AbstractProvider
         return $this->generateReport($response, $data);
     }
 
+    /**
+     * @throws RenderException
+     */
     public function errorException()
     {
         $config = $this->senderObject->getConfig();

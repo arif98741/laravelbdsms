@@ -1,23 +1,31 @@
 <?php namespace Xenon\LaravelBDSms;
 
+use Exception;
+use Illuminate\Support\Facades\Config;
+
 class SMS
 {
     /** @var Sender */
-    private $sender;
+    private static $sender;
 
-    public function __construct(Sender $sender)
+
+    public function __construct(Sender  $sender)
     {
-        $this->sender = $sender;
+        dd($sender);
     }
 
     /**
      * @throws Handler\ParameterException
      * @throws Handler\ValidationException
+     * @throws Exception
      */
-    public function shoot(string $number, string $text)
+    public static function shoot(string $number, string $text)
     {
-        $this->sender->setMobile($number);
-        $this->sender->setMessage($text);
-        return $this->sender->send();
+        $config = Config::get('sms');
+
+        self::$sender = new Sender();
+        self::$sender->setMobile($number);
+        self::$sender->setMessage($text);
+        return self::$sender->send();
     }
 }

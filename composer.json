@@ -15,7 +15,10 @@
     "autoload": {
         "psr-4": {
             "Xenon\\LaravelBDSms\\": "src/"
-        }
+        },
+        "classmap": [
+            "app/facades"
+        ]
     },
     "extra": {
         "laravel": {
