@@ -21,7 +21,10 @@
         "laravel": {
             "providers": [
                 "Xenon\\LaravelBDSms\\LaravelBDSmsServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "SMS": "Xenon\\LaravelBDSms\\Facades\\SMS"
+            }
         }
     }
 }

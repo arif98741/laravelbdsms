@@ -30,7 +30,6 @@ class Ssl extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @return array
      * @throws GuzzleException
      */
     public function sendRequest()
@@ -58,9 +57,7 @@ class Ssl extends AbstractProvider
         $smsResult = $body->getContents();
         $data['number'] = $mobile;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report;
-
+        return $this->generateReport($smsResult, $data);
     }
 
     /**

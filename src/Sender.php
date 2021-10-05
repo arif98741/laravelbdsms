@@ -17,6 +17,7 @@ use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Handler\ValidationException;
 use Xenon\LaravelBDSms\Helper\Helper;
+use Xenon\LaravelBDSms\Provider\AbstractProvider;
 
 class Sender
 {
@@ -189,7 +190,11 @@ class Sender
     {
         try {
             if (!class_exists($ProviderClass)) {
-                throw new RenderException('Provider ' . $ProviderClass . ' not found');
+                throw new RenderException("Provider '$ProviderClass' not found");
+            }
+
+            if (!is_subclass_of($ProviderClass, AbstractProvider::class)) {
+                throw new RenderException("Provider '$ProviderClass' is not a " . AbstractProvider::class);
             }
         } catch (XenonException $exception) {
 
