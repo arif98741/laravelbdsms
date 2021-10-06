@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Facade;
  */
 class SMS extends Facade
 {
+    /**
+     * @return string
+     * @version v1.0.32
+     * @since v1.0.31
+     */
     protected static function getFacadeAccessor(): string
     {
         return 'LaravelBDSms';
