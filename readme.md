@@ -115,8 +115,11 @@ array:6 [▼
 
 #### Currently Supported SMS Gateways
 * BDBulkSMS
+* BoomCast
 * BulkSMSBD
 * Dianahost
+* ElitBuzz
+* Infobip
 * MDLSMS
 * Metronet
 * Mobireach
