@@ -22,7 +22,7 @@ use Xenon\LaravelBDSms\Provider\AbstractProvider;
 class Sender
 {
     /**
-     * @var
+     * @var AbstractProvider
      */
     private $provider;
     /**

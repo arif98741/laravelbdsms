@@ -5,12 +5,11 @@ use Exception;
 class SMS
 {
     /** @var Sender */
-    private static $sender;
-
+    private $sender;
 
     public function __construct(Sender $sender)
     {
-        self::$sender = $sender;
+        $this->sender = $sender;
     }
 
     /**
@@ -29,17 +28,10 @@ class SMS
      * @throws Handler\ValidationException
      * @throws Exception
      */
-    public static function shoot(string $number, string $text)
+    public function shoot(string $number, string $text)
     {
-        /*$config = Config::get('sms');
-
-
-        self::$sender = new Sender();
-        self::$sender->setMobile($number);
-        self::$sender->setMessage($text);
-        return self::$sender->send();*/
-        self::$sender->setMobile($number);
-        self::$sender->setMessage($text);
-        return self::$sender->send();
+        $this->sender->setMobile($number);
+        $this->sender->setMessage($text);
+        return $this->sender->send();
     }
 }

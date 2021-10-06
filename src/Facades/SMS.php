@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static void shoot(string $mobile, string $text)
+ * @method static \Xenon\LaravelBDSms\SMS via(string $provider)
+ * @method static mixed shoot(string $mobile, string $text)
  *
  * @see \Xenon\LaravelBDSms\SMS
  */
