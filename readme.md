@@ -1,12 +1,38 @@
 Xenon\LaravelBDSms is a sms gateway package for sending text message to Bangladeshi mobile numbers using several gateways for <strong>Laravel</strong>. You should use <strong>composer 2</strong> for latest updates of this package.
 
-### Installation
-# step
+# Installation
 ```
 composer require xenon/laravelbdsms
 ```
+Then, publish the package
 
-### Sample Code DianaHost
+```
+php artisan vendor:publish --provider="Xenon\\LaravelBDSms\\LaravelBDSmsServiceProvider"
+```
+
+This will create a `sms.php` in the `config/` directory. Set your desired provider as `default_provider` and fill up the necessary environment variable of that provider.
+
+# Usage
+Simply use the facade
+<pre>
+use Xenon\LaravelBDSms\Facades\SMS;
+
+SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
+</pre>
+
+Or, if you need to change the default provider on the fly
+<pre>
+use Xenon\LaravelBDSms\Facades\SMS;
+use Xenon\LaravelBDSms\Provider\Ssl;
+
+$response = SMS::via(Ssl::class)->shoot('017XXYYZZAA', 'helloooooooo boss!');
+</pre>
+That should do it.
+#
+
+Otherwise, if you want more control, you can use the underlying sender object. This will not touch any laravel facade or service provider. 
+
+#### Sample Code DianaHost
 
 <pre>
 use Xenon\LaravelBDSms\Provider\DianaHost;
@@ -28,7 +54,7 @@ $status = $sender->send();
 </pre>
 
 
-### Sample Code SSLCommerz
+#### Sample Code SSLCommerz
 
 <pre>
 use Xenon\LaravelBDSms\Provider\Ssl;
@@ -48,7 +74,7 @@ $sender->setConfig(
 $status = $sender->send();
 </pre>
 
-### Sample Code MimSMS
+#### Sample Code MimSMS
 <pre>
 use Xenon\LaravelBDSms\Provider\MimSms;
 use Xenon\LaravelBDSms\Sender;
@@ -67,7 +93,7 @@ $sender->setConfig(
 
 $status = $sender->send();
 </pre>
-
+#
 ### Demo Response Using SSL
 <pre>
 array:6 [▼
