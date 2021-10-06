@@ -20,6 +20,13 @@ use Xenon\LaravelBDSms\Facades\SMS;
 SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
 </pre>
 
+or, with facade alias
+<pre>
+use LaravelBDSms;
+
+LaravelBDSms::shoot('017XXYYZZAA', 'helloooooooo boss!');
+</pre>
+
 Or, if you need to change the default provider on the fly
 <pre>
 use Xenon\LaravelBDSms\Facades\SMS;
