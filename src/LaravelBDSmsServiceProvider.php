@@ -26,10 +26,10 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
         $this->app->bind('LaravelBDSms', function () {
 
             $provider = config('sms.default_provider');
+
             $sender = Sender::getInstance();
             $sender->setProvider($provider);
             $sender->setConfig(config('sms.providers')[$provider]);
-
             return new SMS($sender);
         });
 

@@ -1,7 +1,6 @@
 <?php namespace Xenon\LaravelBDSms;
 
 use Exception;
-use Illuminate\Support\Facades\Config;
 
 class SMS
 {
@@ -21,9 +20,13 @@ class SMS
      */
     public static function shoot(string $number, string $text)
     {
-        $config = Config::get('sms');
+        /*$config = Config::get('sms');
+
 
         self::$sender = new Sender();
+        self::$sender->setMobile($number);
+        self::$sender->setMessage($text);
+        return self::$sender->send();*/
         self::$sender->setMobile($number);
         self::$sender->setMessage($text);
         return self::$sender->send();

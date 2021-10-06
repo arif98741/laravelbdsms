@@ -20,7 +20,7 @@ use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
 
 return [
-    'default_provider' => env('SMS_DEFAULT_PROVIDER', BDBulkSms::class),
+    'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
     'providers' => [
         Adn::class => [
             'senderid' => env('SMS_ADN_SENDER_ID', ''),
