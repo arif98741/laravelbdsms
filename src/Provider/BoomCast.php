@@ -10,12 +10,20 @@ class BoomCast extends AbstractProvider
 {
     /**
      * @param Sender $sender
+     * @version v1.0.32
+     * @since v1.0.31
      */
     public function __construct(Sender $sender)
     {
         $this->senderObject = $sender;
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @version v1.0.32
+     * @since v1.0.31
+     */
     public function sendRequest()
     {
         $mobile = $this->senderObject->getMobile();
@@ -47,6 +55,8 @@ class BoomCast extends AbstractProvider
 
     /**
      * @throws RenderException
+     * @version v1.0.32
+     * @since v1.0.31
      */
     public function errorException()
     {

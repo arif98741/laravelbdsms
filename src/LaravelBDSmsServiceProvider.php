@@ -19,6 +19,8 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
      * Register services.
      *
      * @return void
+     * @version v1.0.32
+     * @since v1.0.31
      */
     public function register()
     {
@@ -39,6 +41,8 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
      * Bootstrap services.
      *
      * @return void
+     * @version v1.0.32
+     * @since v1.0.31
      */
     public function boot()
     {

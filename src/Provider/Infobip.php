@@ -12,6 +12,8 @@ class Infobip extends AbstractProvider
 {
     /**
      * @param Sender $sender
+     * @version v1.0.32
+     * @since v1.0.31
      */
     public function __construct(Sender $sender)
     {
@@ -21,6 +23,8 @@ class Infobip extends AbstractProvider
     /**
      * @param $config
      * @return string[]
+     * @version v1.0.32
+     * @since v1.0.31
      */
     private function getHeaders($config): array
     {
@@ -34,6 +38,8 @@ class Infobip extends AbstractProvider
     /**
      * @return JsonResponse
      * @throws GuzzleException
+     * @version v1.0.32
+     * @since v1.0.31
      */
     public function sendRequest()
     {
@@ -62,6 +68,8 @@ class Infobip extends AbstractProvider
 
     /**
      * @throws RenderException
+     * @version v1.0.32
+     * @since v1.0.31
      */
     public function errorException()
     {
