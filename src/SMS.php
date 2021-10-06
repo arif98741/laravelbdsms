@@ -1,7 +1,5 @@
 <?php namespace Xenon\LaravelBDSms;
-
 use Exception;
-
 class SMS
 {
     /** @var Sender */
@@ -13,18 +11,7 @@ class SMS
     }
 
     /**
-     * @throws Handler\RenderException
-     * @throws \Exception
-     */
-    public function via($provider): SMS
-    {
-        $this->sender->setProvider($provider);
-        $this->sender->setConfig(config('sms.providers')[$provider]);
-        return $this;
-    }
-
-    /**
-     * @throws Handler\ParameterException
+	@@ -29,17 +28,10 @@ public function via($provider): SMS
      * @throws Handler\ValidationException
      * @throws Exception
      */
