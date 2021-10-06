@@ -11,6 +11,17 @@ class SMS
     }
 
     /**
+     * @throws Handler\RenderException
+     * @throws \Exception
+     */
+    public function via($provider): SMS
+    {
+        $this->sender->setProvider($provider);
+        $this->sender->setConfig(config('sms.providers')[$provider]);
+        return $this;
+    }
+
+    /**
      * @throws Handler\ParameterException
      * @throws Handler\ValidationException
      */
