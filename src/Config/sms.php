@@ -32,6 +32,7 @@ use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
+use Xenon\LaravelBDSms\Provider\AjuraTech;
 
 return [
     'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
@@ -121,5 +122,11 @@ return [
             'campaign' => env('SMS_TENSE_CAMPAIGN', ''),
             'masking' => env('SMS_TENSE_MASKING', ''),
         ],
+        AjuraTech::class => [
+            'apikey'=>env('SMS_AjuraTechReveSms_API_KEY', ''),
+            'secretkey'=>env('SMS_AjuraTechReveSms_API_SECRET_KEY', ''),
+            'callerID'=>env('SMS_AjuraTechReveSms_CALLER_ID', ''),
+        ],
     ]
 ];
+
