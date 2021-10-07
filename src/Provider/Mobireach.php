@@ -19,7 +19,7 @@ use Xenon\LaravelBDSms\Sender;
 class Mobireach extends AbstractProvider
 {
     /**
-     * DianaHost constructor.
+     * Mobireach constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)

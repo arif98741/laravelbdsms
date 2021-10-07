@@ -19,8 +19,10 @@ use Xenon\LaravelBDSms\Sender;
 class AjuraTech extends AbstractProvider
 {
     /**
-     * GreenWeb constructor.
+     * Ajuratech constructor.
      * @param Sender $sender
+     * @version v1.0.33
+     * @since v1.0.33
      */
     public function __construct(Sender $sender)
     {
@@ -29,7 +31,10 @@ class AjuraTech extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @return false|string
      * @throws GuzzleException
+     * @since v1.0.33
+     * @version v1.0.33
      */
     public function sendRequest()
     {
@@ -46,9 +51,9 @@ class AjuraTech extends AbstractProvider
         $response = $client->request('GET', '', [
             'query' => [
 
-                'apikey'=> $config['apikey'],
-                'secretkey'=> $config['secretkey'],
-                'callerID'=> $config['callerID'],
+                'apikey' => $config['apikey'],
+                'secretkey' => $config['secretkey'],
+                'callerID' => $config['callerID'],
                 'toUser' => $number,
                 'messageContent' => $text,
             ]
@@ -64,6 +69,8 @@ class AjuraTech extends AbstractProvider
 
     /**
      * @throws ParameterException
+     * @version v1.0.33
+     * @since v1.0.33
      */
     public function errorException()
     {

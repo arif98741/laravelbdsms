@@ -11,6 +11,7 @@ use Xenon\LaravelBDSms\Sender;
 class Infobip extends AbstractProvider
 {
     /**
+     * Infobip Constructor
      * @param Sender $sender
      * @version v1.0.32
      * @since v1.0.31

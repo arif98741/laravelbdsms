@@ -44,6 +44,11 @@ return [
             'request_type' => env('SMS_ADN_API_REQUEST_TYPE', ''),
             'message_type' => env('SMS_ADN_API_MESSAGE_TYPE', ''),
         ],
+        AjuraTech::class => [
+            'apikey'=>env('SMS_AjuraTechReveSms_API_KEY', ''),
+            'secretkey'=>env('SMS_AjuraTechReveSms_API_SECRET_KEY', ''),
+            'callerID'=>env('SMS_AjuraTechReveSms_CALLER_ID', ''),
+        ],
         Alpha::class => [],
         BDBulkSms::class => [
             'token' => env('SMS_BD_BULK_SMS_TOKEN', ''),
@@ -121,11 +126,6 @@ return [
             'password' => env('SMS_TENSE_PASSWORD', ''),
             'campaign' => env('SMS_TENSE_CAMPAIGN', ''),
             'masking' => env('SMS_TENSE_MASKING', ''),
-        ],
-        AjuraTech::class => [
-            'apikey'=>env('SMS_AjuraTechReveSms_API_KEY', ''),
-            'secretkey'=>env('SMS_AjuraTechReveSms_API_SECRET_KEY', ''),
-            'callerID'=>env('SMS_AjuraTechReveSms_CALLER_ID', ''),
         ],
     ]
 ];

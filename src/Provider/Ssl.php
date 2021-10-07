@@ -20,7 +20,7 @@ use Xenon\LaravelBDSms\Sender;
 class Ssl extends AbstractProvider
 {
     /**
-     * BulkSmsBD constructor.
+     * Ssl constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)

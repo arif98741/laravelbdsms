@@ -9,6 +9,7 @@ use Xenon\LaravelBDSms\Sender;
 class ElitBuzz extends AbstractProvider
 {
     /**
+     * Elitbuzz Constructor
      * @param Sender $sender
      * @version v1.0.32
      * @since v1.0.31
