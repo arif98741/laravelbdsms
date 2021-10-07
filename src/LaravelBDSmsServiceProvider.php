@@ -49,5 +49,8 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/Config/sms.php' => config_path('sms.php'),
         ]);
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
     }
 }
