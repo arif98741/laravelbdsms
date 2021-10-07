@@ -21,8 +21,8 @@ class AjuraTech extends AbstractProvider
     /**
      * Ajuratech constructor.
      * @param Sender $sender
-     * @version v1.0.33
-     * @since v1.0.33
+     * @version v1.0.34
+     * @since v1.0.34
      */
     public function __construct(Sender $sender)
     {
@@ -33,8 +33,8 @@ class AjuraTech extends AbstractProvider
      * Send Request To Api and Send Message
      * @return false|string
      * @throws GuzzleException
-     * @since v1.0.33
-     * @version v1.0.33
+     * @since v1.0.34
+     * @version v1.0.34
      */
     public function sendRequest()
     {
@@ -69,8 +69,8 @@ class AjuraTech extends AbstractProvider
 
     /**
      * @throws ParameterException
-     * @version v1.0.33
-     * @since v1.0.33
+     * @version v1.0.34
+     * @since v1.0.34
      */
     public function errorException()
     {
