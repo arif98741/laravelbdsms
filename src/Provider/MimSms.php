@@ -18,7 +18,7 @@ use Xenon\LaravelBDSms\Sender;
 
 /**
  * Class MimSms
- * @package Xenon\LaravelBDSms\Provider
+ * @package Xenon\LaravelBDSmsLog\Provider
  * @version v1.0.20
  * @since v1.0.20
  */

@@ -6,7 +6,7 @@
 |
 | This file is key value a pair of providers. Individual provider has different types of
 | params and api request params. This file is generated after running command below from your terminal.
-| php artisan vendor:publish --provider="Xenon\\LaravelBDSms\\LaravelBDSmsServiceProvider"
+| php artisan vendor:publish --provider="Xenon\\LaravelBDSmsLog\\LaravelBDSmsServiceProvider"
 | .Here All data ar dynamically coming from .env file.
 | Be sure to confirm to select default provider during use SMS facade, otherwise you can manually send sms
 | by selecting provider.
