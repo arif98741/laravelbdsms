@@ -13,6 +13,8 @@ namespace Xenon\LaravelBDSms;
 
 
 use Exception;
+use Illuminate\Support\Facades\Config;
+use Xenon\LaravelBDSms\Facades\Logger;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Handler\ValidationException;
@@ -126,7 +128,31 @@ class Sender
             throw new ParameterException('Message should not be empty');
 
         $this->provider->errorException();
-        return $this->provider->sendRequest();
+
+        $config = Config::get('sms');
+
+        $response = $this->provider->sendRequest();
+        
+        if (is_object($response)) {
+            $object = json_decode($response->getContent());
+        } else {
+            $object = json_decode($response);
+        }
+
+        $responseData = $object->response;
+
+        Logger::createLog([
+            'provider' => get_class($this->provider),
+            'request_json' => json_encode([
+                'config' => $config['providers'][get_class($this->provider)],
+                'mobile' => $this->getMobile(),
+                'message' => $this->getMessage()
+            ])
+            ,
+            'response_json' => json_encode($responseData)
+        ]);
+
+        return $response;
     }
 
     /**

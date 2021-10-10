@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Facade;
 
 
 /**
- * @method static Xenon\LaravelBDSms\Log\Log createLog()
+ * @method static Xenon\LaravelBDSms\Log\Log createLog(array $data)
  * @method static Xenon\LaravelBDSms\Log\Log viewLastLog()
  * @method static Xenon\LaravelBDSms\Log\Log viewAllLog()
  * @method static Xenon\LaravelBDSms\Log\Log logByProvider()
@@ -24,6 +24,6 @@ class Logger extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'LaravelSmsLogger';
+        return 'LaravelBDSmsLogger';
     }
 }

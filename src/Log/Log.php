@@ -2,14 +2,16 @@
 
 namespace Xenon\LaravelBDSms\Log;
 
+use Xenon\LaravelBDSms\Models\LaravelBDSmsLog;
+
 class Log
 {
     /**
      * Add New Log to Model
      */
-    public function createLog()
+    public function createLog(array $data)
     {
-        return $this;
+        LaravelBDSmsLog::create($data);
         //todo:: crate log data in table
     }
 
