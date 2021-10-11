@@ -15,6 +15,7 @@
 */
 
 use Xenon\LaravelBDSms\Provider\Adn;
+use Xenon\LaravelBDSms\Provider\AjuraTech;
 use Xenon\LaravelBDSms\Provider\Alpha;
 use Xenon\LaravelBDSms\Provider\BDBulkSms;
 use Xenon\LaravelBDSms\Provider\BoomCast;
@@ -32,9 +33,16 @@ use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
-use Xenon\LaravelBDSms\Provider\AjuraTech;
 
 return [
+    /*
+     *-----------------------------------------------------------------------------------------------
+     | Sms Log will mainly save sms request, provider name, response in database table called lbs_log
+     | You Can change sms log to true or false according to your need. Default is true
+     |---------------------------------------------------------------------------------------------
+     */
+    'sms_log' => true,
+
     'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
     'providers' => [
         Adn::class => [
@@ -45,9 +53,9 @@ return [
             'message_type' => env('SMS_ADN_API_MESSAGE_TYPE', ''),
         ],
         AjuraTech::class => [
-            'apikey'=>env('SMS_AjuraTechReveSms_API_KEY', ''),
-            'secretkey'=>env('SMS_AjuraTechReveSms_API_SECRET_KEY', ''),
-            'callerID'=>env('SMS_AjuraTechReveSms_CALLER_ID', ''),
+            'apikey' => env('SMS_AjuraTechReveSms_API_KEY', ''),
+            'secretkey' => env('SMS_AjuraTechReveSms_API_SECRET_KEY', ''),
+            'callerID' => env('SMS_AjuraTechReveSms_CALLER_ID', ''),
         ],
         Alpha::class => [],
         BDBulkSms::class => [
