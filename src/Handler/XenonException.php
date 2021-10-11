@@ -13,7 +13,7 @@ namespace Xenon\LaravelBDSms\Handler;
 
 /**
  * Class XenonException
- * @package Xenon\LaravelBDSms\Handler
+ * @package Xenon\LaravelBDSmsLog\Handler
  * @version v1.0.10
  * @since v1.0.10
  * @deprecated

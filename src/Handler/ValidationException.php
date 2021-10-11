@@ -17,7 +17,7 @@ use Illuminate\Http\Response;
 
 /**
  * Class ParameterException
- * @package Xenon\LaravelBDSms\Handler
+ * @package Xenon\LaravelBDSmsLog\Handler
  * @version v1.0.20
  * @since v1.0.20
  */

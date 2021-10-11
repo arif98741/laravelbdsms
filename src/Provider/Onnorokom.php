@@ -18,7 +18,7 @@ use Xenon\LaravelBDSms\Sender;
 
 /**
  * Class Onnorokom
- * @package Xenon\LaravelBDSms\Provider
+ * @package Xenon\LaravelBDSmsLog\Provider
  */
 class Onnorokom extends AbstractProvider
 {
@@ -55,6 +55,8 @@ class Onnorokom extends AbstractProvider
             'campaignName' => $config['campaignName']
         );
         $smsResult = $soapClient->__call("OneToOne", array($paramArray));
+
+
         return $this->generateReport($smsResult, $data);
     }
 

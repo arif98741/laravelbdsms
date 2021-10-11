@@ -43,7 +43,7 @@ abstract class AbstractProvider implements ProviderRoadmap
         return response()->json([
             'status' => 'response',
             'response' => $result,
-            'provider' => self::class,
+            'provider' => get_class($this),
             'send_time' => date('Y-m-d H:i:s'),
             'mobile' => $data['number'],
             'message' => $data['message']
