@@ -132,27 +132,30 @@ class Sender
         $this->provider->errorException();
 
         $config = Config::get('sms');
-
         $response = $this->provider->sendRequest();
 
-        if (is_object($response)) {
-            $object = json_decode($response->getContent());
-        } else {
-            $object = json_decode($response);
+        if ($config['sms_log']) {
+
+
+            if (is_object($response)) {
+                $object = json_decode($response->getContent());
+            } else {
+                $object = json_decode($response);
+            }
+
+            $providerResponse = $object->response;
+
+            Logger::createLog([
+                'provider' => get_class($this->provider),
+                'request_json' => json_encode([
+                    'config' => $config['providers'][get_class($this->provider)],
+                    'mobile' => $this->getMobile(),
+                    'message' => $this->getMessage()
+                ])
+                ,
+                'response_json' => json_encode($providerResponse)
+            ]);
         }
-
-        $providerResponse = $object->response;
-
-        Logger::createLog([
-            'provider' => get_class($this->provider),
-            'request_json' => json_encode([
-                'config' => $config['providers'][get_class($this->provider)],
-                'mobile' => $this->getMobile(),
-                'message' => $this->getMessage()
-            ])
-            ,
-            'response_json' => json_encode($providerResponse)
-        ]);
 
         return $response;
     }
