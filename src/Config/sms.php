@@ -6,7 +6,7 @@
 |
 | This file is key value a pair of providers. Individual provider has different types of
 | params and api request params. This file is generated after running command below from your terminal.
-| php artisan vendor:publish --provider="Xenon\\LaravelBDSms\\LaravelBDSmsServiceProvider"
+| php artisan vendor:publish --provider="Xenon\\LaravelBDSmsLog\\LaravelBDSmsServiceProvider"
 | .Here All data ar dynamically coming from .env file.
 | Be sure to confirm to select default provider during use SMS facade, otherwise you can manually send sms
 | by selecting provider.
@@ -32,6 +32,7 @@ use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
+use Xenon\LaravelBDSms\Provider\AjuraTech;
 
 return [
     'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
@@ -42,6 +43,11 @@ return [
             'api_secret' => env('SMS_ADN_API_SECRET', ''),
             'request_type' => env('SMS_ADN_API_REQUEST_TYPE', ''),
             'message_type' => env('SMS_ADN_API_MESSAGE_TYPE', ''),
+        ],
+        AjuraTech::class => [
+            'apikey'=>env('SMS_AjuraTechReveSms_API_KEY', ''),
+            'secretkey'=>env('SMS_AjuraTechReveSms_API_SECRET_KEY', ''),
+            'callerID'=>env('SMS_AjuraTechReveSms_CALLER_ID', ''),
         ],
         Alpha::class => [],
         BDBulkSms::class => [
@@ -123,3 +129,4 @@ return [
         ],
     ]
 ];
+

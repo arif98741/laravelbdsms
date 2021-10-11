@@ -13,6 +13,7 @@ namespace Xenon\LaravelBDSms;
 
 
 use Exception;
+use Xenon\LaravelBDSms\Facades\Logger;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Handler\ValidationException;

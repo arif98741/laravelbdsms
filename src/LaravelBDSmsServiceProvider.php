@@ -12,6 +12,7 @@
 namespace Xenon\LaravelBDSms;
 
 use Illuminate\Support\ServiceProvider;
+use Xenon\LaravelBDSms\Log\Log;
 
 class LaravelBDSmsServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,10 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
             return new SMS($sender);
         });
 
+        $this->app->bind('LaravelBDSmsLogger', function () {
+            return new Log;
+        });
+
     }
 
     /**
@@ -50,7 +55,16 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
             __DIR__ . '/Config/sms.php' => config_path('sms.php'),
         ]);
 
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+        if ($this->app->runningInConsole())
+
+            if (!class_exists('CreateLaravelbdSmsTable')) {
+
+                $this->publishes([
+                    __DIR__ . '/Database/Migrations/create_laravelbd_sms_table.php.stub' => database_path('Migrations/' . date('Y_m_d_His', time()) . '_create_laravelbd_sms_table.php'),
+
+                ], 'migrations');
+            }
     }
+
 }

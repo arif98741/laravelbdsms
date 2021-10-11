@@ -19,7 +19,7 @@ use Xenon\LaravelBDSms\Sender;
 class Tense extends AbstractProvider
 {
     /**
-     * DianaHost constructor.
+     * Tense constructor.
      * @param Sender $sender
      * @since v1.0.25
      */

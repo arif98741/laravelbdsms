@@ -16,11 +16,13 @@ use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
-class Mobireach extends AbstractProvider
+class AjuraTech extends AbstractProvider
 {
     /**
-     * Mobireach constructor.
+     * Ajuratech constructor.
      * @param Sender $sender
+     * @version v1.0.34
+     * @since v1.0.34
      */
     public function __construct(Sender $sender)
     {
@@ -29,7 +31,10 @@ class Mobireach extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @return false|string
      * @throws GuzzleException
+     * @since v1.0.34
+     * @version v1.0.34
      */
     public function sendRequest()
     {
@@ -37,24 +42,22 @@ class Mobireach extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-
-
         $client = new Client([
-            'base_uri' => 'https://api.mobireach.com.bd/SendTextMessage',
+            'base_uri' => 'https://smpp.ajuratech.com:7790/sendtext?json',
             'timeout' => 10.0,
+            'verify' => false
         ]);
 
         $response = $client->request('GET', '', [
             'query' => [
-                'Username' => $config['Username'],
-                'Password' => $config['Password'],
-                'From' => $config['From'],
-                'To' => $number,
-                'Message' => $text,
-            ],
-            'verify' => false
-        ]);
 
+                'apikey' => $config['apikey'],
+                'secretkey' => $config['secretkey'],
+                'callerID' => $config['callerID'],
+                'toUser' => $number,
+                'messageContent' => $text,
+            ]
+        ]);
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
@@ -66,21 +69,19 @@ class Mobireach extends AbstractProvider
 
     /**
      * @throws ParameterException
+     * @version v1.0.34
+     * @since v1.0.34
      */
     public function errorException()
     {
-        if (!array_key_exists('Username', $this->senderObject->getConfig())) {
-            throw new ParameterException('Username is absent in configuration');
+        if (!array_key_exists('apikey', $this->senderObject->getConfig())) {
+            throw new ParameterException('apikey is absent in configuration');
         }
-
-        if (!array_key_exists('Password', $this->senderObject->getConfig())) {
-            throw new ParameterException('Password is absent in configuration');
+        if (!array_key_exists('secretkey', $this->senderObject->getConfig())) {
+            throw new ParameterException('secretkey is absent in configuration');
         }
-
-        if (!array_key_exists('From', $this->senderObject->getConfig())) {
-            throw new ParameterException('From is absent in configuration');
+        if (!array_key_exists('callerID', $this->senderObject->getConfig())) {
+            throw new ParameterException('callerID is absent in configuration');
         }
-
     }
-
 }

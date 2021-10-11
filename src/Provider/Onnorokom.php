@@ -18,7 +18,7 @@ use Xenon\LaravelBDSms\Sender;
 
 /**
  * Class Onnorokom
- * @package Xenon\LaravelBDSms\Provider
+ * @package Xenon\LaravelBDSmsLog\Provider
  */
 class Onnorokom extends AbstractProvider
 {
