@@ -13,9 +13,7 @@ namespace Xenon\LaravelBDSms;
 
 
 use Exception;
-
 use Illuminate\Support\Facades\Config;
-
 use Xenon\LaravelBDSms\Facades\Logger;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
@@ -133,29 +131,7 @@ class Sender
 
         $config = Config::get('sms');
         $response = $this->provider->sendRequest();
-
-        if ($config['sms_log']) {
-
-
-            if (is_object($response)) {
-                $object = json_decode($response->getContent());
-            } else {
-                $object = json_decode($response);
-            }
-
-            $providerResponse = $object->response;
-
-            Logger::createLog([
-                'provider' => get_class($this->provider),
-                'request_json' => json_encode([
-                    'config' => $config['providers'][get_class($this->provider)],
-                    'mobile' => $this->getMobile(),
-                    'message' => $this->getMessage()
-                ])
-                ,
-                'response_json' => json_encode($providerResponse)
-            ]);
-        }
+        $this->logGenerate($config, $response);
 
         return $response;
     }
@@ -234,6 +210,36 @@ class Sender
 
         $this->provider = new $ProviderClass($this);
         return $this;
+    }
+
+    /**
+     * @param $config
+     * @param $response
+     */
+    private function logGenerate($config, $response): void
+    {
+        if ($config['sms_log']) {
+
+
+            if (is_object($response)) {
+                $object = json_decode($response->getContent());
+            } else {
+                $object = json_decode($response);
+            }
+
+            $providerResponse = $object->response;
+
+            Logger::createLog([
+                'provider' => get_class($this->provider),
+                'request_json' => json_encode([
+                    'config' => $config['providers'][get_class($this->provider)],
+                    'mobile' => $this->getMobile(),
+                    'message' => $this->getMessage()
+                ])
+                ,
+                'response_json' => json_encode($providerResponse)
+            ]);
+        }
     }
 
 }

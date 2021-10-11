@@ -2,8 +2,12 @@
 
 namespace Xenon\LaravelBDSms\Log;
 
+use Illuminate\Support\Facades\DB;
 use Xenon\LaravelBDSms\Models\LaravelBDSmsLog;
 
+/**
+ *
+ */
 class Log
 {
     /**
@@ -12,48 +16,74 @@ class Log
     public function createLog(array $data)
     {
         LaravelBDSmsLog::create($data);
-        //todo:: crate log data in table
     }
 
+    /**
+     * @return mixed
+     */
     public function viewLastLog()
     {
-        //todo:: view last log
+        return LaravelBDSmsLog::orderBy('id', 'desc')->first();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|LaravelBDSmsLog[]
+     */
     public function viewAllLog()
     {
-        //todo:: view all logs
+        return LaravelBDSmsLog::all();
     }
 
+    /**
+     *
+     */
     public function clearLog()
     {
-        //todo:: clear log table
-
+        DB::statement("SET foreign_key_checks=0");
+        Model::truncate();
+        DB::statement("SET foreign_key_checks=1");
     }
 
-    public function logByProvider()
+    /**
+     * @param $provider
+     * @return mixed
+     */
+    public function logByProvider($provider)
     {
-        //todo:: log for specific provider
+        return LaravelBDSmsLog::where('provider', $provider)->get();
     }
 
+    /**
+     * @return mixed
+     */
     public function logByDefaultProvider()
     {
-        //todo:: default provider log list
+        $provider = config('sms.default_provider');
+        return LaravelBDSmsLog::where('provider', config('sms.providers')[$provider])->get();
     }
 
+    /**
+     * @return mixed
+     */
     public function total()
     {
-        //todo:: count total log
+        return LaravelBDSmsLog::count();
     }
 
-    public function toArray()
+    /**
+     * @param $object
+     * @return mixed
+     */
+    public function toArray($object)
     {
-
+        return $object->toArray();
     }
 
+    /**
+     *
+     */
     public function toJson()
     {
 
     }
-
 }
