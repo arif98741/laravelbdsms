@@ -77,7 +77,6 @@ class Sender
      */
     public static function getInstance(): Sender
     {
-        $cls = static::class;
         if (!isset(self::$instance)) {
             self::$instance = new Sender();
         }
@@ -114,6 +113,7 @@ class Sender
      */
     public function send()
     {
+
         if (!is_array($this->getConfig())) {
             throw  new ParameterException('config must be an array');
         }

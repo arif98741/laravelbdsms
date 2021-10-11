@@ -11,8 +11,7 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -29,7 +28,6 @@ class Sms4BD extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
      */
     public function sendRequest()
     {
@@ -37,7 +35,7 @@ class Sms4BD extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $client = new Client([
+        /*$client = new Client([
             'base_uri' => 'http://www.sms4bd.net',
             'timeout' => 10.0,
         ]);
@@ -61,6 +59,19 @@ class Sms4BD extends AbstractProvider
             $report = $this->generateReport($e->getMessage(), $data);
             return $report->getContent();
         }
+*/
+
+        $query = [
+            'publickey' => $config['publickey'],
+            'privatekey' => $config['privatekey'],
+            'type' => $config['type'],
+            'sender' => $config['sender'],
+            'delay' => $config['delay'],
+            'receiver' => $number,
+            'message' => $text,
+        ];
+
+        $response = Request::get('http://www.sms4bd.net', $query, false);
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

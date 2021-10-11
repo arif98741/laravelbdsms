@@ -2,16 +2,19 @@
 
 namespace Xenon\LaravelBDSms\Log;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Xenon\LaravelBDSms\Models\LaravelBDSmsLog;
 
-/**
- *
- */
+
 class Log
 {
     /**
      * Add New Log to Model
+     * @since v1.0.35
+     * @version v1.0.35
      */
     public function createLog(array $data)
     {
@@ -19,7 +22,9 @@ class Log
     }
 
     /**
-     * @return mixed
+     * @return Model|\Illuminate\Database\Query\Builder|object|LaravelBDSmsLog|null
+     * @version v1.0.35
+     * @since v1.0.35
      */
     public function viewLastLog()
     {
@@ -27,7 +32,9 @@ class Log
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection|LaravelBDSmsLog[]
+     * @return Collection|LaravelBDSmsLog[]
+     * @since v1.0.35
+     * @version v1.0.35
      */
     public function viewAllLog()
     {
@@ -35,18 +42,21 @@ class Log
     }
 
     /**
-     *
+     * @since v1.0.35
+     * @version v1.0.35
      */
     public function clearLog()
     {
         DB::statement("SET foreign_key_checks=0");
-        Model::truncate();
+        LaravelBDSmsLog::truncate();
         DB::statement("SET foreign_key_checks=1");
     }
 
     /**
      * @param $provider
-     * @return mixed
+     * @return Builder[]|Collection|\Illuminate\Support\Collection|LaravelBDSmsLog[]
+     * @since v1.0.35
+     * @version v1.0.35
      */
     public function logByProvider($provider)
     {
@@ -54,7 +64,9 @@ class Log
     }
 
     /**
-     * @return mixed
+     * @return Builder[]|Collection|\Illuminate\Support\Collection|LaravelBDSmsLog[]
+     * @since v1.0.35
+     * @version v1.0.35
      */
     public function logByDefaultProvider()
     {
@@ -63,9 +75,11 @@ class Log
     }
 
     /**
-     * @return mixed
+     * @return int
+     * @since v1.0.35
+     * @version v1.0.35
      */
-    public function total()
+    public function total(): int
     {
         return LaravelBDSmsLog::count();
     }
@@ -73,6 +87,8 @@ class Log
     /**
      * @param $object
      * @return mixed
+     * @since v1.0.35
+     * @version v1.0.35
      */
     public function toArray($object)
     {
@@ -80,7 +96,8 @@ class Log
     }
 
     /**
-     *
+     * @since v1.0.35
+     * @version v1.0.35
      */
     public function toJson()
     {

@@ -11,8 +11,7 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -30,7 +29,6 @@ class Ssl extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
      */
     public function sendRequest()
     {
@@ -38,21 +36,16 @@ class Ssl extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $client = new Client([
-            'base_uri' => 'https://smsplus.sslwireless.com/api/v3/send-sms',
-            'timeout' => 10.0,
-            'verify' => false
-        ]);
+        $query = [
+            'api_token' => $config['api_token'],
+            'sid' => $config['sid'],
+            'csms_id' => $config['csms_id'],
+            'msisdn' => $mobile,
+            'sms' => $text,
+        ];
 
-        $response = $client->request('GET', '', [
-            'query' => [
-                'api_token' => $config['api_token'],
-                'sid' => $config['sid'],
-                'csms_id' => $config['csms_id'],
-                'msisdn' => $mobile,
-                'sms' => $text,
-            ]
-        ]);
+        $response = Request::get('https://smsplus.sslwireless.com/api/v3/send-sms', $query, false);
+
         $body = $response->getBody();
         $smsResult = $body->getContents();
         $data['number'] = $mobile;
@@ -67,7 +60,7 @@ class Ssl extends AbstractProvider
     public function errorException()
     {
         if (!array_key_exists('api_token', $this->senderObject->getConfig()))
-            throw new RenderException('apiToken key is absent in configuration');
+            throw new RenderException('api_token key is absent in configuration');
 
         if (!array_key_exists('sid', $this->senderObject->getConfig()))
             throw new RenderException('sid key is absent in configuration');

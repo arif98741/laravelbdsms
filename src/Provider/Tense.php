@@ -11,8 +11,7 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -30,7 +29,6 @@ class Tense extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
      * @since v1.0.25
      */
     public function sendRequest()
@@ -39,7 +37,7 @@ class Tense extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $client = new Client([
+        /*$client = new Client([
             'base_uri' => 'http://sms.tense.com.bd/api-sendsms',
             'timeout' => 10.0,
         ]);
@@ -53,7 +51,19 @@ class Tense extends AbstractProvider
                 'number' => $number,
                 'text' => $text,
             ]
-        ]);
+        ]);*/
+
+        $query = [
+            'user' => $config['user'],
+            'password' => $config['password'],
+            'campaign' => $config['campaign'],
+            'masking' => $config['masking'],
+            'number' => $number,
+            'text' => $text,
+        ];
+
+        $response = Request::get('http://sms.tense.com.bd/api-sendsms', $query, false);
+
         $body = $response->getBody();
         $smsResult = $body->getContents();
 

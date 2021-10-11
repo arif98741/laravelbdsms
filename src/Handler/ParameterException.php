@@ -13,7 +13,6 @@ namespace Xenon\LaravelBDSms\Handler;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 /**
  * Class ParameterException
@@ -38,7 +37,7 @@ class ParameterException extends \Exception
      * Render the exception into an HTTP response.
      *
      * @param Request $request
-     * @return Response
+     * @return void
      * @version v1.0.20
      * @since v1.0.20
      */

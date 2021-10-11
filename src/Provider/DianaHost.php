@@ -11,8 +11,7 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -29,7 +28,6 @@ class DianaHost extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
      */
     public function sendRequest()
     {
@@ -37,20 +35,17 @@ class DianaHost extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $client = new Client([
-            'base_uri' => 'http://esms.dianahost.com/smsapi',
-            'timeout' => 10.0,
-        ]);
+        //$requestUrl, array $query, bool $verify = false
+        $query = [
+            'api_key' => $config['api_key'],
+            'type' => $config['type'],
+            'senderid' => $config['senderid'],
+            'contacts' => $number,
+            'msg' => $text,
+        ];
 
-        $response = $client->request('GET', '', [
-            'query' => [
-                'api_key' => $config['api_key'],
-                'type' => $config['type'],
-                'senderid' => $config['senderid'],
-                'contacts' => $number,
-                'msg' => $text,
-            ]
-        ]);
+        $response = Request::get('http://esms.dianahost.com/smsapi', $query);
+
         $body = $response->getBody();
         $smsResult = $body->getContents();
 

@@ -31,6 +31,7 @@ class BoomCast extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
+
         $client = new Client();
         $response = $client->get($config['url'], [
             'query' => [

@@ -12,6 +12,8 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 
+use Illuminate\Http\JsonResponse;
+
 class DnsBd extends AbstractProvider
 {
 
@@ -30,14 +32,9 @@ class DnsBd extends AbstractProvider
         // TODO: Implement sendRequest() method.
     }
 
-    /**
-     * @param $result
-     * @param $data
-     * @return mixed
-     */
-    public function generateReport($result, $data)
+    public function generateReport(): JsonResponse
     {
-        // TODO: Implement generateReport() method.
+
     }
 
     /**

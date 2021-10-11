@@ -41,7 +41,7 @@ class Alpha implements ProviderRoadmap
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
-        $response = curl_exec($ch);
+        curl_exec($ch);
         curl_close($ch);
     }
 
@@ -49,7 +49,7 @@ class Alpha implements ProviderRoadmap
     /**
      * @param $result
      * @param $data
-     * @return mixed
+     * @return void
      */
     public function generateReport($result, $data)
     {
@@ -57,7 +57,7 @@ class Alpha implements ProviderRoadmap
     }
 
     /**
-     * @return mixed
+     * @return void
      */
     public function errorException()
     {

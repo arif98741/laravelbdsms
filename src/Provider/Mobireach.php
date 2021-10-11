@@ -11,8 +11,7 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -29,7 +28,6 @@ class Mobireach extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
      */
     public function sendRequest()
     {
@@ -39,7 +37,7 @@ class Mobireach extends AbstractProvider
 
 
 
-        $client = new Client([
+        /*$client = new Client([
             'base_uri' => 'https://api.mobireach.com.bd/SendTextMessage',
             'timeout' => 10.0,
         ]);
@@ -53,7 +51,17 @@ class Mobireach extends AbstractProvider
                 'Message' => $text,
             ],
             'verify' => false
-        ]);
+        ]);*/
+
+        $query = [
+            'Username' => $config['Username'],
+            'Password' => $config['Password'],
+            'From' => $config['From'],
+            'To' => $number,
+            'Message' => $text,
+        ];
+
+        $response = Request::get('https://api.mobireach.com.bd/SendTextMessage', $query, false);
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

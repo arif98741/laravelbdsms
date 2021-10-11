@@ -25,7 +25,6 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         $this->app->bind('LaravelBDSms', function () {
 
             $provider = config('sms.default_provider');
@@ -38,6 +37,10 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
 
         $this->app->bind('LaravelBDSmsLogger', function () {
             return new Log;
+        });
+
+        $this->app->bind('LaravelBDSmsRequest', function () {
+            return new Request;
         });
 
     }

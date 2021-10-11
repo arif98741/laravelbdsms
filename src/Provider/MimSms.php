@@ -11,8 +11,7 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -37,7 +36,6 @@ class MimSms extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
      * @version v1.0.20
      * @since v1.0.20
      */
@@ -47,21 +45,16 @@ class MimSms extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $client = new Client([
-            'base_uri' => 'https://esms.mimsms.com/smsapi',
-            'timeout' => 10.0,
-            'verify' => false
-        ]);
+        $query = [
+            'api_key' => $config['api_key'],
+            'type' => $config['type'],
+            'senderid' => $config['senderid'],
+            'contacts' => $number,
+            'msg' => $text,
+        ];
 
-        $response = $client->request('GET', '', [
-            'query' => [
-                'api_key' => $config['api_key'],
-                'type' => $config['type'],
-                'senderid' => $config['senderid'],
-                'contacts' => $number,
-                'msg' => $text,
-            ]
-        ]);
+        $response = Request::get('https://esms.mimsms.com/smsapi', $query, false);
+
         $body = $response->getBody();
         $smsResult = $body->getContents();
 

@@ -12,8 +12,7 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -30,7 +29,6 @@ class BDBulkSms extends AbstractProvider
 
     /**
      * Send Request TO Server
-     * @throws GuzzleException
      */
     public function sendRequest()
     {
@@ -38,18 +36,13 @@ class BDBulkSms extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $client = new Client([
-            'base_uri' => 'http://api.greenweb.com.bd/api2.php',
-            'timeout' => 10.0,
-        ]);
+        $query = [
+            'token' => $config['token'],
+            'to' => $number,
+            'message' => $text,
+        ];
+        $response = Request::get('http://api.greenweb.com.bd/api2.php', $query);
 
-        $response = $client->request('GET', '', [
-            'query' => [
-                'token' => $config['token'],
-                'to' => $number,
-                'message' => $text,
-            ]
-        ]);
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
