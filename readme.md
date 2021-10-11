@@ -25,8 +25,8 @@ php artisan vendor:publish
 
 ### Step 3:
 
-Select Vendor From Console
-<img src=""
+Select Vendor From Console <br>
+<img src="https://raw.githubusercontent.com/arif98741/laravelbdsms/master/img/installation.png" style="width: 60%; height: 60%">
 
 ### Step 4:
 
