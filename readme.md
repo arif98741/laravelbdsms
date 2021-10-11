@@ -30,7 +30,9 @@ Select Vendor From Console <br>
 
 ### Step 4:
 
+```
 php artisan config:cache && php artisan migrate
+```
 
 This will create a `sms.php` in the `config/` directory and also table in your database. Set your desired provider as `default_provider` and fill up the
 necessary environment variable of that provider.
