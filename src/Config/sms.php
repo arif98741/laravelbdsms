@@ -43,6 +43,11 @@ return [
      */
     'sms_log' => true,
 
+    /*
+     *-----------------------------------------------------------------------------------------------
+     | Default provider will be used during usage of facade ; SMS
+     |---------------------------------------------------------------------------------------------
+     */
     'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
     'providers' => [
         Adn::class => [

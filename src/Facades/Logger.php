@@ -19,8 +19,8 @@ class Logger extends Facade
 {
     /**
      * @return string
-     * @version v1.0.32
-     * @since v1.0.31
+     * @version v1.0.35
+     * @since v1.0.35
      */
     protected static function getFacadeAccessor(): string
     {
