@@ -46,7 +46,7 @@ use Xenon\LaravelBDSms\Facades\SMS;
 SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
 </pre>
 
-or, with facade alias
+Or, with facade alias
 <pre>
 use LaravelBDSms;
 
