@@ -111,9 +111,9 @@ return [
             'type' => env('SMS_MIM_SMS_TYPE', ''),
         ],
         Mobireach::class => [
-            'username' => env('SMS_MOBIREACH_USERNAME', ''),
-            'password' => env('SMS_MOBIREACH_PASSWORD', ''),
-            'from' => env('SMS_MOBIREACH_FROM', ''),
+            'Username' => env('SMS_MOBIREACH_USERNAME', ''),
+            'Password' => env('SMS_MOBIREACH_PASSWORD', ''),
+            'From' => env('SMS_MOBIREACH_FROM', ''),
         ],
         Onnorokom::class => [
             'userName' => env('SMS_ONNOROKOM_USERNAME', ''),
