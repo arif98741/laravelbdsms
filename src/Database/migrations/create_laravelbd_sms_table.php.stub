@@ -18,7 +18,7 @@ class CreateLaravelbdSmsTable extends Migration
          * @table lbs_log
          */
         Schema::create('lbs_log', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->text('provider');
             $table->text('request_json');
             $table->text('response_json');

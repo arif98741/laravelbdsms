@@ -35,24 +35,6 @@ class Mobireach extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-
-
-        /*$client = new Client([
-            'base_uri' => 'https://api.mobireach.com.bd/SendTextMessage',
-            'timeout' => 10.0,
-        ]);
-
-        $response = $client->request('GET', '', [
-            'query' => [
-                'Username' => $config['Username'],
-                'Password' => $config['Password'],
-                'From' => $config['From'],
-                'To' => $number,
-                'Message' => $text,
-            ],
-            'verify' => false
-        ]);*/
-
         $query = [
             'Username' => $config['Username'],
             'Password' => $config['Password'],
