@@ -195,6 +195,7 @@ class Sender
      */
     public function setProvider($ProviderClass): Sender
     {
+
         try {
             if (!class_exists($ProviderClass)) {
                 throw new RenderException("Provider '$ProviderClass' not found");

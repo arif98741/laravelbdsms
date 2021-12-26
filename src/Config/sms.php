@@ -33,6 +33,7 @@ use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
+use Xenon\LaravelBDSms\Provider\TwentyFourSmsBD;
 
 return [
     /*
@@ -48,7 +49,7 @@ return [
      | Default provider will be used during usage of facade ; SMS
      |---------------------------------------------------------------------------------------------
      */
-    'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
+    'default_provider' => env('SMS_DEFAULT_PROVIDER', TwentyFourSmsBD::class),
     'providers' => [
         Adn::class => [
             'senderid' => env('SMS_ADN_SENDER_ID', ''),
@@ -140,6 +141,11 @@ return [
             'campaign' => env('SMS_TENSE_CAMPAIGN', ''),
             'masking' => env('SMS_TENSE_MASKING', ''),
         ],
+        TwentyFourSmsBD::class => [
+            'apiKey' => env('SMS_TWENTYFOURSMSBD_APIKEY', ''),
+            'sender_id' => env('SMS_TWENTYFOURSMSBD_SENDER_ID', ''),
+        ],
+
     ]
 ];
 
