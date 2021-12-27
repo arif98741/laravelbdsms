@@ -20,7 +20,7 @@ composer require xenon/laravelbdsms
 Then, publish the package
 
 ```
-php artisan vendor:publish
+php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider
 ```
 
 ### Step 3:
