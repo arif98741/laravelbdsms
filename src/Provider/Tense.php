@@ -37,22 +37,6 @@ class Tense extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        /*$client = new Client([
-            'base_uri' => 'http://sms.tense.com.bd/api-sendsms',
-            'timeout' => 10.0,
-        ]);
-
-        $response = $client->request('GET', '', [
-            'query' => [
-                'user' => $config['user'],
-                'password' => $config['password'],
-                'campaign' => $config['campaign'],
-                'masking' => $config['masking'],
-                'number' => $number,
-                'text' => $text,
-            ]
-        ]);*/
-
         $query = [
             'user' => $config['user'],
             'password' => $config['password'],

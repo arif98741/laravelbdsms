@@ -2,10 +2,9 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -31,41 +30,27 @@ class BoomCast extends AbstractProvider
      */
     public function sendRequest()
     {
-        $mobile = $this->senderObject->getMobile();
+        $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
+        $query = [
+            "masking" => $config['masking'],
+            "userName" => $config['username'],
+            "password" => $config['password'],
+            "MsgType" => "TEXT",
+            "receiver" => $number,
+            "message" => $text,
+        ];
 
-        $client = new Client([
-            'base_uri' => 'https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php',
-            'timeout' => 10.0,
-            'verify' => false,
-        ]);
+        $response = Request::get('https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php', $query, false);
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
 
-        try {
-            $response = $client->request('GET', '', [
-                'query' => [
-                    "masking" => $config['masking'],
-                    "userName" => $config['username'],
-                    "password" => $config['password'],
-                    "MsgType" => "TEXT",
-                    "receiver" => $mobile,
-                    "message" => $text,
-                ],
-                'timeout' => 60,
-                'read_timeout' => 60,
-                'connect_timeout' => 60
-            ]);
-        } catch (ClientException|GuzzleException $e) {
-            throw new RenderException($e->getMessage());
-        }
-
-
-        $response = $response->getBody()->getContents();
-
-        $data['number'] = $mobile;
+        $data['number'] = $number;
         $data['message'] = $text;
-        return $this->generateReport($response, $data);
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
     }
 
     /**

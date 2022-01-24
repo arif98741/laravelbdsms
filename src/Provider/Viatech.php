@@ -2,20 +2,19 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
-class BoomCast extends AbstractProvider
+class Viatech extends AbstractProvider
 {
     /**
-     * BoomCast Constructor
+     * Viatech Constructor
      * @param Sender $sender
-     * @version v1.0.32
-     * @since v1.0.31
+     * @version v1.0.38
+     * @since v1.0.38
      */
     public function __construct(Sender $sender)
     {
@@ -26,46 +25,31 @@ class BoomCast extends AbstractProvider
      * @return JsonResponse
      * @throws GuzzleException
      * @throws RenderException
-     * @version v1.0.37
-     * @since v1.0.31
+     * @version v1.0.38
+     * @since v1.0.38
      */
     public function sendRequest()
     {
-        $mobile = $this->senderObject->getMobile();
+        $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
+        $query = [
+            "api_key" => $config['api_key'],
+            "mask" => $config['mask'],
+            "recipient" => $number,
+            "message" => $text,
+        ];
 
-        $client = new Client([
-            'base_uri' => 'https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php',
-            'timeout' => 10.0,
-            'verify' => false,
-        ]);
+        $response = Request::get('http://masking.viatech.com.bd/smsnet/bulk/api', $query, false);
 
-        try {
-            $response = $client->request('GET', '', [
-                'query' => [
-                    "masking" => $config['masking'],
-                    "userName" => $config['username'],
-                    "password" => $config['password'],
-                    "MsgType" => "TEXT",
-                    "receiver" => $mobile,
-                    "message" => $text,
-                ],
-                'timeout' => 60,
-                'read_timeout' => 60,
-                'connect_timeout' => 60
-            ]);
-        } catch (ClientException|GuzzleException $e) {
-            throw new RenderException($e->getMessage());
-        }
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
 
-
-        $response = $response->getBody()->getContents();
-
-        $data['number'] = $mobile;
+        $data['number'] = $number;
         $data['message'] = $text;
-        return $this->generateReport($response, $data);
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
     }
 
     /**
@@ -76,15 +60,11 @@ class BoomCast extends AbstractProvider
     public function errorException()
     {
         $config = $this->senderObject->getConfig();
+        if (!array_key_exists('api_key', $config))
+            throw new RenderException('api_key key is absent in configuration');
 
+        if (!array_key_exists('mask', $config))
+            throw new RenderException('mask key is absent in configuration');
 
-        if (!array_key_exists('masking', $config))
-            throw new RenderException('masking key is absent in configuration');
-
-        if (!array_key_exists('username', $config))
-            throw new RenderException('username key is absent in configuration');
-
-        if (!array_key_exists('password', $config))
-            throw new RenderException('password key is absent in configuration');
     }
 }
