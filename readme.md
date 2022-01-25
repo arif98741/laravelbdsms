@@ -155,6 +155,7 @@ array:6 [▼
 * Infobip
 * MDLSMS
 * Metronet
+* Mimsms
 * Mobireach
 * OnnoRokomSMS
 * SSLSms
