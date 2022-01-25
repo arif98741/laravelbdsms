@@ -48,8 +48,8 @@ class BDBulkSms extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        return $this->generateReport($smsResult, $data);
-
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
 
     }
 

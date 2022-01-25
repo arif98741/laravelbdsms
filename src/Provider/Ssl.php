@@ -50,7 +50,8 @@ class Ssl extends AbstractProvider
         $smsResult = $body->getContents();
         $data['number'] = $mobile;
         $data['message'] = $text;
-        return $this->generateReport($smsResult, $data);
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
     }
 
     /**

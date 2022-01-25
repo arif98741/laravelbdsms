@@ -60,11 +60,13 @@ class Infobip extends AbstractProvider
             ]
         ]);
 
-        $response = $response->getBody()->getContents();
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
 
         $data['number'] = $mobile;
         $data['message'] = $text;
-        return $this->generateReport($response, $data);
+        $report = $this->generateReport($smsResult, $data);
+        return $report->getContent();
     }
 
     /**
