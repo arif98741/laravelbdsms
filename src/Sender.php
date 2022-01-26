@@ -121,9 +121,7 @@ class Sender
         if (Helper::numberValidation($this->getMobile()) == false) {
             throw new ValidationException('Invalid Mobile Number');
         }
-        if (strlen($this->getMobile()) > 11 || strlen($this->getMobile()) < 11) {
-            throw new ParameterException('Invalid mobile number. It should be 11 digit');
-        }
+       
         if (empty($this->getMessage()))
             throw new ParameterException('Message should not be empty');
 
