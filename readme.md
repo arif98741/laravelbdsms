@@ -147,6 +147,7 @@ array:6 [▼
 #### Currently Supported SMS Gateways
 
 * AjuraTech
+* Adn
 * BDBulkSMS
 * BoomCast
 * BulkSMSBD
