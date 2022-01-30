@@ -17,6 +17,7 @@
 use Xenon\LaravelBDSms\Provider\Adn;
 use Xenon\LaravelBDSms\Provider\AjuraTech;
 use Xenon\LaravelBDSms\Provider\Alpha;
+use Xenon\LaravelBDSms\Provider\Banglalink;
 use Xenon\LaravelBDSms\Provider\BDBulkSms;
 use Xenon\LaravelBDSms\Provider\BoomCast;
 use Xenon\LaravelBDSms\Provider\BulkSmsBD;
@@ -65,6 +66,11 @@ return [
             'callerID' => env('SMS_AjuraTechReveSms_CALLER_ID', ''),
         ],
         Alpha::class => [],
+        Banglalink::class => [
+            'userID' => env('SMS_BANGLALINK_USERID', ''),
+            'passwd' => env('SMS_BANGLALINK_PASSWD', ''),
+            'sender' => env('SMS_BANGLALINK_SENDER', ''),
+        ],
         BDBulkSms::class => [
             'token' => env('SMS_BD_BULK_SMS_TOKEN', ''),
         ],

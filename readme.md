@@ -148,6 +148,7 @@ array:6 [▼
 
 * AjuraTech
 * Adn
+* Banglalink
 * BDBulkSMS
 * BoomCast
 * BulkSMSBD
