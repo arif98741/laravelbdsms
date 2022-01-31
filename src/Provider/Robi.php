@@ -12,8 +12,13 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
 class Robi extends AbstractProvider
@@ -30,6 +35,7 @@ class Robi extends AbstractProvider
     /**
      * Send Request To Api and Send Message
      * @throws GuzzleException
+     * @throws RenderException
      */
     public function sendRequest()
     {
@@ -47,17 +53,20 @@ class Robi extends AbstractProvider
          * SendTextMessage
          * SendTextMultiMessage
          */
-
-        $response = $client->request('POST', '', [
-            'form_params' => [
-                'username' => $config['username'],
-                'password' => $config['password'],
-                'To' => $number,
-                'Message' => $text,
-            ]
-        ]);
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
+        try {
+            $response = $client->request('POST', '', [
+                'form_params' => [
+                    'username' => $config['username'],
+                    'password' => $config['password'],
+                    'To' => $number,
+                    'Message' => $text,
+                ]
+            ]);
+            $body = $response->getBody();
+            $smsResult = $body->getContents();
+        } catch (ConnectException|ClientException|RequestException $e) {
+            throw new RenderException($e->getMessage());
+        }
 
         $data['number'] = $number;
         $data['message'] = $text;
