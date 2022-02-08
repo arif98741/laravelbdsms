@@ -118,10 +118,6 @@ class Sender
             throw  new ParameterException('config must be an array');
         }
 
-        if (Helper::numberValidation($this->getMobile()) == false) {
-            throw new ValidationException('Invalid Mobile Number');
-        }
-       
         if (empty($this->getMessage()))
             throw new ParameterException('Message should not be empty');
 
