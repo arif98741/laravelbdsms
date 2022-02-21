@@ -46,8 +46,8 @@ class BulkSmsBD extends AbstractProvider
             'query' => [
                 'username' => $config['username'],
                 'password' => $config['password'],
-                'contacts' => $number,
-                'msg' => $text,
+                'number' => $number,
+                'message' => $text,
             ]
         ]);
         $body = $response->getBody();
