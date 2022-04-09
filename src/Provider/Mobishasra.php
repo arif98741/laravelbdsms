@@ -16,7 +16,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
-class BulkSmsBD extends AbstractProvider
+class Mobishasra extends AbstractProvider
 {
     /**
      * BulkSmsBD constructor.
@@ -38,20 +38,27 @@ class BulkSmsBD extends AbstractProvider
         $config = $this->senderObject->getConfig();
 
         $client = new Client([
-            'base_uri' => 'http://66.45.237.70/api.php',
+            'base_uri' => 'https://mshastra.com/sendurlcomma.aspx',
             'timeout' => 10.0,
         ]);
 
         $response = $client->request('GET', '', [
             'query' => [
-                'username' => $config['username'],
-                'password' => $config['password'],
-                'number' => $number,
-                'message' => $text,
-            ]
+                'user' => $config['user'],
+                'pwd' => $config['pwd'],
+                'senderid' => $config['senderid'],
+                'mobileno' => '88' . $number,
+                'msgtext' => $text,
+                'priority' => 'High',
+                'CountryCode' => 'ALL',
+            ],
+            'verify' => false
         ]);
+
         $body = $response->getBody();
+
         $smsResult = $body->getContents();
+
 
         $data['number'] = $number;
         $data['message'] = $text;
@@ -60,15 +67,19 @@ class BulkSmsBD extends AbstractProvider
     }
 
     /**
+     * @return void
      * @throws ParameterException
      */
     public function errorException()
     {
-        if (!array_key_exists('username', $this->senderObject->getConfig())) {
-            throw new ParameterException('username key is absent in configuration');
+        if (!array_key_exists('user', $this->senderObject->getConfig())) {
+            throw new ParameterException('user key is absent in configuration');
         }
-        if (!array_key_exists('password', $this->senderObject->getConfig())) {
-            throw new ParameterException('password key is absent in configuration');
+        if (!array_key_exists('pwd', $this->senderObject->getConfig())) {
+            throw new ParameterException('pwd key is absent in configuration');
+        }
+        if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
+            throw new ParameterException('senderid key is absent in configuration');
         }
     }
 }

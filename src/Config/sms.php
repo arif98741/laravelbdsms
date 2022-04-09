@@ -123,6 +123,11 @@ return [
             'Password' => env('SMS_MOBIREACH_PASSWORD', ''),
             'From' => env('SMS_MOBIREACH_FROM', ''),
         ],
+        Mobishasra::class => [
+            'user' => env('SMS_MOBISHASTRA_USERNAME', ''),
+            'pwd' => env('SMS_MOBISHASTRA_PASSWORD', ''),
+            'senderid' => env('SMS_MOBISHASTRA_SENDER_ID', ''),
+        ],
         Onnorokom::class => [
             'userName' => env('SMS_ONNOROKOM_USERNAME', ''),
             'userPassword' => env('SMS_ONNOROKOM_PASSWORD', ''),

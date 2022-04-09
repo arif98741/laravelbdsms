@@ -15,7 +15,6 @@ use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
-
 class Ssl extends AbstractProvider
 {
     /**
@@ -55,7 +54,6 @@ class Ssl extends AbstractProvider
     }
 
     /**
-     * @throws XenonException
      * @throws RenderException
      */
     public function errorException()
