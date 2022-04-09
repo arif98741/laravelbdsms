@@ -30,6 +30,7 @@ use Xenon\LaravelBDSms\Provider\MDL;
 use Xenon\LaravelBDSms\Provider\Metronet;
 use Xenon\LaravelBDSms\Provider\MimSms;
 use Xenon\LaravelBDSms\Provider\Mobireach;
+use Xenon\LaravelBDSms\Provider\Mobishasra;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\Ssl;
