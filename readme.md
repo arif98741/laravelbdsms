@@ -67,26 +67,6 @@ That should do it.
 Otherwise, if you want more control, you can use the underlying sender object. This will not touch any laravel facade or
 service provider.
 
-#### Sample Code DianaHost
-
-<pre>
-use Xenon\LaravelBDSms\Provider\DianaHost;
-use Xenon\LaravelBDSms\Sender;
-
-
-$sender = Sender::getInstance();
-$sender->setProvider(DianaHost::class); 
-$sender->setMobile('017XXYYZZAA');
-$sender->setMessage('helloooooooo boss!');
-$sender->setConfig(
-   [
-       'api_key' => 'your_api_goes_here',
-       'type' => 'text',
-       'senderid' => 'sender_id'
-   ]
-);
-$status = $sender->send();
-</pre>
 
 #### Sample Code SSLCommerz
 
@@ -153,6 +133,7 @@ array:6 [▼
 * BoomCast
 * BulkSMSBD
 * Dianahost
+* Dianasms
 * ElitBuzz
 * Infobip
 * MDLSMS

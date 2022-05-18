@@ -22,6 +22,7 @@ use Xenon\LaravelBDSms\Provider\BDBulkSms;
 use Xenon\LaravelBDSms\Provider\BoomCast;
 use Xenon\LaravelBDSms\Provider\BulkSmsBD;
 use Xenon\LaravelBDSms\Provider\DianaHost;
+use Xenon\LaravelBDSms\Provider\DianaSms;
 use Xenon\LaravelBDSms\Provider\DnsBd;
 use Xenon\LaravelBDSms\Provider\ElitBuzz;
 use Xenon\LaravelBDSms\Provider\GreenWeb;
@@ -45,7 +46,7 @@ return [
      | You Can change sms log to true or false according to your need. Default is true
      |---------------------------------------------------------------------------------------------
      */
-    'sms_log' => true,
+    'sms_log' => false,
 
     /*
      *-----------------------------------------------------------------------------------------------
@@ -89,6 +90,11 @@ return [
             'senderid' => env('SMS_DIANA_HOST_SENDER_ID', ''),
             'api_key' => env('SMS_DIANA_HOST_API_KEY', ''),
             'type' => env('SMS_DIANA_HOST_TYPE', ''),
+        ],
+        DianaSms::class => [
+            'SenderId' => env('SMS_DIANA_SMS_SENDER_ID', ''),
+            'ApiKey' => env('SMS_DIANA_SMS_API_KEY', ''),
+            'ClientId' => env('SMS_DIANA_SMS_CLIENT_ID', ''),
         ],
         DnsBd::class => [],
         ElitBuzz::class => [

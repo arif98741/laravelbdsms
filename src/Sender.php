@@ -230,8 +230,7 @@ class Sender
                     'config' => $config['providers'][get_class($this->provider)],
                     'mobile' => $this->getMobile(),
                     'message' => $this->getMessage()
-                ])
-                ,
+                ]),
                 'response_json' => json_encode($providerResponse)
             ]);
         }
