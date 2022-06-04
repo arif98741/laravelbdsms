@@ -16,7 +16,10 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: curl -sS https://getcomposer.org/installer | php7.4 -- --install-dir=/usr/local/bin --filename=composer
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+        run: |
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          apt-get install nginx software-properties-common  php7.4-fpm php7.4-redis unzip libpq-dev libzip-dev php7.4-common php7.4-mysql php7.4-xml php7.4-xmlrpc php7.4-curl php7.4-gd php7.4-imagick php7.4-cli php7.4-dev php7.4-imap php7.4-mbstring php7.4-opcache php7.4-soap php7.4-zip php7.4-intl php7.4-dom php7.4-pdo php7.4-bcmath php7.4-json -y
+
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate key
