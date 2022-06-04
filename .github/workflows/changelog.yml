@@ -1,7 +1,5 @@
 name: Generate changelog
 on:
-  push:
-    branches: [ master ]
   release:
     types: [created, edited]
 jobs:
