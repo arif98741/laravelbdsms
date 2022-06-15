@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.39.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.39.0) - 2022-06-15 18:57:00
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.38.5...v1.0.39.0
+
 ## [v1.0.38.5](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.38.5) - 2022-05-18 19:02:16
 
 ## What's Changed
