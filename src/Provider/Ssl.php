@@ -43,8 +43,14 @@ class Ssl extends AbstractProvider
             'sms' => $text,
         ];
 
-        // $response = Request::get('https://smsplus.sslwireless.com/api/v3/send-sms', $query, false);
-        $response = Request::post('https://smsplus.sslwireless.com/api/v3/send-sms', $query);
+        // $response = Request::get('https://smsplus.sslwireless.com/api/v3/send-sms', $query, false); //this for sending using get api.
+        if (is_array($mobile)) {
+
+            $response = Request::post('https://smsplus.sslwireless.com//api/v3/send-sms/bulk', $query);
+        } else {
+            $response = Request::post('https://smsplus.sslwireless.com/api/v3/send-sms', $query);
+
+        }
         $body = $response->getBody();
         $smsResult = $body->getContents();
         $data['number'] = $mobile;
