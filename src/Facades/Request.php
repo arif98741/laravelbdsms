@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static Xenon\LaravelBDSms\Request get($requestUrl, array $query, bool $verify = false, $timeout = 10.0)
+ * @method static Xenon\LaravelBDSms\Request post($requestUrl, array $query, bool $verify = false, $timeout = 10.0)
  * @see \Xenon\LaravelBDSms\Request
  */
 class Request extends Facade
