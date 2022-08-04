@@ -43,14 +43,19 @@ class Ssl extends AbstractProvider
             'sms' => $text,
         ];
 
-        $response = Request::get('https://smsplus.sslwireless.com/api/v3/send-sms', $query, false);
+        // $response = Request::get('https://smsplus.sslwireless.com/api/v3/send-sms', $query, false); //this for sending using get api.
+        if (is_array($mobile)) {
 
+            $response = Request::post('https://smsplus.sslwireless.com//api/v3/send-sms/bulk', $query);
+        } else {
+            $response = Request::post('https://smsplus.sslwireless.com/api/v3/send-sms', $query);
+
+        }
         $body = $response->getBody();
         $smsResult = $body->getContents();
         $data['number'] = $mobile;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**
@@ -58,14 +63,17 @@ class Ssl extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('api_token', $this->senderObject->getConfig()))
+        if (!array_key_exists('api_token', $this->senderObject->getConfig())) {
             throw new RenderException('api_token key is absent in configuration');
+        }
 
-        if (!array_key_exists('sid', $this->senderObject->getConfig()))
+        if (!array_key_exists('sid', $this->senderObject->getConfig())) {
             throw new RenderException('sid key is absent in configuration');
+        }
 
-        if (!array_key_exists('csms_id', $this->senderObject->getConfig()))
+        if (!array_key_exists('csms_id', $this->senderObject->getConfig())) {
             throw new RenderException('csms_id key is absent in configuration');
+        }
 
     }
 }
