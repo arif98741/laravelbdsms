@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [v1.0.41.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.41.0) - 2022-08-04 09:02:08
+
+*No description*
+
+## [v1.0.41-dev](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.41-dev) - 2022-08-04 06:38:19
+
+*No description*
+
 ## [v1.0.40.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.40.0) - 2022-06-16 09:06:52
 
 *No description*
