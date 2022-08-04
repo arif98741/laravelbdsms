@@ -156,3 +156,8 @@ do that....
 
 For clear documentation read this blog
 in  [Medium!](https://send-sms-using-laravelbdsms.medium.com/laravel-sms-gateway-package-for-bangladesh-e70af99f2060)
+
+Special thanks to <br>
+[tusharkhan](https://github.com/tusharkhan) <br>
+[tusher9352](https://github.com/tusher9352)
+
