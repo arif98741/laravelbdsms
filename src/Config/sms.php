@@ -20,6 +20,7 @@ use Xenon\LaravelBDSms\Provider\Alpha;
 use Xenon\LaravelBDSms\Provider\Banglalink;
 use Xenon\LaravelBDSms\Provider\BDBulkSms;
 use Xenon\LaravelBDSms\Provider\BoomCast;
+use Xenon\LaravelBDSms\Provider\Brilliant;
 use Xenon\LaravelBDSms\Provider\BulkSmsBD;
 use Xenon\LaravelBDSms\Provider\DianaHost;
 use Xenon\LaravelBDSms\Provider\DianaSms;
@@ -82,6 +83,11 @@ return [
             'username' => env('SMS_BOOM_CAST_USERNAME', ''),
             'password' => env('SMS_BOOM_CAST_PASSWORD', ''),
             'masking' => env('SMS_BOOM_CAST_MASKING', ''),
+        ],
+        Brilliant::class => [
+            'SenderId' => env('SMS_BRILLIANT_SENDER_ID', ''),
+            'ApiKey' => env('SMS_BRILLIANT_API_KEY', ''),
+            'ClientId' => env('SMS_BRILLIANT_CLIENT_ID', ''),
         ],
         BulkSmsBD::class => [
             'username' => env('SMS_BULK_SMS_BD_USERNAME', ''),
