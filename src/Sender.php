@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\Config;
 use Xenon\LaravelBDSms\Facades\Logger;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Handler\ValidationException;
-use Xenon\LaravelBDSms\Helper\Helper;
 use Xenon\LaravelBDSms\Provider\AbstractProvider;
 
 class Sender
@@ -108,7 +106,7 @@ class Sender
     /**
      * Send Message Finally
      * @throws ParameterException
-     * @throws ValidationException
+     * @throws \JsonException
      * @since v1.0.5
      */
     public function send()
@@ -118,8 +116,9 @@ class Sender
             throw  new ParameterException('config must be an array');
         }
 
-        if (empty($this->getMessage()))
+        if (empty($this->getMessage())) {
             throw new ParameterException('Message should not be empty');
+        }
 
         $this->provider->errorException();
 
@@ -198,9 +197,9 @@ class Sender
             if (!is_subclass_of($ProviderClass, AbstractProvider::class)) {
                 throw new RenderException("Provider '$ProviderClass' is not a " . AbstractProvider::class);
             }
-        } catch (XenonException $exception) {
+        } catch (RenderException $exception) {
 
-            $exception->showException($ProviderClass);
+            throw new RenderException($exception->getMessage());
         }
 
         $this->provider = new $ProviderClass($this);
@@ -210,6 +209,7 @@ class Sender
     /**
      * @param $config
      * @param $response
+     * @throws \JsonException
      */
     private function logGenerate($config, $response): void
     {
@@ -230,8 +230,8 @@ class Sender
                     'config' => $config['providers'][get_class($this->provider)],
                     'mobile' => $this->getMobile(),
                     'message' => $this->getMessage()
-                ]),
-                'response_json' => json_encode($providerResponse)
+                ], JSON_THROW_ON_ERROR),
+                'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
             ]);
         }
     }
