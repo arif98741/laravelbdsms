@@ -44,6 +44,8 @@ Simply use the facade
 use Xenon\LaravelBDSms\Facades\SMS;
 
 SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
+
+SMS::shoot(['017XXYYZZAA','018XXYYZZAA'], 'helloooooooo boss!'); //for Ssl Sms Gateway Only
 </pre>
 
 Or, with facade alias
@@ -77,6 +79,7 @@ use Xenon\LaravelBDSms\Sender;
 $sender = Sender::getInstance();
 $sender->setProvider(Ssl::class); 
 $sender->setMobile('017XXYYZZAA');
+//$sender->setMobile(['017XXYYZZAA','018XXYYZZAA']);
 $sender->setMessage('helloooooooo boss!');
 $sender->setConfig(
    [
@@ -153,3 +156,8 @@ do that....
 
 For clear documentation read this blog
 in  [Medium!](https://send-sms-using-laravelbdsms.medium.com/laravel-sms-gateway-package-for-bangladesh-e70af99f2060)
+
+Special thanks to <br>
+[tusharkhan](https://github.com/tusharkhan) <br>
+[tusher9352](https://github.com/tusher9352)
+

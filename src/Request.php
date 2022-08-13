@@ -14,6 +14,7 @@ class Request
     /**
      * @param false $verify
      * @throws GuzzleException
+     * @throws RenderException
      */
     public function get($requestUrl, array $query, bool $verify = false, $timeout = 10.0)
     {
@@ -22,10 +23,15 @@ class Request
             'timeout' => $timeout,
         ]);
 
-        return $client->request('GET', '', [
-            'query' => $query,
-            'verify' => $verify
-        ]);
+        try {
+            return $client->request('GET', '', [
+                'query' => $query,
+                'verify' => $verify
+            ]);
+        } catch (GuzzleException|ClientException $e) {
+            throw new RenderException($e->getMessage());
+        }
+
 
     }
 
@@ -40,7 +46,9 @@ class Request
         try {
 
             return $client->post($requestUrl, [
-                RequestOptions::JSON => $query
+                RequestOptions::JSON => $query,
+                'verify' => $verify,
+                'timeout' => $timeout,
             ]);
 
         } catch (GuzzleException|ClientException $e) {
