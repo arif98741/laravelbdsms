@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [v1.0.41.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.41.1) - 2022-08-13 14:37:38
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.41.0...v1.0.41.1
+
+### Bug Fixes
+
+- general:
+  - fix ssl vefication error from local environment ([d5a800e](https://github.com/arif98741/laravelbdsms/commit/d5a800e2f604b54a42bbdf66e107d203c2569a67))
+
 ## [v1.0.41.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.41.0) - 2022-08-04 09:02:08
 
 *No description*
