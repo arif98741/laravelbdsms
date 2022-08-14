@@ -42,15 +42,14 @@ class Metronet extends AbstractProvider
             'message' => $text,
         ];
 
-        $response = Request::get('202.164.208.212/smsnet/bulk/api', $query, false);
+        $response = Request::get('202.164.208.212/smsnet/bulk/api', $query);
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**

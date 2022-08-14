@@ -4,7 +4,6 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -37,7 +36,7 @@ class Infobip extends AbstractProvider
     }
 
     /**
-     * @return JsonResponse
+     * @return false|string
      * @throws GuzzleException
      * @version v1.0.32
      * @since v1.0.31
@@ -65,8 +64,7 @@ class Infobip extends AbstractProvider
 
         $data['number'] = $mobile;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**
@@ -78,16 +76,20 @@ class Infobip extends AbstractProvider
     {
         $config = $this->senderObject->getConfig();
 
-        if (!array_key_exists('base_url', $config))
+        if (!array_key_exists('base_url', $config)) {
             throw new RenderException('base_url key is absent in configuration');
+        }
 
-        if (!array_key_exists('from', $config))
+        if (!array_key_exists('from', $config)) {
             throw new RenderException('from key is absent in configuration');
+        }
 
-        if (!array_key_exists('user', $config))
+        if (!array_key_exists('user', $config)) {
             throw new RenderException('user key is absent in configuration');
+        }
 
-        if (!array_key_exists('password', $config))
+        if (!array_key_exists('password', $config)) {
             throw new RenderException('password key is absent in configuration');
+        }
     }
 }

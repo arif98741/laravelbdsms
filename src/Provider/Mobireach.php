@@ -43,15 +43,14 @@ class Mobireach extends AbstractProvider
             'Message' => $text,
         ];
 
-        $response = Request::get('https://api.mobireach.com.bd/SendTextMessage', $query, false);
+        $response = Request::get('https://api.mobireach.com.bd/SendTextMessage', $query);
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**

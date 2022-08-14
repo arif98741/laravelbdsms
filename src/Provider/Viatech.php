@@ -3,7 +3,6 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
@@ -22,7 +21,7 @@ class Viatech extends AbstractProvider
     }
 
     /**
-     * @return JsonResponse
+     * @return false|string
      * @throws GuzzleException
      * @throws RenderException
      * @version v1.0.38
@@ -41,15 +40,14 @@ class Viatech extends AbstractProvider
             "message" => $text,
         ];
 
-        $response = Request::get('http://masking.viatech.com.bd/smsnet/bulk/api', $query, false);
+        $response = Request::get('http://masking.viatech.com.bd/smsnet/bulk/api', $query);
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**
@@ -60,11 +58,13 @@ class Viatech extends AbstractProvider
     public function errorException()
     {
         $config = $this->senderObject->getConfig();
-        if (!array_key_exists('api_key', $config))
+        if (!array_key_exists('api_key', $config)) {
             throw new RenderException('api_key key is absent in configuration');
+        }
 
-        if (!array_key_exists('mask', $config))
+        if (!array_key_exists('mask', $config)) {
             throw new RenderException('mask key is absent in configuration');
+        }
 
     }
 }

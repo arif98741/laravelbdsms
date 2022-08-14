@@ -52,22 +52,19 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
      * @version v1.0.32
      * @since v1.0.31
      */
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
             __DIR__ . '/Config/sms.php' => config_path('sms.php'),
         ]);
 
+        if ($this->app->runningInConsole() && !class_exists('CreateLaravelbdSmsTable')) {
 
-        if ($this->app->runningInConsole())
+            $this->publishes([
+                __DIR__ . '/Database/migrations/create_laravelbd_sms_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_laravelbd_sms_table.php'),
 
-            if (!class_exists('CreateLaravelbdSmsTable')) {
-
-                $this->publishes([
-                    __DIR__ . '/Database/migrations/create_laravelbd_sms_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_laravelbd_sms_table.php'),
-
-                ], 'migrations');
-            }
+            ], 'migrations');
+        }
     }
 
 }

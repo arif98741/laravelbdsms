@@ -71,14 +71,13 @@ class Sms4BD extends AbstractProvider
             'message' => $text,
         ];
 
-        $response = Request::get('http://www.sms4bd.net', $query, false);
+        $response = Request::get('http://www.sms4bd.net', $query);
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
         $data['number'] = $number;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**

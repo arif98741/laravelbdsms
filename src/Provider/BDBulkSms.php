@@ -48,8 +48,7 @@ class BDBulkSms extends AbstractProvider
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
 
     }
 
@@ -62,9 +61,9 @@ class BDBulkSms extends AbstractProvider
     {
         if (is_array($mobile)) {
             return implode(',', $mobile);
-        } else {
-            return $mobile;
         }
+
+        return $mobile;
     }
 
     /**
@@ -73,7 +72,8 @@ class BDBulkSms extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('token', $this->senderObject->getConfig()))
+        if (!array_key_exists('token', $this->senderObject->getConfig())) {
             throw new ParameterException('token key is absent in configuration');
+        }
     }
 }

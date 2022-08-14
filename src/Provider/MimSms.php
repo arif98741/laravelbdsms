@@ -53,15 +53,14 @@ class MimSms extends AbstractProvider
             'msg' => $text,
         ];
 
-        $response = Request::get('https://esms.mimsms.com/smsapi', $query, false);
+        $response = Request::get('https://esms.mimsms.com/smsapi', $query);
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**

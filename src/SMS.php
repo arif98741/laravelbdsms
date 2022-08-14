@@ -32,7 +32,6 @@ class SMS
 
     /**
      * @throws Handler\ParameterException
-     * @throws Handler\ValidationException
      * @throws Exception
      * @version v1.0.32
      * @since v1.0.31
