@@ -76,7 +76,7 @@ class Sender
     public static function getInstance(): Sender
     {
         if (!isset(self::$instance)) {
-            self::$instance = new Sender();
+            self::$instance = new self();
         }
 
         return self::$instance;
@@ -209,6 +209,7 @@ class Sender
     /**
      * @param $config
      * @param $response
+     * @return void
      * @throws \JsonException
      */
     private function logGenerate($config, $response): void

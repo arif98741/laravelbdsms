@@ -43,15 +43,14 @@ class MDL extends AbstractProvider
             'msg' => $text,
         ];
 
-        $response = Request::get('http://premium.mdlsms.com/smsapi', $query, false);
+        $response = Request::get('http://premium.mdlsms.com/smsapi', $query);
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**

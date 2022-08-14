@@ -3,7 +3,6 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Http\JsonResponse;
 use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Sender;
@@ -22,7 +21,7 @@ class BoomCast extends AbstractProvider
     }
 
     /**
-     * @return JsonResponse
+     * @return false|string
      * @throws GuzzleException
      * @throws RenderException
      * @version v1.0.37
@@ -43,14 +42,13 @@ class BoomCast extends AbstractProvider
             "message" => $text,
         ];
 
-        $response = Request::get('https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php', $query, false);
+        $response = Request::get('https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php', $query);
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
         $data['number'] = $number;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**
@@ -62,14 +60,16 @@ class BoomCast extends AbstractProvider
     {
         $config = $this->senderObject->getConfig();
 
-
-        if (!array_key_exists('masking', $config))
+        if (!array_key_exists('masking', $config)) {
             throw new RenderException('masking key is absent in configuration');
+        }
 
-        if (!array_key_exists('username', $config))
+        if (!array_key_exists('username', $config)) {
             throw new RenderException('username key is absent in configuration');
+        }
 
-        if (!array_key_exists('password', $config))
+        if (!array_key_exists('password', $config)) {
             throw new RenderException('password key is absent in configuration');
+        }
     }
 }

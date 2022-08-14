@@ -50,8 +50,7 @@ class ElitBuzz extends AbstractProvider
 
         $data['number'] = $mobile;
         $data['message'] = $text;
-        $report = $this->generateReport($smsResult, $data);
-        return $report->getContent();
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
     /**
@@ -63,13 +62,16 @@ class ElitBuzz extends AbstractProvider
     {
         $config = $this->senderObject->getConfig();
 
-        if (!array_key_exists('url', $config))
+        if (!array_key_exists('url', $config)) {
             throw new RenderException('url key is absent in configuration');
+        }
 
-        if (!array_key_exists('api_key', $config))
+        if (!array_key_exists('api_key', $config)) {
             throw new RenderException('api_key key is absent in configuration');
+        }
 
-        if (!array_key_exists('senderid', $config))
+        if (!array_key_exists('senderid', $config)) {
             throw new RenderException('senderid key is absent in configuration');
+        }
     }
 }

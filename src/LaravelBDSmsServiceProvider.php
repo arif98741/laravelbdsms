@@ -52,7 +52,7 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
      * @version v1.0.32
      * @since v1.0.31
      */
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
             __DIR__ . '/Config/sms.php' => config_path('sms.php'),

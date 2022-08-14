@@ -65,23 +65,29 @@ class Onnorokom extends AbstractProvider
      */
     public function errorException()
     {
-        if (!extension_loaded('soap'))
+        if (!extension_loaded('soap')) {
             throw new RenderException('Soap client is not installed or loaded');
+        }
 
-        if (!array_key_exists('userName', $this->senderObject->getConfig()))
+        if (!array_key_exists('userName', $this->senderObject->getConfig())) {
             throw new RenderException('userName key is absent in configuration');
+        }
 
-        if (!array_key_exists('userPassword', $this->senderObject->getConfig()))
+        if (!array_key_exists('userPassword', $this->senderObject->getConfig())) {
             throw new RenderException('userPassword key is absent in configuration');
+        }
 
-        if (!array_key_exists('type', $this->senderObject->getConfig()))
+        if (!array_key_exists('type', $this->senderObject->getConfig())) {
             throw new RenderException('type key is absent in configuration');
+        }
 
-        if (!array_key_exists('maskName', $this->senderObject->getConfig()))
+        if (!array_key_exists('maskName', $this->senderObject->getConfig())) {
             throw new RenderException('maskName key is absent in configuration');
+        }
 
-        if (!array_key_exists('campaignName', $this->senderObject->getConfig()))
+        if (!array_key_exists('campaignName', $this->senderObject->getConfig())) {
             throw new RenderException('campaignName key is absent in configuration');
+        }
 
     }
 
