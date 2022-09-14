@@ -34,6 +34,7 @@ class Ssl extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $query = [
             'api_token' => $config['api_token'],

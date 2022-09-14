@@ -11,6 +11,7 @@ use Xenon\LaravelBDSms\Handler\RenderException;
 class Request
 {
 
+
     /**
      * @param false $verify
      * @throws GuzzleException

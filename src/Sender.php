@@ -43,6 +43,11 @@ class Sender
     private $method;
 
     /**
+     * @var bool
+     */
+    private bool $queue = false;
+
+    /**
      * @return mixed
      */
     public function getMethod()
@@ -76,10 +81,12 @@ class Sender
     public static function getInstance(): Sender
     {
         if (!isset(self::$instance)) {
-            self::$instance = new self();
+            self::$instance = new Sender;
         }
 
         return self::$instance;
+
+
     }
 
     /**
@@ -100,6 +107,27 @@ class Sender
     {
         $this->config = $config;
         return $this;
+    }
+
+    /**
+     * @param bool $queue
+     * @return Sender
+     * @since v1.0.41.6-dev
+     */
+    public function setQueue(bool $queue): Sender
+    {
+        $this->queue = $queue;
+        return $this;
+    }
+
+    /**
+     * @since v1.0.41.6-dev
+     * @return bool
+     */
+    public function getQueue()
+    {
+        return $this->queue;
+
     }
 
 

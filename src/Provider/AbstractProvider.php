@@ -16,6 +16,9 @@ use Illuminate\Http\JsonResponse;
 
 abstract class AbstractProvider implements ProviderRoadmap
 {
+    /**
+     * @var
+     */
     protected $senderObject;
 
     public function getData()
@@ -69,8 +72,8 @@ abstract class AbstractProvider implements ProviderRoadmap
      * Return Report As Json
      * @deprecated
      */
-    public function toJson()
+    public function toJson($data)
     {
-        return json_encode();
+        return json_encode($data);
     }
 }
