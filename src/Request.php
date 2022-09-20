@@ -10,7 +10,7 @@ use Xenon\LaravelBDSms\Handler\RenderException;
 
 class Request
 {
-
+    private static $queue = false;
 
     /**
      * @param false $verify
@@ -32,8 +32,6 @@ class Request
         } catch (GuzzleException|ClientException $e) {
             throw new RenderException($e->getMessage());
         }
-
-
     }
 
     /**
@@ -56,6 +54,23 @@ class Request
             throw new RenderException($e->getMessage());
         }
 
+    }
+
+    /**
+     * @return bool
+     */
+    public static function getQueue(): bool
+    {
+        return self::$queue;
+    }
+
+    /**
+     * @param bool $queue
+     * @return void
+     */
+    public static function setQueue(bool $queue)
+    {
+        self::$queue = $queue;
     }
 
 

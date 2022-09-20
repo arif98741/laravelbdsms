@@ -151,6 +151,7 @@ class Sender
         $this->provider->errorException();
 
         $config = Config::get('sms');
+
         $response = $this->provider->sendRequest();
         $this->logGenerate($config, $response);
 
