@@ -121,8 +121,8 @@ class Sender
     }
 
     /**
-     * @since v1.0.41.6-dev
      * @return bool
+     * @since v1.0.41.6-dev
      */
     public function getQueue()
     {
@@ -153,7 +153,8 @@ class Sender
         $config = Config::get('sms');
 
         $response = $this->provider->sendRequest();
-        $this->logGenerate($config, $response);
+        if (!$this->getQueue())
+            $this->logGenerate($config, $response);
 
         return $response;
     }
