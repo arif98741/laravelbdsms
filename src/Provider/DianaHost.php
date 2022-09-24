@@ -11,8 +11,8 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class DianaHost extends AbstractProvider
@@ -34,8 +34,8 @@ class DianaHost extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
-        //$requestUrl, array $query, bool $verify = false
         $query = [
             'api_key' => $config['api_key'],
             'type' => $config['type'],
@@ -44,7 +44,11 @@ class DianaHost extends AbstractProvider
             'msg' => $text,
         ];
 
-        $response = Request::get('http://esms.dianahost.com/smsapi', $query);
+
+        $requestObject = new Request('http://esms.dianahost.com/smsapi', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

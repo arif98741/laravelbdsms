@@ -11,8 +11,9 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class Esms extends AbstractProvider
@@ -28,12 +29,14 @@ class Esms extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @throws RenderException
      */
     public function sendRequest()
     {
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $query = [
             'sender_id' => $config['sender_id'],
@@ -42,10 +45,15 @@ class Esms extends AbstractProvider
         ];
 
         $headers = [
-            'Authorization' => 'Bearer '.$config['api_token'],
+            'Authorization' => 'Bearer ' . $config['api_token'],
             'Content-Type' => 'application/json'
         ];
-        $response = Request::post('https://login.esms.com.bd/api/v3/sms/send', $query,$headers);
+
+        $requestObject = new Request('https://login.esms.com.bd/api/v3/sms/send', $query, $queue);
+        $requestObject->setHeaders($headers)->setContentTypeJson(true);
+        $response = $requestObject->post();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

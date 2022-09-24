@@ -3,8 +3,8 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class BoomCast extends AbstractProvider
@@ -32,6 +32,7 @@ class BoomCast extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $query = [
             "masking" => $config['masking'],
@@ -42,7 +43,12 @@ class BoomCast extends AbstractProvider
             "message" => $text,
         ];
 
-        $response = Request::get('https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php', $query);
+        $requestObject = new Request('https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php', $query, $queue);
+
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
+
         $body = $response->getBody();
         $smsResult = $body->getContents();
 

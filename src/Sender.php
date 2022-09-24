@@ -43,6 +43,11 @@ class Sender
     private $method;
 
     /**
+     * @var bool
+     */
+    private bool $queue = false;
+
+    /**
      * @return mixed
      */
     public function getMethod()
@@ -76,10 +81,12 @@ class Sender
     public static function getInstance(): Sender
     {
         if (!isset(self::$instance)) {
-            self::$instance = new self();
+            self::$instance = new Sender;
         }
 
         return self::$instance;
+
+
     }
 
     /**
@@ -100,6 +107,27 @@ class Sender
     {
         $this->config = $config;
         return $this;
+    }
+
+    /**
+     * @param bool $queue
+     * @return Sender
+     * @since v1.0.41.6-dev
+     */
+    public function setQueue(bool $queue): Sender
+    {
+        $this->queue = $queue;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     * @since v1.0.41.6-dev
+     */
+    public function getQueue()
+    {
+        return $this->queue;
+
     }
 
 
@@ -123,8 +151,10 @@ class Sender
         $this->provider->errorException();
 
         $config = Config::get('sms');
+
         $response = $this->provider->sendRequest();
-        $this->logGenerate($config, $response);
+        if (!$this->getQueue())
+            $this->logGenerate($config, $response);
 
         return $response;
     }
@@ -188,7 +218,6 @@ class Sender
      */
     public function setProvider($ProviderClass): Sender
     {
-
         try {
             if (!class_exists($ProviderClass)) {
                 throw new RenderException("Provider '$ProviderClass' not found");
@@ -215,7 +244,6 @@ class Sender
     private function logGenerate($config, $response): void
     {
         if ($config['sms_log']) {
-
 
             if (is_object($response)) {
                 $object = json_decode($response->getContent());

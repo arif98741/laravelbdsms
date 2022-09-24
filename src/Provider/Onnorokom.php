@@ -33,6 +33,7 @@ class Onnorokom extends AbstractProvider
 
     /**
      * Send Request To Server
+     * @throws RenderException
      */
     public function sendRequest()
     {
@@ -40,6 +41,10 @@ class Onnorokom extends AbstractProvider
             'number' => $this->senderObject->getMobile(),
             'message' => $this->senderObject->getMessage()
         ];
+
+        if (!extension_loaded('soap')) {
+            throw new RenderException("Soap extension is not enabled in your server. Please install/enable it before using onnorokom sms client");
+        }
 
         $soapClient = new SoapClient("https://api2.onnorokomsms.com/sendsms.asmx?wsdl");
         $config = $this->senderObject->getConfig();

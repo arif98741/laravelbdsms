@@ -11,8 +11,8 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class MDL extends AbstractProvider
@@ -31,9 +31,10 @@ class MDL extends AbstractProvider
      */
     public function sendRequest()
     {
-        $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
+        $number = $this->senderObject->getMobile();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -43,7 +44,10 @@ class MDL extends AbstractProvider
             'msg' => $text,
         ];
 
-        $response = Request::get('http://premium.mdlsms.com/smsapi', $query);
+        $requestObject = new Request('http://premium.mdlsms.com/smsapi', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

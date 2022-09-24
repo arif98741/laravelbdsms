@@ -11,8 +11,8 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 /**
@@ -36,14 +36,18 @@ class MimSms extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @return bool|mixed|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Xenon\LaravelBDSms\Handler\RenderException
      * @version v1.0.20
      * @since v1.0.20
      */
     public function sendRequest()
     {
-        $number = $this->senderObject->getMobile();
-        $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
+        $text = $this->senderObject->getMessage();
+        $number = $this->senderObject->getMobile();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -53,7 +57,10 @@ class MimSms extends AbstractProvider
             'msg' => $text,
         ];
 
-        $response = Request::get('https://esms.mimsms.com/smsapi', $query);
+        $requestObject = new Request('https://esms.mimsms.com/smsapi', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

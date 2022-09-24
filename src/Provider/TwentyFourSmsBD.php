@@ -11,9 +11,9 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class TwentyFourSmsBD extends AbstractProvider
@@ -36,22 +36,18 @@ class TwentyFourSmsBD extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
+        $query = [
+            'apiKey' => $config['apiKey'],
+            'sender_id' => $config['sender_id'],
+            'mobileNo' => $number,
+            'message' => $text,
+        ];
 
-        $client = new Client([
-            'base_uri' => 'https://24smsbd.com/api/bulkSmsApi',
-            'timeout' => 10.0,
-            'verify' => false,
-        ]);
-
-
-        $response = $client->request('POST', '', [
-            'query' => [
-                'apiKey' => $config['apiKey'],
-                'sender_id' => $config['sender_id'],
-                'mobileNo' => $number,
-                'message' => $text,
-            ]
-        ]);
+        $requestObject = new Request('https://24smsbd.com/api/bulkSmsApi', $query, $queue);
+        $response = $requestObject->post();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

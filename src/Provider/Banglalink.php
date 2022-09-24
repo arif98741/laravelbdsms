@@ -11,9 +11,9 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class Banglalink extends AbstractProvider
@@ -36,22 +36,21 @@ class Banglalink extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
-        $client = new Client([
-            'base_uri' => 'https://vas.banglalink.net/sendSMS/sendSMS',
-            'timeout' => 10.0,
-            'verify' => false,
-        ]);
+        $formParams = [
+            'userID' => $config['userID'],
+            'passwd' => $config['passwd'],
+            'sender' => $config['sender'],
+            'msisdn' => $number,
+            'message' => $text,
+        ];
 
-        $response = $client->request('POST', '', [
-            'form_params' => [
-                'userID' => $config['userID'],
-                'passwd' => $config['passwd'],
-                'sender' => $config['sender'],
-                'msisdn' => $number,
-                'message' => $text,
-            ]
-        ]);
+        $requestObject = new Request('https://vas.banglalink.net/sendSMS/sendSMS', [], $queue);
+        $requestObject->setFormParams($formParams);
+        $response = $requestObject->post();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

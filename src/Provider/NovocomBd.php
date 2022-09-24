@@ -11,8 +11,8 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class NovocomBd extends AbstractProvider
@@ -28,12 +28,16 @@ class NovocomBd extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @return bool|mixed|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Xenon\LaravelBDSms\Handler\RenderException
      */
     public function sendRequest()
     {
-        $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
+        $number = $this->senderObject->getMobile();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $query = [
             'ApiKey' => $config['ApiKey'],
@@ -44,7 +48,10 @@ class NovocomBd extends AbstractProvider
             'Is_Unicode' => true,
         ];
 
-        $response = Request::get('https://sms.novocom-bd.com/api/v2/SendSMS', $query);
+        $requestObject = new Request('https://sms.novocom-bd.com/api/v2/SendSMS', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

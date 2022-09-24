@@ -11,9 +11,9 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class BulkSmsBD extends AbstractProvider
@@ -36,20 +36,20 @@ class BulkSmsBD extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
-        $client = new Client([
-            'base_uri' => 'http://66.45.237.70/api.php',
-            'timeout' => 10.0,
-        ]);
+        $query = [
+            'username' => $config['username'],
+            'password' => $config['password'],
+            'number' => $number,
+            'message' => $text,
+        ];
 
-        $response = $client->request('GET', '', [
-            'query' => [
-                'username' => $config['username'],
-                'password' => $config['password'],
-                'number' => $number,
-                'message' => $text,
-            ]
-        ]);
+        $requestObject = new Request('http://66.45.237.70/api.php', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
+
         $body = $response->getBody();
         $smsResult = $body->getContents();
 
