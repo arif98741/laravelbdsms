@@ -174,9 +174,9 @@ array:6 [▼
 | DianaHost    | api_key, type, senderid                              | Done   | -                      |
 | DianaSMS     | ApiKey, ClientId, SenderId                           | Done   | -                      |
 | Esms         | api_token, sender_id                                 | Done   | -                      |
-| ElitBuzz     | api_key, type, senderid                              | Done   | -                      |
+| ElitBuzz     | api_key, type, senderid                              | Done   | not tested yet in live                      |
 | Infobip      | user, password                                       | Done   | not tested yet in live |
-| MDL          | api_key, type, senderid                              | Done   | -                      |
+| MDL          | api_key, type, senderid                              | Done   | not tested yet in live                      |
 | Metronet     | api_key, mask                                        | Done   | -                      |
 | MimSms       | api_key, type, senderid                              | Done   | -                      |
 | Mobireach    | Username,Password, From                              | Done   | -                      |
