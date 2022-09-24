@@ -163,7 +163,7 @@ array:6 [▼
 
 ### Currently Supported SMS Gateways
 
-| Provider     | Credentials  Required     For Sending SMS            | Status | Comment                |
+| Provider     | Credentials  Required <br>    For Sending SMS        | Status | Comment                |
 |--------------|------------------------------------------------------|--------|------------------------|
 | AjuraTech    | apikey, secretkey , callerID                         | Done   | -                      |
 | Adn          | api_key, type, senderid                              | Done   | -                      |
