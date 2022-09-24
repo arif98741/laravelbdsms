@@ -53,11 +53,11 @@ class Onnorokom extends AbstractProvider
         $paramArray = array(
             'userName' => $config['userName'],
             'userPassword' => $config['userPassword'],
-            'mobileNumber' => $mobile,
-            'smsText' => $message,
             'type' => $config['type'],
             'maskName' => $config['maskName'],
-            'campaignName' => $config['campaignName']
+            'campaignName' => $config['campaignName'],
+            'mobileNumber' => $mobile,
+            'smsText' => $message,
         );
         $smsResult = $soapClient->__call("OneToOne", array($paramArray));
 
