@@ -13,6 +13,7 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Sender;
 
@@ -37,7 +38,7 @@ class Mobishasra extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
 
-        $client = new Client([
+        /*$client = new Client([
             'base_uri' => 'https://mshastra.com/sendurlcomma.aspx',
             'timeout' => 10.0,
         ]);
@@ -53,8 +54,18 @@ class Mobishasra extends AbstractProvider
                 'CountryCode' => 'ALL',
             ],
             'verify' => false
-        ]);
+        ]);*/
 
+        $query  = [
+            'user' => $config['user'],
+            'pwd' => $config['pwd'],
+            'senderid' => $config['senderid'],
+            'mobileno' => '88' . $number,
+            'msgtext' => $text,
+            'priority' => 'High',
+            'CountryCode' => 'ALL',
+        ];
+        $response = Request::get('https://mshastra.com/sendurlcomma.aspx', $query);
         $body = $response->getBody();
 
         $smsResult = $body->getContents();

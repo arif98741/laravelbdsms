@@ -16,7 +16,7 @@ class Request
      * @throws GuzzleException
      * @throws RenderException
      */
-    public function get($requestUrl, array $query, bool $verify = false, $timeout = 10.0)
+    public function get($requestUrl, array $query, array $headers = [], bool $verify = false, $timeout = 10.0)
     {
         $client = new Client([
             'base_uri' => $requestUrl,
@@ -24,10 +24,14 @@ class Request
         ]);
 
         try {
-            return $client->request('GET', '', [
-                'query' => $query,
-                'verify' => $verify
+
+            return $client->request('get', $requestUrl, [
+                'query'=> $query,
+                'headers' => $headers,
+                'verify' => $verify,
+                'timeout' => $timeout,
             ]);
+
         } catch (GuzzleException|ClientException $e) {
             throw new RenderException($e->getMessage());
         }
@@ -36,17 +40,22 @@ class Request
     }
 
     /**
-     * @param false $verify
+     * @param $requestUrl
+     * @param array $query
+     * @param array $headers
+     * @param bool $verify
+     * @param float $timeout
+     * @return \Psr\Http\Message\ResponseInterface
      * @throws RenderException
      */
-    public function post($requestUrl, array $query, bool $verify = false, $timeout = 10.0)
+    public function post($requestUrl, array $query, array $headers = [], bool $verify = false, float $timeout = 20.0)
     {
         $client = new Client();
-
         try {
 
-            return $client->post($requestUrl, [
+            return $client->request('post', $requestUrl, [
                 RequestOptions::JSON => $query,
+                'headers' => $headers,
                 'verify' => $verify,
                 'timeout' => $timeout,
             ]);

@@ -26,6 +26,7 @@ use Xenon\LaravelBDSms\Provider\DianaHost;
 use Xenon\LaravelBDSms\Provider\DianaSms;
 use Xenon\LaravelBDSms\Provider\DnsBd;
 use Xenon\LaravelBDSms\Provider\ElitBuzz;
+use Xenon\LaravelBDSms\Provider\Esms;
 use Xenon\LaravelBDSms\Provider\GreenWeb;
 use Xenon\LaravelBDSms\Provider\Infobip;
 use Xenon\LaravelBDSms\Provider\MDL;
@@ -108,6 +109,10 @@ return [
             'url' => env('SMS_ELITBUZZ_URL', ''),
             'senderid' => env('SMS_ELITBUZZ_SENDER_ID', ''),
             'api_key' => env('SMS_ELITBUZZ_API_KEY', ''),
+        ],
+        Esms::class => [
+            'sender_id' => env('SMS_ESMS_SENDER_ID', ''),
+            'api_token' => env('SMS_ESMS_API_TOKEN', ''),
         ],
         GreenWeb::class => [
             'token' => env('SMS_GREEN_WEB_TOKEN', ''),
