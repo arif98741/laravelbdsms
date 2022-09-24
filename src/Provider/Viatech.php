@@ -3,8 +3,8 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class Viatech extends AbstractProvider
@@ -32,6 +32,7 @@ class Viatech extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $query = [
             "api_key" => $config['api_key'],
@@ -40,7 +41,10 @@ class Viatech extends AbstractProvider
             "message" => $text,
         ];
 
-        $response = Request::get('http://masking.viatech.com.bd/smsnet/bulk/api', $query);
+        $requestObject = new Request('http://masking.viatech.com.bd/smsnet/bulk/api', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

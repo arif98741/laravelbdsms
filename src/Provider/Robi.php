@@ -12,12 +12,10 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class Robi extends AbstractProvider
@@ -41,6 +39,7 @@ class Robi extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $client = new Client([
             'base_uri' => 'https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage',
@@ -48,24 +47,21 @@ class Robi extends AbstractProvider
             'verify' => false,
         ]);
 
-        /**
-         * SendTextMessage
-         * SendTextMultiMessage
-         */
-        try {
-            $response = $client->request('POST', '', [
-                'form_params' => [
-                    'username' => $config['username'],
-                    'password' => $config['password'],
-                    'To' => $number,
-                    'Message' => $text,
-                ]
-            ]);
-            $body = $response->getBody();
-            $smsResult = $body->getContents();
-        } catch (ConnectException|ClientException|RequestException $e) {
-            throw new RenderException($e->getMessage());
-        }
+        $formParams = [
+            'username' => $config['username'],
+            'password' => $config['password'],
+            'To' => $number,
+            'Message' => $text,
+        ];
+
+        $requestObject = new Request('https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage', [], $queue);
+        $requestObject->setFormParams($formParams);
+        $response = $requestObject->post();
+        if ($queue)
+            return true;
+
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
 
         $data['number'] = $number;
         $data['message'] = $text;

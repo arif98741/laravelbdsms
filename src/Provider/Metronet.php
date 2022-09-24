@@ -11,8 +11,8 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class Metronet extends AbstractProvider
@@ -28,12 +28,16 @@ class Metronet extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @return bool|mixed|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Xenon\LaravelBDSms\Handler\RenderException
      */
     public function sendRequest()
     {
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -42,7 +46,10 @@ class Metronet extends AbstractProvider
             'message' => $text,
         ];
 
-        $response = Request::get('202.164.208.212/smsnet/bulk/api', $query);
+        $requestObject = new Request('202.164.208.212/smsnet/bulk/api', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

@@ -11,8 +11,8 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Facades\Request;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class Tense extends AbstractProvider
@@ -36,7 +36,7 @@ class Tense extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-
+        $queue = $this->senderObject->getQueue();
         $query = [
             'user' => $config['user'],
             'password' => $config['password'],
@@ -46,7 +46,10 @@ class Tense extends AbstractProvider
             'text' => $text,
         ];
 
-        $response = Request::get('http://sms.tense.com.bd/api-sendsms', $query, false);
+        $requestObject = new Request('http://sms.tense.com.bd/api-sendsms', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
@@ -62,7 +65,6 @@ class Tense extends AbstractProvider
      */
     public function errorException()
     {
-        //user=demo&password=demo123&campaign=SmsCamp&number=0171XXXXXXX&text=test messages
         if (!array_key_exists('user', $this->senderObject->getConfig())) {
             throw new ParameterException('user is absent in configuration');
         }

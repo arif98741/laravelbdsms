@@ -11,15 +11,15 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
-class Banglalink extends AbstractProvider
+class Esms extends AbstractProvider
 {
     /**
-     * Banglalink constructor.
+     * DianaHost constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -29,7 +29,7 @@ class Banglalink extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
+     * @throws RenderException
      */
     public function sendRequest()
     {
@@ -38,16 +38,19 @@ class Banglalink extends AbstractProvider
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
 
-        $formParams = [
-            'userID' => $config['userID'],
-            'passwd' => $config['passwd'],
-            'sender' => $config['sender'],
-            'msisdn' => $number,
+        $query = [
+            'sender_id' => $config['sender_id'],
+            'recipient' => $number,
             'message' => $text,
         ];
 
-        $requestObject = new Request('https://vas.banglalink.net/sendSMS/sendSMS', [], $queue);
-        $requestObject->setFormParams($formParams);
+        $headers = [
+            'Authorization' => 'Bearer ' . $config['api_token'],
+            'Content-Type' => 'application/json'
+        ];
+
+        $requestObject = new Request('https://login.esms.com.bd/api/v3/sms/send', $query, $queue);
+        $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue)
             return true;
@@ -65,16 +68,13 @@ class Banglalink extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('userID', $this->senderObject->getConfig())) {
-            throw new ParameterException('userID key is absent in configuration');
+        if (!array_key_exists('api_token', $this->senderObject->getConfig())) {
+            throw new ParameterException('api_token is absent in configuration');
         }
 
-        if (!array_key_exists('passwd', $this->senderObject->getConfig())) {
-            throw new ParameterException('passwd key is absent in configuration');
+        if (!array_key_exists('sender_id', $this->senderObject->getConfig())) {
+            throw new ParameterException('sender_id key is absent in configuration');
         }
-        if (!array_key_exists('sender', $this->senderObject->getConfig())) {
-            throw new ParameterException('sender key is absent in configuration');
-        }
-
     }
+
 }

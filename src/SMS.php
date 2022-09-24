@@ -42,4 +42,18 @@ class SMS
         $this->sender->setMessage($text);
         return $this->sender->send();
     }
+
+    /**
+     * @throws Handler\ParameterException
+     * @throws Exception
+     * @version v1.0.46-dev
+     * @since v1.0.46-dev
+     */
+    public function shootWithQueue(string $number, string $text)
+    {
+        $this->sender->setMobile($number);
+        $this->sender->setMessage($text);
+        $this->sender->setQueue(true);
+        return $this->sender->send();
+    }
 }

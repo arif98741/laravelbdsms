@@ -11,8 +11,10 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Facades\Request;
+use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class DianaSms extends AbstractProvider
@@ -28,12 +30,15 @@ class DianaSms extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
+     * @throws RenderException
+     * @throws GuzzleException
      */
     public function sendRequest()
     {
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
         $query = [
             'ApiKey' => $config['ApiKey'],
@@ -43,7 +48,10 @@ class DianaSms extends AbstractProvider
             'Message' => $text,
         ];
 
-        $response = Request::get('https://q.dianasms.com/api/v2/SendSMS', $query);
+        $requestObject = new Request('https://q.dianasms.com/api/v2/SendSMS', $query, $queue);
+        $response = $requestObject->get();
+        if ($queue)
+            return true;
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
@@ -51,6 +59,7 @@ class DianaSms extends AbstractProvider
         $data['number'] = $number;
         $data['message'] = $text;
         return $this->generateReport($smsResult, $data)->getContent();
+
     }
 
     /**

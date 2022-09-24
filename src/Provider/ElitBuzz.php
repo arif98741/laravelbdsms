@@ -2,8 +2,8 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
 use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class ElitBuzz extends AbstractProvider
@@ -20,8 +20,8 @@ class ElitBuzz extends AbstractProvider
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return false|string
+     * @throws RenderException
      * @version v1.0.32
      * @since v1.0.31
      */
@@ -30,20 +30,23 @@ class ElitBuzz extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
-        $client = new Client();
-        $response = $client->post($config['url'] . "/smsapi", [
-            'form_params' => [
-                "api_key" => $config['api_key'],
-                "type" => "text",
-                "senderid" => $config['senderid'],
-                "contacts" => $mobile,
-                "msg" => urlencode($text),
-            ],
-            'timeout' => 60,
-            'read_timeout' => 60,
-            'connect_timeout' => 60
-        ]);
+        $formParams = [
+            "api_key" => $config['api_key'],
+            "type" => "text",
+            "senderid" => $config['senderid'],
+            "contacts" => $mobile,
+            "msg" => urlencode($text),
+        ];
+
+        $requestUrl = $config['url'] . "/smsapi";
+        $requestObject = new Request($requestUrl, [], $queue);
+        $requestObject->setFormParams($formParams);
+        $response = $requestObject->post(false, 60);
+        if ($queue)
+            return true;
+
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
