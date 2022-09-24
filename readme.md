@@ -70,9 +70,10 @@ SMS::shoot(['017XXYYZZAA','018XXYYZZAA'], 'helloooooooo boss!'); //for Ssl Sms G
 
 ### Or, with facade alias
 <pre>
-use LaravelBDSms;
+use LaravelBDSms, SMS;
 
 LaravelBDSms::shoot('017XXYYZZAA', 'helloooooooo boss!');
+SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
 </pre>
 
 ### Or, if you need to change the default provider on the fly
