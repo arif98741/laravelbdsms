@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Config;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Xenon\LaravelBDSms\Facades\Logger;
@@ -118,6 +119,9 @@ class SendSmsJob implements ShouldQueue
      */
     private function insertLoggerLog(array $log): void
     {
-        Logger::createLog($log);
+        $config = Config::get('sms');
+        if ($config['sms_log']) {
+            Logger::createLog($log);
+        }
     }
 }
