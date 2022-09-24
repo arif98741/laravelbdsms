@@ -7,15 +7,34 @@ gateways for <strong>Laravel Framework</strong>.
    <img src="https://img.shields.io/github/license/arif98741/laravelbdsms">
 </p>
 
+<!-- TOC -->
+* [Installation](#installation)
+  * [Step 1:](#step-1-)
+  * [Step 2:](#step-2-)
+  * [Step 3:](#step-3-)
+  * [Step 4:](#step-4-)
+  * [Usage](#usage)
+    * [Simply use the facade](#simply-use-the-facade)
+    * [Or, with facade alias](#or-with-facade-alias)
+    * [Or, if you need to change the default provider on the fly](#or-if-you-need-to-change-the-default-provider-on-the-fly)
+    * [Or, if you want to send message with queue. This queue will be added in your jobs. Then this will be sent as soon as job is run.](#or-if-you-want-to-send-message-with-queue-this-queue-will-be-added-in-your-jobs-then-this-will-be-sent-as-soon-as-job-is-run)
+
+    * [Sample Code SSLCommerz](#sample-code-sslcommerz)
+    * [Sample Code MimSMS](#sample-code-mimsms)
+    * [Demo Response Using SSL](#demo-response-using-ssl)
+    * [Currently Supported SMS Gateways](#currently-supported-sms-gateways)
+<!-- TOC -->
+
+
 # Installation
 
-### Step 1:
+## Step 1:
 
 ```
 composer require xenon/laravelbdsms
 ```
 
-### Step 2:
+## Step 2:
 
 Then, publish the package
 
@@ -23,23 +42,24 @@ Then, publish the package
 php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider
 ```
 
-### Step 3:
+## Step 3:
 
 Select Vendor From Console <br>
 <img src="https://raw.githubusercontent.com/arif98741/laravelbdsms/master/img/installation.png" style="width: 60%; height: 60%">
 
-### Step 4:
+## Step 4:
 
 ```
 php artisan config:cache && php artisan migrate
 ```
 
-This will create a `sms.php` in the `config/` directory and also table in your database. Set your desired provider as `default_provider` and fill up the
-necessary environment variable of that provider.
+[//]: # (This will create a `sms.php` in the `config/` directory and also table in your database. Set your desired provider as `default_provider` and fill up the)
 
-# Usage
+[//]: # (necessary environment variable of that provider.)
 
-Simply use the facade
+## Usage
+
+### Simply use the facade
 <pre>
 use Xenon\LaravelBDSms\Facades\SMS;
 
@@ -48,19 +68,30 @@ SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
 SMS::shoot(['017XXYYZZAA','018XXYYZZAA'], 'helloooooooo boss!'); //for Ssl Sms Gateway Only
 </pre>
 
-Or, with facade alias
+### Or, with facade alias
 <pre>
 use LaravelBDSms;
 
 LaravelBDSms::shoot('017XXYYZZAA', 'helloooooooo boss!');
 </pre>
 
-Or, if you need to change the default provider on the fly
+### Or, if you need to change the default provider on the fly
 <pre>
 use Xenon\LaravelBDSms\Facades\SMS;
 use Xenon\LaravelBDSms\Provider\Ssl;
 
 $response = SMS::via(Ssl::class)->shoot('017XXYYZZAA', 'helloooooooo boss!');
+</pre>
+That should do it.
+
+
+### Or, if you want to send message with queue. This queue will be added in your jobs. Message be sent as soon as job is run.
+<pre>
+use Xenon\LaravelBDSms\Facades\SMS;
+use Xenon\LaravelBDSms\Provider\Ssl;
+
+SMS::shootWithQueue("01XXXXXXXXX",'test sms');
+SMS::via(Ssl::class)->shootWithQueue("01XXXXXXXXX",'test sms');
 </pre>
 That should do it.
 
@@ -70,7 +101,7 @@ Otherwise, if you want more control, you can use the underlying sender object. T
 service provider.
 
 
-#### Sample Code SSLCommerz
+### Sample Code SSLCommerz
 
 <pre>
 use Xenon\LaravelBDSms\Provider\Ssl;
@@ -81,6 +112,7 @@ $sender->setProvider(Ssl::class);
 $sender->setMobile('017XXYYZZAA');
 //$sender->setMobile(['017XXYYZZAA','018XXYYZZAA']);
 $sender->setMessage('helloooooooo boss!');
+$sender->setQueue(true); //if you want to sent sms from queue
 $sender->setConfig(
    [
        'api_token' => 'api token goes here',
@@ -91,7 +123,7 @@ $sender->setConfig(
 $status = $sender->send();
 </pre>
 
-#### Sample Code MimSMS
+### Sample Code MimSMS
 
 <pre>
 use Xenon\LaravelBDSms\Provider\MimSms;
@@ -101,6 +133,7 @@ $sender = Sender::getInstance();
 $sender->setProvider(MimSms::class);
 $sender->setMobile('017XXYYZZAA');
 $sender->setMessage('This is test message');
+$sender->setQueue(true); //if you want to sent sms from queue
 $sender->setConfig(
    [
        'api_key' => 'api_key_goes_here',
@@ -112,7 +145,7 @@ $sender->setConfig(
 $status = $sender->send();
 </pre>
 
-#
+
 
 ### Demo Response Using SSL
 
@@ -127,7 +160,7 @@ array:6 [▼
 ]
 </pre>
 
-#### Currently Supported SMS Gateways
+### Currently Supported SMS Gateways
 
 * AjuraTech
 * Adn
@@ -137,6 +170,7 @@ array:6 [▼
 * BulkSMSBD
 * Dianahost
 * Dianasms
+* Esms
 * ElitBuzz
 * Infobip
 * MDLSMS

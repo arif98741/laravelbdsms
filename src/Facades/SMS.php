@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static \Xenon\LaravelBDSms\SMS via(string $provider)
  * @method static mixed shoot(string $mobile, string $text)
+ * @method static mixed shootWithQueue(string $number, string $text)
  *
  * @see \Xenon\LaravelBDSms\SMS
  */
