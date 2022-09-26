@@ -36,6 +36,7 @@ use Xenon\LaravelBDSms\Provider\Mobireach;
 use Xenon\LaravelBDSms\Provider\Mobishasra;
 use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
+use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
@@ -158,6 +159,11 @@ return [
             'type' => env('SMS_ONNOROKOM_TYPE', ''),
             'maskName' => env('SMS_ONNOROKOM_MASK', ''),
             'campaignName' => env('SMS_ONNOROKOM_CAMPAIGN_NAME', ''),
+        ],
+        SmartLabSms::class => [
+            'user' => env('SMS_SMARTLAB_USER', ''),
+            'password' => env('SMS_SMARTLAB_PASSWORD', ''),
+            'sender' => env('SMS_SMARTLAB_SENDER', ''),
         ],
         Sms4BD::class => [
             'publickey' => env('SMS_SMS4BD_PUBLIC_KEY', ''),

@@ -174,14 +174,15 @@ array:6 [▼
 | DianaHost    | api_key, type, senderid                              | Done   | -                      |
 | DianaSMS     | ApiKey, ClientId, SenderId                           | Done   | -                      |
 | Esms         | api_token, sender_id                                 | Done   | -                      |
-| ElitBuzz     | api_key, type, senderid                              | Done   | not tested yet in live                      |
+| ElitBuzz     | api_key, type, senderid                              | Done   | not tested yet in live |
 | Infobip      | user, password                                       | Done   | not tested yet in live |
-| MDL          | api_key, type, senderid                              | Done   | not tested yet in live                      |
+| MDL          | api_key, type, senderid                              | Done   | not tested yet in live |
 | Metronet     | api_key, mask                                        | Done   | -                      |
 | MimSms       | api_key, type, senderid                              | Done   | -                      |
 | Mobireach    | Username,Password, From                              | Done   | -                      |
 | NovocomBD    | ApiKey , ClientId   , SenderId                       | Done   | -                      |
 | OnnoRokomSMS | userName, userPassword, type, maskName, campaignName | Done   | not tested yet in live |
+| SmartLabSMS | user, password, sender        | Done   | -                      |
 | Sslsms       | api_token, sid, csms_id                              | Done   | -                      |
 | Tense       | user, password, campaign, masking                    | Done   | -                      |
 | TwentyFourSmsBD       | apiKey, sender_id                                    | Done   | -                      |
