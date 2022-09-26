@@ -44,8 +44,9 @@ class GreenWeb extends AbstractProvider
 
         $requestObject = new Request('https://api.greenweb.com.bd/api.php?json', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

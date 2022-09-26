@@ -46,8 +46,9 @@ class BoomCast extends AbstractProvider
         $requestObject = new Request('https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php', $query, $queue);
 
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

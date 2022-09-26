@@ -48,8 +48,9 @@ class Sms4BD extends AbstractProvider
 
         $requestObject = new Request('http://www.sms4bd.net', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
         $body = $response->getBody();
         $smsResult = $body->getContents();
         $data['number'] = $number;

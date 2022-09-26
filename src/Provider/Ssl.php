@@ -51,8 +51,9 @@ class Ssl extends AbstractProvider
             $requestObject = new Request('https://smsplus.sslwireless.com/api/v3/send-sms', $query, $queue);
         }
         $response = $requestObject->post();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
         $body = $response->getBody();
         $smsResult = $body->getContents();
         $data['number'] = $mobile;

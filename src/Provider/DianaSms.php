@@ -50,8 +50,9 @@ class DianaSms extends AbstractProvider
 
         $requestObject = new Request('https://q.dianasms.com/api/v2/SendSMS', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

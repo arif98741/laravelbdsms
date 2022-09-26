@@ -50,8 +50,9 @@ class NovocomBd extends AbstractProvider
 
         $requestObject = new Request('https://sms.novocom-bd.com/api/v2/SendSMS', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

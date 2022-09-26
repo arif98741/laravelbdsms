@@ -52,8 +52,9 @@ class Esms extends AbstractProvider
         $requestObject = new Request('https://login.esms.com.bd/api/v3/sms/send', $query, $queue);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

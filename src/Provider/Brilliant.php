@@ -47,8 +47,9 @@ class Brilliant extends AbstractProvider
 
         $requestObject = new Request('http://sms.brilliant.com.bd:6005/api/v2/SendSMS', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

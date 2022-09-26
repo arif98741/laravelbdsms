@@ -49,8 +49,9 @@ class Banglalink extends AbstractProvider
         $requestObject = new Request('https://vas.banglalink.net/sendSMS/sendSMS', [], $queue);
         $requestObject->setFormParams($formParams);
         $response = $requestObject->post();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

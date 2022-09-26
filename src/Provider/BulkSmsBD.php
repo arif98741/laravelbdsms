@@ -47,8 +47,9 @@ class BulkSmsBD extends AbstractProvider
 
         $requestObject = new Request('http://66.45.237.70/api.php', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

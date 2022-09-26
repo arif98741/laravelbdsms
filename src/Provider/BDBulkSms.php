@@ -45,8 +45,9 @@ class BDBulkSms extends AbstractProvider
         $requestObject = new Request('http://api.greenweb.com.bd/api2.php', $query, $queue);
 
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

@@ -59,8 +59,9 @@ class MimSms extends AbstractProvider
 
         $requestObject = new Request('https://esms.mimsms.com/smsapi', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

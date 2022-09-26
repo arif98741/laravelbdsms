@@ -43,8 +43,9 @@ class Viatech extends AbstractProvider
 
         $requestObject = new Request('http://masking.viatech.com.bd/smsnet/bulk/api', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

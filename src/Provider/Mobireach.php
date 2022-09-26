@@ -49,8 +49,9 @@ class Mobireach extends AbstractProvider
 
         $requestObject = new Request('https://api.mobireach.com.bd/SendTextMessage', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
