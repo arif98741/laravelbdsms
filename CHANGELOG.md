@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## [v1.0.43.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.43.0) - 2022-09-26 11:22:33
+
+Merge pull request #13 from arif98741/dev
+
+dev
+
+## [v1.0.42.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.42.1) - 2022-09-24 21:37:52
+
+fix queue insert log based on config status
+
+### Bug Fixes
+
+- general:
+  - fix queue insert log based on config status ([dbe4fe7](https://github.com/arif98741/laravelbdsms/commit/dbe4fe73e9fd75710813b96a233fdac8f5357162))
+
 ## [v1.0.42.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.42.0) - 2022-09-24 20:49:06
 
 ## [v1.0.41.5](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.41.5) - 2022-08-14 22:22:47
