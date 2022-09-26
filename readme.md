@@ -20,10 +20,11 @@ gateways for <strong>Laravel Framework</strong>.
     * [Or, if you want to send message with queue. This queue will be added in your jobs. Message be sent as soon as job is run.](#or-if-you-want-to-send-message-with-queue-this-queue-will-be-added-in-your-jobs-message-be-sent-as-soon-as-job-is-run)
 * [Log Generate](#log-generate)
 
-    * [Sample Code SSLCommerz](#sample-code-sslcommerz)
-    * [Sample Code MimSMS](#sample-code-mimsms)
+* [Sample Code](#sample-code)
+  * [SSLCommerz](#sslcommerz)
     * [Demo Response Using SSL](#demo-response-using-ssl)
-    * [Currently Supported SMS Gateways](#currently-supported-sms-gateways)
+  * [MimSMS](#mimsms)
+* [Currently Supported SMS Gateways](#currently-supported-sms-gateways)
 <!-- TOC -->
 
 
@@ -108,9 +109,8 @@ You can generate log in database for every sms api request and save in database.
 Otherwise, if you want more control, you can use the underlying sender object. This will not touch any laravel facade or
 service provider.
 
-
-### Sample Code SSLCommerz
-
+# Sample Code
+## SSLCommerz
 <pre>
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Sender;
@@ -131,7 +131,20 @@ $sender->setConfig(
 $status = $sender->send();
 </pre>
 
-### Sample Code MimSMS
+### Demo Response Using SSL
+
+<pre>
+array:6 [▼
+  "status" => "response"
+  "response" => "{"status":"FAILED","status_code":4003,"error_message":"IP Blacklisted"}"
+  "provider" => "Xenon\LaravelBDSms\Provider\Ssl"
+  "send_time" => "2021-07-06 08:03:23"
+  "mobile" => "017XXYYZZAA"
+  "message" => "helloooooooo boss!"
+]
+</pre>
+
+## MimSMS
 
 <pre>
 use Xenon\LaravelBDSms\Provider\MimSms;
@@ -154,21 +167,7 @@ $status = $sender->send();
 </pre>
 
 
-
-### Demo Response Using SSL
-
-<pre>
-array:6 [▼
-  "status" => "response"
-  "response" => "{"status":"FAILED","status_code":4003,"error_message":"IP Blacklisted"}"
-  "provider" => "Xenon\LaravelBDSms\Provider\Ssl"
-  "send_time" => "2021-07-06 08:03:23"
-  "mobile" => "017XXYYZZAA"
-  "message" => "helloooooooo boss!"
-]
-</pre>
-
-### Currently Supported SMS Gateways
+# Currently Supported SMS Gateways
 
 | Provider     | Credentials  Required <br>    For Sending SMS        | Status | Comment                |
 |--------------|------------------------------------------------------|--------|------------------------|
