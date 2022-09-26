@@ -86,13 +86,6 @@ $response = SMS::via(Ssl::class)->shoot('017XXYYZZAA', 'helloooooooo boss!');
 </pre>
 That should do it.
 
-# Log Generate
-You can generate log in database for every sms api request and save in database. For doing this. Follow below points
-1. Be confirm you have completed **step-2** and **step-3**
-2. Run command ``php artisan migrate``
-3. Go to your project directory  and locate ``config/sms.php``
-4. Find and make true ``'sms_log' => true,``
-
 
 ### Or, if you want to send message with queue. This queue will be added in your jobs. Message be sent as soon as job is run.
 <pre>
@@ -104,8 +97,14 @@ SMS::via(Ssl::class)->shootWithQueue("01XXXXXXXXX",'test sms');
 </pre>
 That should do it.
 
-#
+# Log Generate
+You can generate log in database for every sms api request and save in database. For doing this. Follow below points
+1. Be confirm you have completed **step-2** and **step-3**
+2. Run command ``php artisan migrate``
+3. Go to your project directory  and locate ``config/sms.php``
+4. Find and make true ``'sms_log' => true,``
 
+#
 Otherwise, if you want more control, you can use the underlying sender object. This will not touch any laravel facade or
 service provider.
 
