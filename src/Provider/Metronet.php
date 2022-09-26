@@ -48,8 +48,9 @@ class Metronet extends AbstractProvider
 
         $requestObject = new Request('202.164.208.212/smsnet/bulk/api', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

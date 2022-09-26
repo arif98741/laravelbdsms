@@ -11,14 +11,16 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
-class Mobireach extends AbstractProvider
+class SmartLabSms extends AbstractProvider
 {
     /**
-     * Mobireach constructor.
+     * SmartLabSMS constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -28,9 +30,7 @@ class Mobireach extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @return bool|mixed|string
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Xenon\LaravelBDSms\Handler\RenderException
+     * @throws GuzzleException|RenderException
      */
     public function sendRequest()
     {
@@ -40,14 +40,14 @@ class Mobireach extends AbstractProvider
         $queue = $this->senderObject->getQueue();
 
         $query = [
-            'Username' => $config['Username'],
-            'Password' => $config['Password'],
-            'From' => $config['From'],
-            'To' => $number,
-            'Message' => $text,
+            'user' => $config['user'],
+            'password' => $config['password'],
+            'sender' => $config['sender'],
+            'msisdn' => $number,
+            'smstext' => $text,
         ];
 
-        $requestObject = new Request('https://api.mobireach.com.bd/SendTextMessage', $query, $queue);
+        $requestObject = new Request('https://labapi.smartlabsms.com/smsapi', $query, $queue);
         $response = $requestObject->get();
         if ($queue) {
             return true;
@@ -66,18 +66,15 @@ class Mobireach extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('Username', $this->senderObject->getConfig())) {
-            throw new ParameterException('Username is absent in configuration');
+        if (!array_key_exists('user', $this->senderObject->getConfig())) {
+            throw new ParameterException('user key is absent in configuration');
+        }
+        if (!array_key_exists('password', $this->senderObject->getConfig())) {
+            throw new ParameterException('password key is absent in configuration');
         }
 
-        if (!array_key_exists('Password', $this->senderObject->getConfig())) {
-            throw new ParameterException('Password is absent in configuration');
+        if (!array_key_exists('sender', $this->senderObject->getConfig())) {
+            throw new ParameterException('sender key is absent in configuration');
         }
-
-        if (!array_key_exists('From', $this->senderObject->getConfig())) {
-            throw new ParameterException('From is absent in configuration');
-        }
-
     }
-
 }

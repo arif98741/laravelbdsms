@@ -48,8 +48,9 @@ class Tense extends AbstractProvider
 
         $requestObject = new Request('http://sms.tense.com.bd/api-sendsms', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

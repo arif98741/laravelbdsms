@@ -46,8 +46,9 @@ class TwentyFourSmsBD extends AbstractProvider
 
         $requestObject = new Request('https://24smsbd.com/api/bulkSmsApi', $query, $queue);
         $response = $requestObject->post();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

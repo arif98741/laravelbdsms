@@ -61,7 +61,6 @@ class Onnorokom extends AbstractProvider
         );
         $smsResult = $soapClient->__call("OneToOne", array($paramArray));
 
-
         return $this->generateReport($smsResult, $data);
     }
 

@@ -50,8 +50,9 @@ class Mobishasra extends AbstractProvider
         $requestObject = new Request('https://mshastra.com/sendurlcomma.aspx', $query, $queue);
 
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
         $body = $response->getBody();
         $smsResult = $body->getContents();
 

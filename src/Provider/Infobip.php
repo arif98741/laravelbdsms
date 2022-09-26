@@ -60,8 +60,9 @@ class Infobip extends AbstractProvider
         $requestObject->setHeaders($headers)
             ->setContentTypeJson(true);
         $response = $requestObject->post();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

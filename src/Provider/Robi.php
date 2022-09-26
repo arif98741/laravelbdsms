@@ -57,8 +57,9 @@ class Robi extends AbstractProvider
         $requestObject = new Request('https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage', [], $queue);
         $requestObject->setFormParams($formParams);
         $response = $requestObject->post();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

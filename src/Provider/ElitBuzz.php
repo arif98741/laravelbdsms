@@ -44,8 +44,9 @@ class ElitBuzz extends AbstractProvider
         $requestObject = new Request($requestUrl, [], $queue);
         $requestObject->setFormParams($formParams);
         $response = $requestObject->post(false, 60);
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
 
         $body = $response->getBody();

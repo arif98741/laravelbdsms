@@ -47,8 +47,9 @@ class DianaHost extends AbstractProvider
 
         $requestObject = new Request('http://esms.dianahost.com/smsapi', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();

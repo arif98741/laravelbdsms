@@ -46,8 +46,9 @@ class MDL extends AbstractProvider
 
         $requestObject = new Request('http://premium.mdlsms.com/smsapi', $query, $queue);
         $response = $requestObject->get();
-        if ($queue)
+        if ($queue) {
             return true;
+        }
 
         $body = $response->getBody();
         $smsResult = $body->getContents();
