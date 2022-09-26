@@ -88,7 +88,7 @@ $response = SMS::via(Ssl::class)->shoot('017XXYYZZAA', 'helloooooooo boss!');
 That should do it.
 
 
-### Or, if you want to send message with queue. This queue will be added in your jobs. Message be sent as soon as job is run.
+### Or, if you want to send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run.
 <pre>
 use Xenon\LaravelBDSms\Facades\SMS;
 use Xenon\LaravelBDSms\Provider\Ssl;
