@@ -17,8 +17,8 @@ gateways for <strong>Laravel Framework</strong>.
     * [Simply use the facade](#simply-use-the-facade)
     * [Or, with facade alias](#or-with-facade-alias)
     * [Or, if you need to change the default provider on the fly](#or-if-you-need-to-change-the-default-provider-on-the-fly)
-* [Log Generate](#log-generate)
     * [Or, if you want to send message with queue. This queue will be added in your jobs. Message be sent as soon as job is run.](#or-if-you-want-to-send-message-with-queue-this-queue-will-be-added-in-your-jobs-message-be-sent-as-soon-as-job-is-run)
+* [Log Generate](#log-generate)
 
     * [Sample Code SSLCommerz](#sample-code-sslcommerz)
     * [Sample Code MimSMS](#sample-code-mimsms)
