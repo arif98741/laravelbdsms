@@ -153,8 +153,9 @@ class Sender
         $config = Config::get('sms');
 
         $response = $this->provider->sendRequest();
-        if (!$this->getQueue())
+        if (!$this->getQueue()) {
             $this->logGenerate($config, $response);
+        }
 
         return $response;
     }
