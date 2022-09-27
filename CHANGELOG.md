@@ -1,12 +1,14 @@
 # CHANGELOG
 
+## [v1.0.44.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.2) - 2022-09-27 14:04:34
+
+Merge branch 'smsnet24-gateway'
+
 ## [v1.0.44.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.1) - 2022-09-27 14:01:22
 
-## What's Changed
-* Merge request for Smsnet24 by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/14
+## [v1.0.44.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.0) - 2022-09-27 13:57:28
 
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.43.0...v1.0.44.1
+SmsNet24 Gateway Added
 
 ## [v1.0.43.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.43.0) - 2022-09-26 11:22:33
 
