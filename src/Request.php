@@ -231,7 +231,7 @@ class Request extends Controller
      * @param mixed $timeout
      * @return array
      */
-    private function optionsPostRequest(bool $verify, mixed $timeout): array
+    private function optionsPostRequest(bool $verify, float $timeout): array
     {
         $options = [
             'requestUrl' => $this->requestUrl,

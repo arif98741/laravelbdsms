@@ -20,4 +20,30 @@ class Helper
 
         return false;
     }
+
+    /**
+     * @param array $numbers
+     * @return string
+     * @since v1.0.12
+     * @version v1.0.43.1-dev
+     */
+    public static function getCommaSeperatedNumbers(array $numbers)
+    {
+        return implode(',', $numbers);
+    }
+
+    /**
+     * @param string $mobile
+     * @return string
+     * @since v1.0.12
+     * @version v1.0.43.1-dev
+     */
+    public static function checkMobileNumberPrefixExistence($mobile)
+    {
+        $prefix = substr($mobile, 0, 3);
+        if ($prefix === '880') {
+            return $mobile;
+        }
+        return '88' . $mobile;
+    }
 }

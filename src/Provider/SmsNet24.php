@@ -12,6 +12,7 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Helper\Helper;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
@@ -38,18 +39,31 @@ class SmsNet24 extends AbstractProvider
         $queue = $this->senderObject->getQueue();
 
         $query = [
-            'api_token' => $config['api_token'],
-            'sid' => $config['sid'],
-            'csms_id' => $config['csms_id'],
-            'msisdn' => $mobile,
-            'sms' => $text,
+            'user_id' => $config['user_id'],
+            'user_password' => $config['user_password'],
+            'sms_text' => $text,
         ];
 
         if (is_array($mobile)) {
-            $requestObject = new Request('https://smsplus.sslwireless.com/api/v3/send-sms/bulk', $query, $queue);
-        } else {
-            $requestObject = new Request('https://smsplus.sslwireless.com/api/v3/send-sms', $query, $queue);
+            $query['sms_receiver'] = Helper::getCommaSeperatedNumbers($mobile);
+            $explodeMobileNumbers = explode(',', $query['sms_receiver']);
+            foreach ($explodeMobileNumbers as $arrayData)
+            {
+                $newMobiles[] =  Helper::checkMobileNumberPrefixExistence($arrayData);
+            }
+            $query['sms_receiver'] = implode(',', $newMobiles);
+        }else{
+            $query['sms_receiver'] = Helper::checkMobileNumberPrefixExistence($mobile);
         }
+
+        if (array_key_exists('route_id', $config)) {
+            $query['route_id'] = $config['route_id'];
+        }
+        if (array_key_exists('sms_type_id', $config)) {
+            $query['sms_type_id'] = $config['sms_type_id'];
+        }
+
+        $requestObject = new Request('https://sms.apinet.club/sendSms', $query, $queue);
         $response = $requestObject->post();
         if ($queue) {
             return true;
@@ -66,16 +80,12 @@ class SmsNet24 extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('api_token', $this->senderObject->getConfig())) {
-            throw new RenderException('api_token key is absent in configuration');
+        if (!array_key_exists('user_id', $this->senderObject->getConfig())) {
+            throw new RenderException('user_id key is absent in configuration');
         }
 
-        if (!array_key_exists('sid', $this->senderObject->getConfig())) {
-            throw new RenderException('sid key is absent in configuration');
-        }
-
-        if (!array_key_exists('csms_id', $this->senderObject->getConfig())) {
-            throw new RenderException('csms_id key is absent in configuration');
+        if (!array_key_exists('user_password', $this->senderObject->getConfig())) {
+            throw new RenderException('user_password key is absent in configuration');
         }
 
     }
