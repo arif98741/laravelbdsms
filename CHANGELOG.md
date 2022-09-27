@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [v1.0.44.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.1) - 2022-09-27 14:01:22
+
+## What's Changed
+* Merge request for Smsnet24 by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/14
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.43.0...v1.0.44.1
+
 ## [v1.0.43.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.43.0) - 2022-09-26 11:22:33
 
 Merge pull request #13 from arif98741/dev
