@@ -36,19 +36,18 @@ class SendSmsJob implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return ResponseInterface
-     * @throws GuzzleException
+     * @return ResponseInterface|null
+     * @throws GuzzleException|JsonException
      */
     public function handle()
     {
 
-
         if ($this->jobDetails['method'] == 'post') {
             return $this->postMethodHandler();
 
-        } else {
-            return $this->getMethodHandler();
         }
+
+        return $this->getMethodHandler();
     }
 
     /**
@@ -106,7 +105,7 @@ class SendSmsJob implements ShouldQueue
             $log = [
                 'provider' => $this->jobDetails['requestUrl'],
                 'request_json' => json_encode($this->jobDetails['query'], JSON_THROW_ON_ERROR),
-                'response_json' => json_encode($e->getMessage()),
+                'response_json' => json_encode($e->getMessage(), JSON_THROW_ON_ERROR),
             ];
         }
 
