@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [v1.0.44.3](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.3) - 2022-09-28 06:26:21
+
+fix type issue
+
+### Bug Fixes
+
+- general:
+  - fix type issue ([c6ad313](https://github.com/arif98741/laravelbdsms/commit/c6ad313ee300e67dbe2c17f88d334a4f78c3faa1))
+
 ## [v1.0.44.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.2) - 2022-09-27 14:04:34
 
 Merge branch 'smsnet24-gateway'
