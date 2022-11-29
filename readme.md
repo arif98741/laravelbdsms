@@ -188,7 +188,7 @@ $status = $sender->send();
 | Mobireach       | Username,Password, From                                           | Done   | -                      | -                                                           |
 | NovocomBD       | ApiKey , ClientId   , SenderId                                    | Done   | -                      | -                                                           |
 | OnnoRokomSMS    | userName, userPassword, type, maskName, campaignName              | Done   | not tested yet in live | -                                                           |
-| RedmoITSms      | api_token, sender_id                                              | Done   | not tested yet in live | -                                                           |
+| RedmoITSms      | api_token, sender_id                                              | Done   |  | -                                                           |
 | SmartLabSMS     | user, password, sender                                            | Done   | -                      | -                                                           |
 | SMSNet24        | user_id, user_password, route_id(optional), sms_type_id(optional) | Done   | -                      | admin2@digitallabbd.com, +880 1705 691269, +880 1733393 712 |
 | Sslsms          | api_token, sid, csms_id                                           | Done   | -                      | -                                                           |
