@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.45.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.0) - 2022-11-29 14:05:16
+
+*No description*
+
 ## [v1.0.44.3](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.3) - 2022-09-28 06:26:21
 
 fix type issue
@@ -9,11 +13,11 @@ fix type issue
 - general:
   - fix type issue ([c6ad313](https://github.com/arif98741/laravelbdsms/commit/c6ad313ee300e67dbe2c17f88d334a4f78c3faa1))
 
+## [v1.0.44.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.1) - 2022-09-27 14:01:22
+
 ## [v1.0.44.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.2) - 2022-09-27 14:04:34
 
 Merge branch 'smsnet24-gateway'
-
-## [v1.0.44.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.1) - 2022-09-27 14:01:22
 
 ## [v1.0.44.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.0) - 2022-09-27 13:57:28
 
