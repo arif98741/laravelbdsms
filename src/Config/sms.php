@@ -36,6 +36,7 @@ use Xenon\LaravelBDSms\Provider\Mobireach;
 use Xenon\LaravelBDSms\Provider\Mobishasra;
 use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
+use Xenon\LaravelBDSms\Provider\RedmoItSms;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\SmsNet24;
@@ -160,6 +161,11 @@ return [
             'type' => env('SMS_ONNOROKOM_TYPE', ''),
             'maskName' => env('SMS_ONNOROKOM_MASK', ''),
             'campaignName' => env('SMS_ONNOROKOM_CAMPAIGN_NAME', ''),
+        ],
+        RedmoItSms::class => [
+            'sender_id' => env('SMS_REDMOIT_SENDER_ID', ''),
+            'api_token' => env('SMS_REDMOIT_API_TOKEN', ''),
+            'type' => env('SMS_REDMOIT_TYPE', 'string'),
         ],
         SmartLabSms::class => [
             'user' => env('SMS_SMARTLAB_USER', ''),
