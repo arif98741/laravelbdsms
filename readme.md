@@ -168,7 +168,6 @@ $status = $sender->send();
 
 
 # Currently Supported SMS Gateways
-
 | Provider        | Credentials  Required <br>    For Sending SMS                     | Status | Comment                | Contact                                                     |
 |-----------------|-------------------------------------------------------------------|--------|------------------------|-------------------------------------------------------------|
 | AjuraTech       | apikey, secretkey , callerID                                      | Done   | -                      | -                                                           |
@@ -176,7 +175,7 @@ $status = $sender->send();
 | Banglalink      | userID, passwd , sender                                           | Done   | -                      | -                                                           |
 | BDBulkSMS       | token                                                             | Done   | -                      | -                                                           |
 | BoomCast        | masking  , userName ,   password                                  | Done   | -                      | -                                                           |
-| BulksmsBD       | username, password                                                | Done   | -                      | -                                                           |
+| BulksmsBD       | api_key,senderid                                                  | Done   | -                      | -                                                           |
 | DianaHost       | api_key, type, senderid                                           | Done   | -                      | -                                                           |
 | DianaSMS        | ApiKey, ClientId, SenderId                                        | Done   | -                      | -                                                           |
 | Esms            | api_token, sender_id                                              | Done   | -                      | -                                                           |
@@ -195,6 +194,7 @@ $status = $sender->send();
 | Tense           | user, password, campaign, masking                                 | Done   | -                      | -                                                           |
 | TwentyFourSmsBD | apiKey, sender_id                                                 | Done   | -                      | -                                                           |
 | Viatech         | api_key, mask                                                     | Done   | -                      | -                                                           |
+
 
 We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel something
 is missing then make a issue regarding that. If you want to contribute in this library, then you are highly welcome to

@@ -39,13 +39,19 @@ class BulkSmsBD extends AbstractProvider
         $queue = $this->senderObject->getQueue();
 
         $query = [
-            'username' => $config['username'],
-            'password' => $config['password'],
+            'api_key' => $config['api_key'],
+            'type' => 'text',
             'number' => $number,
             'message' => $text,
         ];
 
-        $requestObject = new Request('http://66.45.237.70/api.php', $query, $queue);
+        if (array_key_exists('senderid', $config)) {
+            $query = [
+                'senderid' => $config['senderid'],
+            ];
+        }
+
+        $requestObject = new Request('https://bulksmsbd.net/api/smsapi', $query, $queue);
         $response = $requestObject->get();
         if ($queue) {
             return true;
@@ -64,11 +70,9 @@ class BulkSmsBD extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('username', $this->senderObject->getConfig())) {
-            throw new ParameterException('username key is absent in configuration');
+        if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
+            throw new ParameterException('api_key key is absent in configuration');
         }
-        if (!array_key_exists('password', $this->senderObject->getConfig())) {
-            throw new ParameterException('password key is absent in configuration');
-        }
+
     }
 }
