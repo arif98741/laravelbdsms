@@ -46,10 +46,10 @@ class BulkSmsBD extends AbstractProvider
         ];
 
         if (array_key_exists('senderid', $config)) {
-            $query = [
-                'senderid' => $config['senderid'],
-            ];
+            $query ['senderid'] = $config['senderid'];
         }
+
+
 
         $requestObject = new Request('https://bulksmsbd.net/api/smsapi', $query, $queue);
         $response = $requestObject->get();
