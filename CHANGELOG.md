@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## [v1.0.45.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.2) - 2022-12-04 12:20:54
+
+## What's Changed
+* BulkSmsBD api url changed and change parameters by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/15
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.45.0...v1.0.45.2
+
+## [v1.0.45.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.1) - 2022-12-04 12:16:31
+
+1. Change Bulksmsbd Api Endpoint
+2. Change sms parameter
+
 ## [v1.0.45.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.0) - 2022-11-29 14:05:16
 
 *No description*
