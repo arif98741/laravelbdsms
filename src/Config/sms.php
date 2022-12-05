@@ -38,6 +38,7 @@ use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
+use Xenon\LaravelBDSms\Provider\SmsinBD;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
 use Xenon\LaravelBDSms\Provider\TwentyFourSmsBD;
@@ -171,6 +172,10 @@ return [
             'type' => env('SMS_SMS4BD_TYPE', ''),
             'sender' => env('SMS_SMS4BD_SENDER', ''),
             'delay' => env('SMS_SMS4BD_DELAY', ''),
+        ],
+        SmsinBD::class => [
+            'api_token' => env('SMSINBD_API_TOKEN', ''),
+            'senderid' => env('SMSINBD_SENDERID', ''),
         ],
         Ssl::class => [
             'api_token' => env('SMS_SSL_API_TOKEN', ''),
