@@ -168,6 +168,7 @@ $status = $sender->send();
 
 
 # Currently Supported SMS Gateways
+
 | Provider        | Credentials  Required <br>    For Sending SMS                     | Status | Comment                | Contact                                                     |
 |-----------------|-------------------------------------------------------------------|--------|------------------------|-------------------------------------------------------------|
 | AjuraTech       | apikey, secretkey , callerID                                      | Done   | -                      | -                                                           |
@@ -189,11 +190,14 @@ $status = $sender->send();
 | OnnoRokomSMS    | userName, userPassword, type, maskName, campaignName              | Done   | not tested yet in live | -                                                           |
 | RedmoITSms      | api_token, sender_id                                              | Done   |  | -                                                           |
 | SmartLabSMS     | user, password, sender                                            | Done   | -                      | -                                                           |
+| SmsinBD         | api_token, senderid                                               | Done   | -                      | -                                                           |
 | SMSNet24        | user_id, user_password, route_id(optional), sms_type_id(optional) | Done   | -                      | admin2@digitallabbd.com, +880 1705 691269, +880 1733393 712 |
 | Sslsms          | api_token, sid, csms_id                                           | Done   | -                      | -                                                           |
 | Tense           | user, password, campaign, masking                                 | Done   | -                      | -                                                           |
 | TwentyFourSmsBD | apiKey, sender_id                                                 | Done   | -                      | -                                                           |
 | Viatech         | api_key, mask                                                     | Done   | -                      | -                                                           |
+
+
 
 
 We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel something
