@@ -169,30 +169,31 @@ $status = $sender->send();
 
 # Currently Supported SMS Gateways
 
-| Provider    | Credentials  Required <br>    For Sending SMS        | Status | Comment                |
-|-------------|------------------------------------------------------|--------|------------------------|
-| AjuraTech   | apikey, secretkey , callerID                         | Done   | -                      |
-| Adn         | api_key, type, senderid                              | Done   | -                      |
-| Banglalink  | userID, passwd , sender                              | Done   | -                      |
-| BDBulkSMS   | token                                                | Done   | -                      |
-| BoomCast    | masking  , userName ,   password                     | Done   | -                      |
-| BulkmsBD    | api_key, senderid                                    | Done   | -                      |
-| DianaHost   | api_key, type, senderid                              | Done   | -                      |
-| DianaSMS    | ApiKey, ClientId, SenderId                           | Done   | -                      |
-| Esms        | api_token, sender_id                                 | Done   | -                      |
-| ElitBuzz    | api_key, type, senderid                              | Done   | not tested yet in live |
-| Infobip     | user, password                                       | Done   | not tested yet in live |
-| MDL         | api_key, type, senderid                              | Done   | not tested yet in live |
-| Metronet    | api_key, mask                                        | Done   | -                      |
-| MimSms      | api_key, type, senderid                              | Done   | -                      |
-| Mobireach   | Username,Password, From                              | Done   | -                      |
-| NovocomBD   | ApiKey , ClientId   , SenderId                       | Done   | -                      |
-| OnnoRokomSMS | userName, userPassword, type, maskName, campaignName | Done   | not tested yet in live |
-| SmartLabSMS | user, password, sender                               | Done   | -                      |
-| Sslsms      | api_token, sid, csms_id                              | Done   | -                      |
-| Tense       | user, password, campaign, masking                    | Done   | -                      |
-| TwentyFourSmsBD      | apiKey, sender_id                                    | Done   | -                      |
-| Viatech      | api_key, mask                                        | Done   | -                      |
+| Provider        | Credentials  Required <br>    For Sending SMS        | Status | Comment                |
+|-----------------|------------------------------------------------------|--------|------------------------|
+| AjuraTech       | apikey, secretkey , callerID                         | Done   | -                      |
+| Adn             | api_key, type, senderid                              | Done   | -                      |
+| Banglalink      | userID, passwd , sender                              | Done   | -                      |
+| BDBulkSMS       | token                                                | Done   | -                      |
+| BoomCast        | masking  , userName ,   password                     | Done   | -                      |
+| BulkmsBD        | api_key, senderid                                    | Done   | -                      |
+| DianaHost       | api_key, type, senderid                              | Done   | -                      |
+| DianaSMS        | ApiKey, ClientId, SenderId                           | Done   | -                      |
+| Esms            | api_token, sender_id                                 | Done   | -                      |
+| ElitBuzz        | api_key, type, senderid                              | Done   | not tested yet in live |
+| Infobip         | user, password                                       | Done   | not tested yet in live |
+| MDL             | api_key, type, senderid                              | Done   | not tested yet in live |
+| Metronet        | api_key, mask                                        | Done   | -                      |
+| MimSms          | api_key, type, senderid                              | Done   | -                      |
+| Mobireach       | Username,Password, From                              | Done   | -                      |
+| NovocomBD       | ApiKey , ClientId   , SenderId                       | Done   | -                      |
+| OnnoRokomSMS    | userName, userPassword, type, maskName, campaignName | Done   | not tested yet in live |
+| SmsinBD         | api_token, senderid                                  | Done   |                        |
+| SmartLabSMS     | user, password, sender                               | Done   | -                      |
+| Sslsms          | api_token, sid, csms_id                              | Done   | -                      |
+| Tense           | user, password, campaign, masking                    | Done   | -                      |
+| TwentyFourSmsBD | apiKey, sender_id                                    | Done   | -                      |
+| Viatech         | api_key, mask                                        | Done   | -                      |
 
 
 We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel something
