@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [v1.0.46.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.46.0) - 2022-12-05 10:04:07
+
+fix: conflicts removed
+
+### Bug Fixes
+
+- general:
+  - conflicts removed ([bdb1ec9](https://github.com/arif98741/laravelbdsms/commit/bdb1ec94bb7a22f46a97c0b347506daa78958f5c))
+
 ## [v1.0.45.5](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.5) - 2022-12-04 12:28:38
 
 Merge pull request #16 from arif98741/dev
