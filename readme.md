@@ -190,7 +190,7 @@ $status = $sender->send();
 | OnnoRokomSMS    | userName, userPassword, type, maskName, campaignName              | Done   | not tested yet in live | -                                                           |
 | RedmoITSms      | api_token, sender_id                                              | Done   |  | -                                                           |
 | SmartLabSMS     | user, password, sender                                            | Done   | -                      | -                                                           |
-| SmsinBD         | api_token, senderid                                               | Done   | -                      | -                                                           |
+| SmsinBD         | api_token, senderid                                               | Done   | 01777-333677                      | -                                                           |
 | SMSNet24        | user_id, user_password, route_id(optional), sms_type_id(optional) | Done   | -                      | admin2@digitallabbd.com, +880 1705 691269, +880 1733393 712 |
 | Sslsms          | api_token, sid, csms_id                                           | Done   | -                      | -                                                           |
 | Tense           | user, password, campaign, masking                                 | Done   | -                      | -                                                           |
