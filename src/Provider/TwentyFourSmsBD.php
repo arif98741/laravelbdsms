@@ -11,8 +11,8 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
@@ -29,7 +29,8 @@ class TwentyFourSmsBD extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
+     * @return bool|string
+     * @throws RenderException
      */
     public function sendRequest()
     {
