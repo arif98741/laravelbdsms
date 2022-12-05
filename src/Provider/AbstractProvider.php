@@ -70,10 +70,11 @@ abstract class AbstractProvider implements ProviderRoadmap
 
     /**
      * Return Report As Json
+     * @throws \JsonException
      * @deprecated
      */
     public function toJson($data)
     {
-        return json_encode($data);
+        return json_encode($data, JSON_THROW_ON_ERROR);
     }
 }

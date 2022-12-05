@@ -37,7 +37,7 @@ class Infobip extends AbstractProvider
 
     /**
      * @return false|string
-     * @throws GuzzleException|RenderException
+     * @throws RenderException
      * @version v1.0.32
      * @since v1.0.31
      */
