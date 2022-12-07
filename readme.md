@@ -9,15 +9,15 @@ gateways for <strong>Laravel Framework</strong>.
 
 <!-- TOC -->
 * [Installation](#installation)
-  * [Step 1:](#step-1)
-  * [Step 2:](#step-2)
-  * [Step 3:](#step-3)
-  * [Step 4:](#step-4)
+  * [Step 1:](#step-1-)
+  * [Step 2:](#step-2-)
+  * [Step 3:](#step-3-)
+  * [Step 4:](#step-4-)
   * [Usage](#usage)
     * [Simply use the facade](#simply-use-the-facade)
     * [Or, with facade alias](#or-with-facade-alias)
     * [Or, if you need to change the default provider on the fly](#or-if-you-need-to-change-the-default-provider-on-the-fly)
-    * [Or, if you want to send message with queue. This queue will be added in your jobs. Message be sent as soon as job is run.](#or-if-you-want-to-send-message-with-queue-this-queue-will-be-added-in-your-jobs-message-be-sent-as-soon-as-job-is-run)
+    * [Or, if you want to send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run.](#or-if-you-want-to-send-message-with-queue-this-queue-will-be-added-in-your-jobs-table-message-will-be-sent-as-soon-as-job-is-run)
 * [Log Generate](#log-generate)
 
 * [Sample Code](#sample-code)
@@ -25,6 +25,8 @@ gateways for <strong>Laravel Framework</strong>.
     * [Demo Response Using SSL](#demo-response-using-ssl)
   * [MimSMS](#mimsms)
 * [Currently Supported SMS Gateways](#currently-supported-sms-gateways)
+* [Stargazers](#stargazers)
+* [Forkers](#forkers)
 <!-- TOC -->
 
 
