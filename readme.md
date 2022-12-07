@@ -27,6 +27,7 @@ gateways for <strong>Laravel Framework</strong>.
 * [Currently Supported SMS Gateways](#currently-supported-sms-gateways)
 * [Stargazers](#stargazers)
 * [Forkers](#forkers)
+* [Contributors](#contributors)
 <!-- TOC -->
 
 
