@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [v1.0.46.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.46.2) - 2022-12-22 19:15:10
+
+schema lbs_log table export added
+
+### Bug Fixes
+
+- general:
+  - change sms provider list configuration syntax error ([f980881](https://github.com/arif98741/laravelbdsms/commit/f980881a42c34fc6e06dbc669f843ecabded86c7))
+
 ## [v1.0.46.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.46.1) - 2022-12-05 10:10:47
 
 fix conflicts
