@@ -11,6 +11,7 @@
 
 namespace Xenon\LaravelBDSms;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Xenon\LaravelBDSms\Log\Log;
 
@@ -58,8 +59,7 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
             __DIR__ . '/Config/sms.php' => config_path('sms.php'),
         ]);
 
-        if ($this->app->runningInConsole() && !class_exists('CreateLaravelbdSmsTable')) {
-
+        if (!Schema::hasTable('lbs_log')) {
             $this->publishes([
                 __DIR__ . '/Database/migrations/create_laravelbd_sms_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_laravelbd_sms_table.php'),
 

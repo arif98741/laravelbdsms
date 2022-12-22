@@ -185,7 +185,7 @@ return [
             'user_password' => env('SMS_SMSNET24_USER_PASSWORD', ''),
             'route_id' => env('SMS_SMSNET24_ROUTE_ID', ''),
             'sms_type_id' => env('SMS_SMSNET24_SMS_TYPE_ID', ''),
-
+        ],
         SmsinBD::class => [
             'api_token' => env('SMSINBD_API_TOKEN', ''),
             'senderid' => env('SMSINBD_SENDERID', ''),
@@ -209,7 +209,6 @@ return [
             'api_key' => env('SMS_VIATECH_API_KEY', ''),
             'mask' => env('SMS_VIATECH_MASK', ''),
         ],
-
     ]
 ];
 
