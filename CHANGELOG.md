@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.47.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.0) - 2023-02-06 18:12:15
+
+Fix conflicts
+
 ## [v1.0.46.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.46.2) - 2022-12-22 19:15:10
 
 schema lbs_log table export added
