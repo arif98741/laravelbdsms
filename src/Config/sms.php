@@ -41,6 +41,7 @@ use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\SmsinBD;
 use Xenon\LaravelBDSms\Provider\SmsNet24;
+use Xenon\LaravelBDSms\Provider\SMSNoc;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
 use Xenon\LaravelBDSms\Provider\TwentyFourSmsBD;
@@ -185,6 +186,11 @@ return [
             'user_password' => env('SMS_SMSNET24_USER_PASSWORD', ''),
             'route_id' => env('SMS_SMSNET24_ROUTE_ID', ''),
             'sms_type_id' => env('SMS_SMSNET24_SMS_TYPE_ID', ''),
+
+        SMSNoc::class => [
+            'sender_id' => env('SMSNOC_SENDER_ID', ''),
+            'bearer_token' => env('SMSNOC_BEARER_TOKEN', ''),
+
         ],
         SmsinBD::class => [
             'api_token' => env('SMSINBD_API_TOKEN', ''),
