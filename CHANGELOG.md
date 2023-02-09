@@ -1,5 +1,72 @@
 # CHANGELOG
 
+## [v1.0.47.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.0) - 2023-02-06 18:12:15
+
+Fix conflicts
+
+## [v1.0.46.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.46.2) - 2022-12-22 19:15:10
+
+schema lbs_log table export added
+
+### Bug Fixes
+
+- general:
+  - change sms provider list configuration syntax error ([f980881](https://github.com/arif98741/laravelbdsms/commit/f980881a42c34fc6e06dbc669f843ecabded86c7))
+
+## [v1.0.46.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.46.1) - 2022-12-05 10:10:47
+
+fix conflicts
+
+### Bug Fixes
+
+- general:
+  - fix conflicts ([239218b](https://github.com/arif98741/laravelbdsms/commit/239218bad5d22ebcc89f77b890522653aac4e22b)) ([#19](https://github.com/arif98741/laravelbdsms/pull/19))
+
+## [v1.0.46.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.46.0) - 2022-12-05 10:04:07
+
+fix: conflicts removed
+
+### Bug Fixes
+
+- general:
+  - conflicts removed ([bdb1ec9](https://github.com/arif98741/laravelbdsms/commit/bdb1ec94bb7a22f46a97c0b347506daa78958f5c))
+
+## [v1.0.45.5](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.5) - 2022-12-04 12:28:38
+
+Merge pull request #16 from arif98741/dev
+
+Fix minor issues for BulksmsBD
+
+## [v1.0.45.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.2) - 2022-12-04 12:20:54
+
+## [v1.0.45.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.1) - 2022-12-04 12:16:31
+
+1. Change Bulksmsbd Api Endpoint
+2. Change sms parameter
+
+## [v1.0.45.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.45.0) - 2022-11-29 14:05:16
+
+*No description*
+
+## [v1.0.44.3](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.3) - 2022-09-28 06:26:21
+
+fix type issue
+
+### Bug Fixes
+
+- general:
+  - fix type issue ([c6ad313](https://github.com/arif98741/laravelbdsms/commit/c6ad313ee300e67dbe2c17f88d334a4f78c3faa1))
+
+## [v1.0.44.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.1) - 2022-09-27 14:01:22
+
+## [v1.0.44.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.2) - 2022-09-27 14:04:34
+
+Merge branch 'smsnet24-gateway'
+
+## [v1.0.44.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.44.0) - 2022-09-27 13:57:28
+
+SmsNet24 Gateway Added
+
 ## [v1.0.43.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.43.0) - 2022-09-26 11:22:33
 
 Merge pull request #13 from arif98741/dev

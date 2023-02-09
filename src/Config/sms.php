@@ -216,5 +216,5 @@ return [
             'mask' => env('SMS_VIATECH_MASK', ''),
         ],
     ]
-
 ];
+

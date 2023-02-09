@@ -48,7 +48,7 @@ class Request extends Controller
      * @throws RenderException
      */
 
-    public function get(bool $verify = false, $timeout = 10.0)
+    public function get(bool $verify = false, float $timeout = 10.0)
     {
         $client = new Client([
             'base_uri' => $this->requestUrl,
@@ -206,7 +206,7 @@ class Request extends Controller
      * @param mixed $timeout
      * @return array
      */
-    private function optionsGetRequest(bool $verify, mixed $timeout): array
+    private function optionsGetRequest(bool $verify, float $timeout): array
     {
         $options = [
             'requestUrl' => $this->requestUrl,
@@ -231,7 +231,7 @@ class Request extends Controller
      * @param mixed $timeout
      * @return array
      */
-    private function optionsPostRequest(bool $verify, mixed $timeout): array
+    private function optionsPostRequest(bool $verify, float $timeout): array
     {
         $options = [
             'requestUrl' => $this->requestUrl,
