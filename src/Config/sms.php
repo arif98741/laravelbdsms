@@ -36,9 +36,11 @@ use Xenon\LaravelBDSms\Provider\Mobireach;
 use Xenon\LaravelBDSms\Provider\Mobishasra;
 use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
+use Xenon\LaravelBDSms\Provider\RedmoItSms;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\SmsinBD;
+use Xenon\LaravelBDSms\Provider\SmsNet24;
 use Xenon\LaravelBDSms\Provider\SMSNoc;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
@@ -162,6 +164,11 @@ return [
             'maskName' => env('SMS_ONNOROKOM_MASK', ''),
             'campaignName' => env('SMS_ONNOROKOM_CAMPAIGN_NAME', ''),
         ],
+        RedmoItSms::class => [
+            'sender_id' => env('SMS_REDMOIT_SENDER_ID', ''),
+            'api_token' => env('SMS_REDMOIT_API_TOKEN', ''),
+            'type' => env('SMS_REDMOIT_TYPE', 'string'),
+        ],
         SmartLabSms::class => [
             'user' => env('SMS_SMARTLAB_USER', ''),
             'password' => env('SMS_SMARTLAB_PASSWORD', ''),
@@ -174,9 +181,16 @@ return [
             'sender' => env('SMS_SMS4BD_SENDER', ''),
             'delay' => env('SMS_SMS4BD_DELAY', ''),
         ],
+        SmsNet24::class => [
+            'user_id' => env('SMS_SMSNET24_USER_ID', ''),
+            'user_password' => env('SMS_SMSNET24_USER_PASSWORD', ''),
+            'route_id' => env('SMS_SMSNET24_ROUTE_ID', ''),
+            'sms_type_id' => env('SMS_SMSNET24_SMS_TYPE_ID', ''),
+        ],
         SMSNoc::class => [
             'sender_id' => env('SMSNOC_SENDER_ID', ''),
             'bearer_token' => env('SMSNOC_BEARER_TOKEN', ''),
+
         ],
         SmsinBD::class => [
             'api_token' => env('SMSINBD_API_TOKEN', ''),
@@ -201,7 +215,6 @@ return [
             'api_key' => env('SMS_VIATECH_API_KEY', ''),
             'mask' => env('SMS_VIATECH_MASK', ''),
         ],
-
     ]
-];
 
+];
