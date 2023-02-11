@@ -195,6 +195,7 @@ $status = $sender->send();
 | SmartLabSMS     | user, password, sender                                            | Done   | -                      | -                                                           |
 | SmsinBD         | api_token, senderid                                               | Done   | 01777-333677                      | -                                                           |
 | SMSNet24        | user_id, user_password, route_id(optional), sms_type_id(optional) | Done   | -                      | admin2@digitallabbd.com, +880 1705 691269, +880 1733393 712 |
+| SmsNoc          | sender_id, bearer_token                                                       | Done   | -                      |  |
 | Sslsms          | api_token, sid, csms_id                                           | Done   | -                      | -                                                           |
 | Tense           | user, password, campaign, masking                                 | Done   | -                      | -                                                           |
 | TwentyFourSmsBD | apiKey, sender_id                                                 | Done   | -                      | -                                                           |
