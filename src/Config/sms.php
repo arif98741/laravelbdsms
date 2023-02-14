@@ -186,7 +186,7 @@ return [
             'user_password' => env('SMS_SMSNET24_USER_PASSWORD', ''),
             'route_id' => env('SMS_SMSNET24_ROUTE_ID', ''),
             'sms_type_id' => env('SMS_SMSNET24_SMS_TYPE_ID', ''),
-
+        ],
         SMSNoc::class => [
             'sender_id' => env('SMSNOC_SENDER_ID', ''),
             'bearer_token' => env('SMSNOC_BEARER_TOKEN', ''),
@@ -217,4 +217,3 @@ return [
         ],
     ]
 ];
-
