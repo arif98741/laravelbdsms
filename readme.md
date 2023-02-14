@@ -221,6 +221,7 @@ do that....
 
 For clear documentation read this blog
 in  [Medium!](https://send-sms-using-laravelbdsms.medium.com/laravel-sms-gateway-package-for-bangladesh-e70af99f2060)
+and also you can download several sms providers documentations as pdf from [this link!](https://github.com/arif98741/laravelbdsms/archive/refs/heads/doc.zip)
 
 
 Special thanks to <br>
