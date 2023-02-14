@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## [v1.0.47.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.2) - 2023-02-14 19:49:26
+
+## What's Changed
+* Update sms.php by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/26
+* Update sms.php by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/27
+
+## New Contributors
+* @sim8568X made their first contribution in https://github.com/arif98741/laravelbdsms/pull/26
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.47.0...v1.0.47.2
+
+### Bug Fixes
+
+- general:
+  - conflicts ([1466756](https://github.com/arif98741/laravelbdsms/commit/1466756dbb687ab9795827984de1d0c4279d3b3b))
+
 ## [v1.0.47.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.0) - 2023-02-06 18:12:15
 
 Fix conflicts
