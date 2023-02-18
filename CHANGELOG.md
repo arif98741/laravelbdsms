@@ -1,20 +1,15 @@
 # CHANGELOG
 
-## [v1.0.47.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.2) - 2023-02-14 19:49:26
+## [v1.0.48.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.48.1) - 2023-02-18 14:08:34
 
-## What's Changed
-* Update sms.php by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/26
-* Update sms.php by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/27
-
-## New Contributors
-* @sim8568X made their first contribution in https://github.com/arif98741/laravelbdsms/pull/26
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.47.0...v1.0.47.2
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.47.2...v1.0.48.1
 
 ### Bug Fixes
 
 - general:
-  - conflicts ([1466756](https://github.com/arif98741/laravelbdsms/commit/1466756dbb687ab9795827984de1d0c4279d3b3b))
+  - fix conflicts and update readme file ([2d41524](https://github.com/arif98741/laravelbdsms/commit/2d41524d4cb071a3e8962be866cab95530df66a4))
+
+## [v1.0.47.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.2) - 2023-02-14 19:49:26
 
 ## [v1.0.47.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.0) - 2023-02-06 18:12:15
 
@@ -299,19 +294,6 @@ is for fixing bug of sending sms using masking.
 ## [v1.0.16](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.16) - 2021-07-10 06:35:39
 
 *No description*
-
-## [v1.0.15](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.15) - 2021-07-10 06:01:07
-
-*No description*
-
-## [v1.0.14](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.14) - 2021-07-09 17:37:32
-
-*No description*
-
-### Bug Fixes
-
-- general:
-  - fix minor error ([43b5ec1](https://github.com/arif98741/laravelbdsms/commit/43b5ec18c3aeb05826f1ee4928a0ea0647db83c7))
 
 ## [v1.0.13](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.13) - 2021-07-08 12:41:29
 
