@@ -192,6 +192,7 @@ $status = $sender->send();
 | SmartLabSMS     | user, password, sender                               | Done   | -                      |
 | Sslsms          | api_token, sid, csms_id                              | Done   | -                      |
 | Tense           | user, password, campaign, masking                    | Done   | -                      |
+| Trubosms        | api_token, sender_id                                 | Done   | -                      |
 | TwentyFourSmsBD | apiKey, sender_id                                    | Done   | -                      |
 | Viatech         | api_key, mask                                        | Done   | -                      |
 
