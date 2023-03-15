@@ -192,6 +192,7 @@ $status = $sender->send();
 | RedmoITSms      | api_token, sender_id                                              | Support closed | -                                                           |
 | SmartLabSMS     | user, password, sender                                            | Done           | -                      | -                                                           |
 | SmsinBD         | api_token, senderid                                               | Done           | 01777-333677                      | -                                                           |
+| SmsQ            | sender_id, client_id, api_key                                            | Done           |                      | -                                                           |
 | SMSNet24        | user_id, user_password, route_id(optional), sms_type_id(optional) | Done           | -                      | admin2@digitallabbd.com, +880 1705 691269, +880 1733393 712 |
 | SmsNoc          | sender_id, bearer_token                                           | Done           | -                      |  |
 | Sslsms          | api_token, sid, csms_id                                           | Done           | -                      | -                                                           |
