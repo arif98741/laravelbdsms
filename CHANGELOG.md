@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [v1.0.49.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.0) - 2023-03-16 08:04:21
+
+Merge pull request #31 from sim8568X/master
+
+Merge Request for Adding SmsQ Gateway
+
 ## [v1.0.48.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.48.1) - 2023-02-18 14:08:34
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.47.2...v1.0.48.1
@@ -294,6 +300,19 @@ is for fixing bug of sending sms using masking.
 ## [v1.0.16](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.16) - 2021-07-10 06:35:39
 
 *No description*
+
+## [v1.0.15](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.15) - 2021-07-10 06:01:07
+
+*No description*
+
+## [v1.0.14](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.14) - 2021-07-09 17:37:32
+
+*No description*
+
+### Bug Fixes
+
+- general:
+  - fix minor error ([43b5ec1](https://github.com/arif98741/laravelbdsms/commit/43b5ec18c3aeb05826f1ee4928a0ea0647db83c7))
 
 ## [v1.0.13](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.13) - 2021-07-08 12:41:29
 
