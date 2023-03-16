@@ -42,6 +42,7 @@ use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\SmsinBD;
 use Xenon\LaravelBDSms\Provider\SmsNet24;
 use Xenon\LaravelBDSms\Provider\SMSNoc;
+use Xenon\LaravelBDSms\Provider\SmsQ;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
 use Xenon\LaravelBDSms\Provider\TruboSms;
@@ -196,6 +197,11 @@ return [
         SmsinBD::class => [
             'api_token' => env('SMSINBD_API_TOKEN', ''),
             'senderid' => env('SMSINBD_SENDERID', ''),
+        ],
+        SmsQ::class => [
+            'sender_id' => env('SMS_SMSQ_SENDER_ID', ''),
+            'api_key' => env('SMS_SMSQ_API_KEY', ''),
+            'client_id' => env('SMS_SMSQ_CLIENT_ID', ''),
         ],
         Ssl::class => [
             'api_token' => env('SMS_SSL_API_TOKEN', ''),
