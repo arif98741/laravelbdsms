@@ -144,8 +144,12 @@ class Sender
             throw  new ParameterException('config must be an array');
         }
 
+        if (empty($this->getMobile())) {
+            throw new ParameterException('Mobile number should not be empty');
+        }
+
         if (empty($this->getMessage())) {
-            throw new ParameterException('Message should not be empty');
+            throw new ParameterException('Message text should not be empty');
         }
 
         $this->provider->errorException();
@@ -212,27 +216,33 @@ class Sender
 
     /**
      * Return this class object
-     * @param $ProviderClass
+     * @param $providerClass
      * @return Sender
      * @throws RenderException
      * @since v1.0.0
      */
-    public function setProvider($ProviderClass): Sender
+    public function setProvider($providerClass): Sender
     {
+
         try {
-            if (!class_exists($ProviderClass)) {
-                throw new RenderException("Provider '$ProviderClass' not found");
+
+            if ($providerClass === null) {
+                throw new RenderException("Provider is empty. Be sure, you have run 'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider' and also you have set provider using setProvider(Provider::class) method. Set default provider in config/sms.php if you use SMS::shoot() facade");
             }
 
-            if (!is_subclass_of($ProviderClass, AbstractProvider::class)) {
-                throw new RenderException("Provider '$ProviderClass' is not a " . AbstractProvider::class);
+            if (!class_exists($providerClass)) {
+                throw new RenderException("Sms Gateway Provider '$providerClass' not found. ");
+            }
+
+            if (!is_subclass_of($providerClass, AbstractProvider::class)) {
+                throw new RenderException("Provider '$providerClass' is not a " . AbstractProvider::class);
             }
         } catch (RenderException $exception) {
 
             throw new RenderException($exception->getMessage());
         }
 
-        $this->provider = new $ProviderClass($this);
+        $this->provider = new $providerClass($this);
         return $this;
     }
 
