@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v1.0.49.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.1) - 2023-04-03 08:40:05
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.47.0...v1.0.49.1
+
 ## [v1.0.49.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.0) - 2023-03-16 08:04:21
 
 Merge pull request #31 from sim8568X/master
