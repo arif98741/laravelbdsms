@@ -46,6 +46,7 @@ use Xenon\LaravelBDSms\Provider\SmsQ;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
 use Xenon\LaravelBDSms\Provider\TruboSms;
+use Xenon\LaravelBDSms\Provider\Twenty4BulkSms;
 use Xenon\LaravelBDSms\Provider\TwentyFourSmsBD;
 use Xenon\LaravelBDSms\Provider\Viatech;
 
@@ -226,7 +227,7 @@ return [
         Viatech::class => [
             'api_key' => env('SMS_VIATECH_API_KEY', ''),
             'mask' => env('SMS_VIATECH_MASK', ''),
-        ], 
+        ],
         Twenty4BulkSms::class => [
             'sender_id' => env('SMS_TWENTYFOUR_BULKSMS_SENDER_ID', ''),
             'user_email' => env('SMS_TWENTYFOUR_BULKSMS_USER_EMAIL', ''),
