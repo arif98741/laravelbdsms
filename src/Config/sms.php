@@ -44,6 +44,7 @@ use Xenon\LaravelBDSms\Provider\SmsNet24;
 use Xenon\LaravelBDSms\Provider\SMSNoc;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
+use Xenon\LaravelBDSms\Provider\TruboSms;
 use Xenon\LaravelBDSms\Provider\TwentyFourSmsBD;
 use Xenon\LaravelBDSms\Provider\Viatech;
 
@@ -206,6 +207,11 @@ return [
             'password' => env('SMS_TENSE_PASSWORD', ''),
             'campaign' => env('SMS_TENSE_CAMPAIGN', ''),
             'masking' => env('SMS_TENSE_MASKING', ''),
+        ],
+        TruboSms::class => [
+            'sender_id' => env('SMS_TRUBOSMS_SENDER_ID', ''),
+            'api_token' => env('SMS_TRUBOSMS_API_TOKEN', ''),
+            'type' => env('SMS_TRUBOSMS_TYPE', 'string'),
         ],
         TwentyFourSmsBD::class => [
             'apiKey' => env('SMS_TWENTYFOURSMSBD_APIKEY', ''),
