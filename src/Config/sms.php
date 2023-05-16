@@ -226,6 +226,11 @@ return [
         Viatech::class => [
             'api_key' => env('SMS_VIATECH_API_KEY', ''),
             'mask' => env('SMS_VIATECH_MASK', ''),
+        ], 
+        Twenty4BulkSms::class => [
+            'sender_id' => env('SMS_TWENTYFOUR_BULKSMS_SENDER_ID', ''),
+            'user_email' => env('SMS_TWENTYFOUR_BULKSMS_USER_EMAIL', ''),
+            'api_key' => env('SMS_TWENTYFOUR_BULKSMS_APP_KEY', ''),
         ],
     ]
 ];
