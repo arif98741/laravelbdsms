@@ -49,6 +49,7 @@ use Xenon\LaravelBDSms\Provider\TruboSms;
 use Xenon\LaravelBDSms\Provider\Twenty4BulkSms;
 use Xenon\LaravelBDSms\Provider\TwentyFourSmsBD;
 use Xenon\LaravelBDSms\Provider\Viatech;
+use Xenon\LaravelBDSms\Provider\RouteMobile;
 
 return [
     /*
@@ -232,6 +233,11 @@ return [
             'sender_id' => env('SMS_TWENTYFOUR_BULKSMS_SENDER_ID', ''),
             'user_email' => env('SMS_TWENTYFOUR_BULKSMS_USER_EMAIL', ''),
             'api_key' => env('SMS_TWENTYFOUR_BULKSMS_APP_KEY', ''),
+        ],
+        RouteMobile::class => [
+            'username' => env('ROUTE_MOBILE_USERNAME', ''),
+            'password' => env('ROUTE_MOBILE_PASSWORD', ''),
+            'source' => env('ROUTE_MOBILE_SOURCE', '')
         ],
     ]
 ];
