@@ -9,6 +9,7 @@ use Xenon\LaravelBDSms\Sender;
 
 class BoomCast extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php';
     /**
      * BoomCast Constructor
      * @param Sender $sender
@@ -43,7 +44,7 @@ class BoomCast extends AbstractProvider
             "message" => $text,
         ];
 
-        $requestObject = new Request('https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue);
 
         $response = $requestObject->get();
         if ($queue) {

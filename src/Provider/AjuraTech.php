@@ -19,6 +19,7 @@ use Xenon\LaravelBDSms\Sender;
 
 class AjuraTech extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://smpp.ajuratech.com:7790/sendtext?json';
     /**
      * Ajuratech constructor.
      * @param Sender $sender
@@ -52,7 +53,7 @@ class AjuraTech extends AbstractProvider
             'messageContent' => $text,
         ];
 
-        $requestObject = new Request('https://smpp.ajuratech.com:7790/sendtext?json', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue);
         $response = $requestObject->get();
         if ($queue) {
             return true;

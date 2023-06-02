@@ -19,6 +19,7 @@ use Xenon\LaravelBDSms\Sender;
 
 class BulkSmsBD extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://bulksmsbd.net/api/smsapi';
     /**
      * BulkSmsBD constructor.
      * @param Sender $sender
@@ -52,7 +53,7 @@ class BulkSmsBD extends AbstractProvider
 
 
 
-        $requestObject = new Request('https://bulksmsbd.net/api/smsapi', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue);
         $response = $requestObject->get();
         if ($queue) {
             return true;
