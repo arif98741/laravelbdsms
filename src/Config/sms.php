@@ -42,9 +42,11 @@ use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\SmsinBD;
 use Xenon\LaravelBDSms\Provider\SmsNet24;
 use Xenon\LaravelBDSms\Provider\SMSNoc;
+use Xenon\LaravelBDSms\Provider\SmsQ;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
 use Xenon\LaravelBDSms\Provider\TruboSms;
+use Xenon\LaravelBDSms\Provider\Twenty4BulkSms;
 use Xenon\LaravelBDSms\Provider\TwentyFourSmsBD;
 use Xenon\LaravelBDSms\Provider\Viatech;
 
@@ -197,6 +199,11 @@ return [
             'api_token' => env('SMSINBD_API_TOKEN', ''),
             'senderid' => env('SMSINBD_SENDERID', ''),
         ],
+        SmsQ::class => [
+            'sender_id' => env('SMS_SMSQ_SENDER_ID', ''),
+            'api_key' => env('SMS_SMSQ_API_KEY', ''),
+            'client_id' => env('SMS_SMSQ_CLIENT_ID', ''),
+        ],
         Ssl::class => [
             'api_token' => env('SMS_SSL_API_TOKEN', ''),
             'sid' => env('SMS_SSL_SID', ''),
@@ -220,6 +227,11 @@ return [
         Viatech::class => [
             'api_key' => env('SMS_VIATECH_API_KEY', ''),
             'mask' => env('SMS_VIATECH_MASK', ''),
+        ],
+        Twenty4BulkSms::class => [
+            'sender_id' => env('SMS_TWENTYFOUR_BULKSMS_SENDER_ID', ''),
+            'user_email' => env('SMS_TWENTYFOUR_BULKSMS_USER_EMAIL', ''),
+            'api_key' => env('SMS_TWENTYFOUR_BULKSMS_APP_KEY', ''),
         ],
     ]
 ];

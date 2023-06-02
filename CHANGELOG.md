@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## [v1.0.49.3](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.3) - 2023-04-03 09:00:57
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.49.2...v1.0.49.3
+
+## [v1.0.49.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.2) - 2023-04-03 08:50:16
+
+*No description*
+
+## [v1.0.49.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.1) - 2023-04-03 08:40:05
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.47.0...v1.0.49.1
+
+## [v1.0.49.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.0) - 2023-03-16 08:04:21
+
+Merge pull request #31 from sim8568X/master
+
+Merge Request for Adding SmsQ Gateway
+
+## [v1.0.48.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.48.1) - 2023-02-18 14:08:34
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.47.2...v1.0.48.1
+
+### Bug Fixes
+
+- general:
+  - fix conflicts and update readme file ([2d41524](https://github.com/arif98741/laravelbdsms/commit/2d41524d4cb071a3e8962be866cab95530df66a4))
+
+## [v1.0.47.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.2) - 2023-02-14 19:49:26
+
 ## [v1.0.47.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.47.0) - 2023-02-06 18:12:15
 
 Fix conflicts

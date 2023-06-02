@@ -227,7 +227,7 @@ class Sender
         try {
 
             if ($providerClass === null) {
-                throw new RenderException("Provider is empty. Be sure, you have run 'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider' and also you have set provider using setProvider(Provider::class) method. Set default provider in config/sms.php if you use SMS::shoot() facade");
+                throw new RenderException("Provider is empty. Be sure to run 'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider' and also set provider using setProvider() method. Set default provider from config/sms.php if you use Xenon\LaravelBDSms\Facades\SMS::shoot() facade");
             }
 
             if (!class_exists($providerClass)) {
