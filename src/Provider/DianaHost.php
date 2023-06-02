@@ -17,6 +17,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class DianaHost extends AbstractProvider
 {
+    private string $apiEndpoint ='http://esms.dianahost.com/smsapi';
+
     /**
      * DianaHost constructor.
      * @param Sender $sender
@@ -45,7 +47,7 @@ class DianaHost extends AbstractProvider
         ];
 
 
-        $requestObject = new Request('http://esms.dianahost.com/smsapi', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue);
         $response = $requestObject->get();
         if ($queue) {
             return true;

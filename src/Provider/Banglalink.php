@@ -18,6 +18,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Banglalink extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://vas.banglalink.net/sendSMS/sendSMS';
+
     /**
      * Banglalink constructor.
      * @param Sender $sender
@@ -46,7 +48,7 @@ class Banglalink extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request('https://vas.banglalink.net/sendSMS/sendSMS', [], $queue);
+        $requestObject = new Request($this->apiEndpoint, [], $queue);
         $requestObject->setFormParams($formParams);
         $response = $requestObject->post();
         if ($queue) {

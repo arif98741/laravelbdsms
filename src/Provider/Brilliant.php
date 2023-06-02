@@ -17,6 +17,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Brilliant extends AbstractProvider
 {
+    private string $apiEndpoint ='http://sms.brilliant.com.bd:6005/api/v2/SendSMS';
+
     /**
      * Brilliant constructor.
      * @param Sender $sender
@@ -45,7 +47,7 @@ class Brilliant extends AbstractProvider
             'Is_Unicode' => true,
         ];
 
-        $requestObject = new Request('http://sms.brilliant.com.bd:6005/api/v2/SendSMS', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue);
         $response = $requestObject->get();
         if ($queue) {
             return true;

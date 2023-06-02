@@ -18,6 +18,7 @@ use Xenon\LaravelBDSms\Sender;
 
 class BDBulkSms extends AbstractProvider
 {
+    private string $apiEndpoint = 'http://api.greenweb.com.bd/api2.php';
     /**
      * BDBulkSms constructor.
      * @param Sender $sender
@@ -42,7 +43,7 @@ class BDBulkSms extends AbstractProvider
             'to' => $number,
             'message' => $text,
         ];
-        $requestObject = new Request('http://api.greenweb.com.bd/api2.php', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue);
 
         $response = $requestObject->get();
         if ($queue) {
