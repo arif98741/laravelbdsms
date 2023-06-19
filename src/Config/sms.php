@@ -99,8 +99,7 @@ return [
             'ClientId' => env('SMS_BRILLIANT_CLIENT_ID', ''),
         ],
         BulkSmsBD::class => [
-            'username' => env('SMS_BULK_SMS_BD_USERNAME', ''),
-            'password' => env('SMS_BULK_SMS_BD_PASSWORD', ''),
+            'api_key' => env('SMS_BULK_SMS_BD_API_KEY', ''),
         ],
         DianaHost::class => [
             'senderid' => env('SMS_DIANA_HOST_SENDER_ID', ''),

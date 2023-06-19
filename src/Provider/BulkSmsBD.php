@@ -51,8 +51,6 @@ class BulkSmsBD extends AbstractProvider
             $query ['senderid'] = $config['senderid'];
         }
 
-
-
         $requestObject = new Request($this->apiEndpoint, $query, $queue);
         $response = $requestObject->get();
         if ($queue) {
