@@ -27,8 +27,7 @@
             ],
             "aliases": {
                 "SMS": "Xenon\\LaravelBDSms\\Facades\\SMS",
-                "LaravelBDSms": "Xenon\\LaravelBDSms\\Facades\\SMS",
-                "LaravelBDSmsLogger": "Xenon\\LaravelBDSms\\Facades\\Logger"
+                "LaravelBDSms": "Xenon\\LaravelBDSms\\Facades\\SMS"
             }
         }
     }
