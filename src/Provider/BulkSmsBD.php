@@ -42,6 +42,7 @@ class BulkSmsBD extends AbstractProvider
 
         $query = [
             'api_key' => $config['api_key'],
+            'senderid' => $config['senderid'],
             'type' => 'text',
             'number' => $number,
             'message' => $text,
