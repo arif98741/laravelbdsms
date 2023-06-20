@@ -100,6 +100,7 @@ return [
         ],
         BulkSmsBD::class => [
             'api_key' => env('SMS_BULK_SMS_BD_API_KEY', ''),
+            'senderid' => env('SMS_BULK_SMS_BD_SENDERID', ''),
         ],
         DianaHost::class => [
             'senderid' => env('SMS_DIANA_HOST_SENDER_ID', ''),
