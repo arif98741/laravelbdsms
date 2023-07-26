@@ -27,6 +27,7 @@ use Xenon\LaravelBDSms\Provider\DianaSms;
 use Xenon\LaravelBDSms\Provider\DnsBd;
 use Xenon\LaravelBDSms\Provider\ElitBuzz;
 use Xenon\LaravelBDSms\Provider\Esms;
+use Xenon\LaravelBDSms\Provider\Grameenphone;
 use Xenon\LaravelBDSms\Provider\GreenWeb;
 use Xenon\LaravelBDSms\Provider\Infobip;
 use Xenon\LaravelBDSms\Provider\MDL;
@@ -121,6 +122,11 @@ return [
         Esms::class => [
             'sender_id' => env('SMS_ESMS_SENDER_ID', ''),
             'api_token' => env('SMS_ESMS_API_TOKEN', ''),
+        ],
+        Grameenphone::class => [
+            'username' => env('SMS_GRAMEENPHONE_USERNAME', ''),
+            'password' => env('SMS_GRAMEENPHONE_PASSWORD', ''),
+            'messagetype' => env('SMS_GRAMEENPHONE_MESSAGETYPE', 1),
         ],
         GreenWeb::class => [
             'token' => env('SMS_GREEN_WEB_TOKEN', ''),
