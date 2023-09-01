@@ -62,7 +62,7 @@ php artisan config:cache && php artisan migrate
 ## Usage
 
 ### Simply use the facade 
-`Note: For sending message using facade you must have to set .env credentials. Find .env credentials for different providers from inside config/sms.php)`
+`Note: For sending message using facade you must have to set .env credentials and set default provider; Find .env credentials for different providers from inside config/sms.php)`
 <pre>
 use Xenon\LaravelBDSms\Facades\SMS;
 
