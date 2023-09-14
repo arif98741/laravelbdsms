@@ -61,7 +61,8 @@ php artisan config:cache && php artisan migrate
 
 ## Usage
 
-### Simply use the facade
+### Simply use the facade 
+`Note: For sending message using facade you must have to set .env credentials. Find .env credentials for different providers from inside config/sms.php)`
 <pre>
 use Xenon\LaravelBDSms\Facades\SMS;
 
@@ -182,18 +183,20 @@ $status = $sender->send();
 | DianaSMS        | ApiKey, ClientId, SenderId                                        | Done           | -                      | -                                                           |
 | Esms            | api_token, sender_id                                              | Done           | -                      | -                                                           |
 | ElitBuzz        | api_key, type, senderid                                           | Done           | not tested yet in live | -                                                           |
+| Grameenphone    | username, password, messagetype                                   | Done           | not tested yet in live | -                                                           |
 | Infobip         | user, password                                                    | Done           | not tested yet in live | -                                                           |
+| Lpeek           | acode, apiKey, requestID, masking                                        | Done           | -                      | -                                                           |
 | MDL             | api_key, type, senderid                                           | Done           | not tested yet in live | -                                                           |
 | Metronet        | api_key, mask                                                     | Done           | -                      | -                                                           |
 | MimSms          | api_key, type, senderid                                           | Done           | -                      | -                                                           |
 | Mobireach       | Username,Password, From                                           | Done           | -                      | -                                                           |
 | NovocomBD       | ApiKey , ClientId   , SenderId                                    | Done           | -                      | -                                                           |
 | OnnoRokomSMS    | userName, userPassword, type, maskName, campaignName              | Done           | not tested yet in live | -                                                           |
-| RedmoITSms      | api_token, sender_id                                              | Support closed | -                                                           |
+| RedmoITSms      | api_token, sender_id                                              | Support closed | -                      |
 | SmartLabSMS     | user, password, sender                                            | Done           | -                      | -                                                           |
-| SmsinBD         | api_token, senderid                                               | Done           | 01777-333677                      | -                                                           |
-| SmsQ            | sender_id, client_id, api_key                                            | Done           |                      | -                                                           |
-| SMSNet24        | user_id, user_password, route_id(optional), sms_type_id(optional) | Done           | -                      | admin2@digitallabbd.com, +880 1705 691269, +880 1733393 712 |
+| SmsinBD         | api_token, senderid                                               | Done           |                        | -                                                           |
+| SmsQ            | sender_id, client_id, api_key                                     | Done           |                        | -                                                           |
+| SMSNet24        | user_id, user_password, route_id(optional), sms_type_id(optional) | Done           | -                      |  |
 | SmsNoc          | sender_id, bearer_token                                           | Done           | -                      |  |
 | Sslsms          | api_token, sid, csms_id                                           | Done           | -                      | -                                                           |
 | Tense           | user, password, campaign, masking                                 | Done           | -                      | -                                                           |

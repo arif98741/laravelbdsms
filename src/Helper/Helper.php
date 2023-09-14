@@ -46,4 +46,17 @@ class Helper
         }
         return '88' . $mobile;
     }
+
+    /**
+     * @param string $text
+     * @return string
+     * @since v1.0.52.0-beta
+     * @version v1.0.52.0-beta
+     */
+    public static function ensureNumberStartsWith88(string $text): string {
+        if (!str_starts_with($text, '88')) {
+            $text = '88' . $text;
+        }
+        return $text;
+    }
 }
