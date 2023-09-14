@@ -30,6 +30,7 @@ use Xenon\LaravelBDSms\Provider\Esms;
 use Xenon\LaravelBDSms\Provider\Grameenphone;
 use Xenon\LaravelBDSms\Provider\GreenWeb;
 use Xenon\LaravelBDSms\Provider\Infobip;
+use Xenon\LaravelBDSms\Provider\Lpeek;
 use Xenon\LaravelBDSms\Provider\MDL;
 use Xenon\LaravelBDSms\Provider\Metronet;
 use Xenon\LaravelBDSms\Provider\MimSms;
@@ -136,6 +137,14 @@ return [
             'user' => env('SMS_INFOBIP_USER', ''),
             'password' => env('SMS_INFOBIP_PASSWORD', ''),
             'from' => env('SMS_INFOBIP_FROM', ''),
+        ],
+        Lpeek::class => [
+            'acode' => env('SMS_LPEEK_ACODE', ''),
+            'apiKey' => env('SMS_LPEEK_APIKEY', ''),
+            'requestID' => env('SMS_LPEEK_REQUESTID', ''),
+            'masking' => env('SMS_LPEEK_MASKING', ''),
+            'is_unicode' => env('SMS_LPEEK_IS_UNICODE', '0'),
+            'transactionType' => env('SMS_LPEEK_TRANSACTIONTYPE', 'T'),
         ],
         MDL::class => [
             'senderid' => env('SMS_MDL_SENDER_ID', ''),
