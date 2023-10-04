@@ -56,18 +56,26 @@ use Xenon\LaravelBDSms\Provider\Viatech;
 return [
     /*
      *-----------------------------------------------------------------------------------------------
-     | Sms Log will mainly save sms request, provider name, response in database table called lbs_log
-     | You Can change sms log to true or false according to your need. Default is true
+     | Sms Log will save sms request, provider name, and response in database table called `lbs_log`
+     | You can change sms log to true/false according to your need. Default is set to true
      |---------------------------------------------------------------------------------------------
      */
     'sms_log' => false,
 
     /*
      *-----------------------------------------------------------------------------------------------
-     | Default provider will be used during usage of facade ; SMS
+     | Default provider will be used during usage of facade( Xenon\LaravelBDSms\Facades\SMS )
      |---------------------------------------------------------------------------------------------
      */
     'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
+    /*
+     *---------------------------------------------------------------------------------------------------------------
+     | Providers are companies or gateways those provide sms credentials as well as sell sms to customers.
+     | This providers key store all the necessary credentials needed for using inside .env file; Be sure to use this
+     | credentials in your .env file before sending sms. This will be used while you are sending sms using
+     | facade(Xenon\LaravelBDSms\Facades\SMS)
+     |-------------------------------------------------------------------------------------------------------------
+     */
     'providers' => [
         Adn::class => [
             'senderid' => env('SMS_ADN_SENDER_ID', ''),
@@ -81,7 +89,9 @@ return [
             'secretkey' => env('SMS_AjuraTechReveSms_API_SECRET_KEY', ''),
             'callerID' => env('SMS_AjuraTechReveSms_CALLER_ID', ''),
         ],
-        Alpha::class => [],
+        Alpha::class => [
+            'api_key' => env('SMS_ALPHA_SMS_API_KEY'),
+        ],
         Banglalink::class => [
             'userID' => env('SMS_BANGLALINK_USERID', ''),
             'passwd' => env('SMS_BANGLALINK_PASSWD', ''),
