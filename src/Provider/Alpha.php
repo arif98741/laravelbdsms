@@ -1,7 +1,7 @@
 <?php
 /*
- *  Last Modified: 6/28/21, 11:18 PM
- *  Copyright (c) 2021
+ *  Last Modified: 10/04/23, 11:50 PM
+ *  Copyright (c) 2023
  *  -created by Ariful Islam
  *  -All Rights Preserved By
  *  -If you have any query then knock me at
@@ -11,56 +11,76 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
+use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Request;
+use Xenon\LaravelBDSms\Sender;
 
-class Alpha implements ProviderRoadmap
+class Alpha extends AbstractProvider
 {
-
-    public function getData()
+    /**
+     * Alpha SMS constructor.
+     * @param Sender $sender
+     */
+    public function __construct(Sender $sender)
     {
-        // TODO: Implement getData() method.
+        $this->senderObject = $sender;
     }
 
-    public function setData()
-    {
-        // TODO: Implement setData() method.
-    }
-
+    /**
+     * Send Request To Api and Send Message
+     * @throws RenderException
+     */
     public function sendRequest()
     {
-        $username = "YOUR_API_USERNAME";
-        $hash = "YOUR_API_HASH_TOKEN";
-        $numbers = "017xxxxxxxx,018xxxxxxxx";
-        $message = "Simple text message.";
+        $mobile = $this->senderObject->getMobile();
+        $text = $this->senderObject->getMessage();
+        $config = $this->senderObject->getConfig();
+        $queue = $this->senderObject->getQueue();
 
+        $query = [
+            'api_key' => $config['api_key'],
+            'msg' => $text,
+            'to' => $mobile,
+        ];
 
-        $params = array('app' => 'ws', 'u' => $username, 'h' => $hash, 'op' => 'pv', 'unicode' => '1', 'to' => $numbers, 'msg' => $message);
+        /**
+         * The schedule date and time to send your message. Date and time must be formatted as Y-m-d H:i:s(eg. 2023-10-05 01:36:03)
+         */
+        if (isset($config['schedule'])) {
+            $query['schedule'] = $config['schedule'];
+        }
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://alphasms.biz/index.php?" . http_build_query($params, "", "&"));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json", "Accept:application/json"));
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        /**
+         * If you have an approved Sender ID, you can use this parameter to set your Sender ID as from in you messages.
+         */
+        if (isset($config['sender_id'])) {
+            $query['sender_id'] = $config['sender_id'];
+        }
+        if (is_array($mobile)) {
+            $query['to'] =  implode(',', $mobile);
+        }
 
-        curl_exec($ch);
-        curl_close($ch);
+        $requestObject = new Request('https://api.sms.net.bd/sendsms', $query, $queue);
+
+        $response = $requestObject->post();
+        if ($queue) {
+            return true;
+        }
+        $body = $response->getBody();
+        $smsResult = $body->getContents();
+        $data['number'] = $mobile;
+        $data['message'] = $text;
+        return $this->generateReport($smsResult, $data)->getContent();
     }
 
-
     /**
-     * @param $result
-     * @param $data
-     * @return void
+     * @throws RenderException
      */
-    public function generateReport($result, $data)
+    public function errorException(): void
     {
-        // TODO: Implement generateReport() method.
-    }
+        if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
+            throw new RenderException('api_key key is absent in configuration');
+        }
 
-    /**
-     * @return void
-     */
-    public function errorException()
-    {
-        // TODO: Implement errorException() method.
     }
 }

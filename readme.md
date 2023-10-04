@@ -175,6 +175,7 @@ $status = $sender->send();
 |-----------------|-------------------------------------------------------------------|------------------|----------------|------------------------|---------|
 | AjuraTech       | apikey, secretkey , callerID                                      | -                | Done           | -                      | -       |
 | Adn             | api_key, type, senderid                                           | -                | Done           | -                      | -       |
+| Alpha           | api_key                                                           | Yes              | Done           | -                      | -       |
 | Banglalink      | userID, passwd , sender                                           | -                | Done           | -                      | -       |
 | BDBulkSMS       | token                                                             | -                | Done           | -                      | -       |
 | BoomCast        | masking  , userName ,   password                                  | -                | Done           | -                      | -       |
