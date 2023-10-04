@@ -36,6 +36,7 @@ use Xenon\LaravelBDSms\Provider\Metronet;
 use Xenon\LaravelBDSms\Provider\MimSms;
 use Xenon\LaravelBDSms\Provider\Mobireach;
 use Xenon\LaravelBDSms\Provider\Mobishasra;
+use Xenon\LaravelBDSms\Provider\Muthofun;
 use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\RedmoItSms;
@@ -169,6 +170,10 @@ return [
             'user' => env('SMS_MOBISHASTRA_USERNAME', ''),
             'pwd' => env('SMS_MOBISHASTRA_PASSWORD', ''),
             'senderid' => env('SMS_MOBISHASTRA_SENDER_ID', ''),
+        ],
+        Muthofun::class => [
+            'api_key' => env('SMS_MUTHOFUN_API_KEY'),
+            'sender_id' => env('SMS_MUTHOFUN_SENDER_ID'),
         ],
         NovocomBd::class => [
             'SenderId' => env('SMS_NOVOCOMBD_SENDER_ID', ''),
