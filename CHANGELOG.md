@@ -2,93 +2,19 @@
 
 ## [v1.0.53.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.53.0) - 2023-10-04 18:42:06
 
-## What's Changed
-* New muthofun sms gateway added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/52
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.52.0...v1.0.53.0
-
 ## [v1.0.52.0-beta](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.52.0-beta) - 2023-09-14 09:23:29
-
-## What's Changed
-* Feat lpeek sms gateway by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/48
-* Lpeek Sms Gateway by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/49
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.51.0...v1.0.52.0-beta
 
 ## [v1.0.51.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.51.0) - 2023-07-26 17:34:29
 
-## What's Changed
-* feat: Grameenphone added as a new provider by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/45
-* Update readme.md by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/47
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.50.5...v1.0.51.0
-
 ## [v1.0.51.0-beta](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.51.0-beta) - 2023-07-26 12:16:28
-
-## What's Changed
-* feat: Grameenphone added as a new provider by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/45
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.50.5...v1.0.51.0-beta
-
-### Feature
-
-- general:
-  - Grameenphone added as a new provider ([cb53a2a](https://github.com/arif98741/laravelbdsms/commit/cb53a2a8d48a1e78ad1546d783aa9cc72811cd40)) ([#45](https://github.com/arif98741/laravelbdsms/pull/45))
 
 ## [v1.0.50.5](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.50.5) - 2023-06-20 05:41:25
 
-## What's Changed
-* Dev by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/40
-* Merge Request for Minor Fix by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/41
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.50.4...v1.0.50.5
-
-### Bug Fixes
-
-- general:
-  - Fixed Configuration Error for BulksSmsBD ([4d46613](https://github.com/arif98741/laravelbdsms/commit/4d466135a7f99131fcb5066a3bec4a16abf99361)) ([#39](https://github.com/arif98741/laravelbdsms/pull/39))
-
 ## [v1.0.50.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.50.2) - 2023-06-19 15:14:21
-
-## What's Changed
-* fix: Remove LaravelbdsmsLogger class alias by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/38
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.50.1...v1.0.50.2
-
-### Bug Fixes
-
-- general:
-  - Remove LaravelbdsmsLogger class alias ([3a10f3a](https://github.com/arif98741/laravelbdsms/commit/3a10f3a9e15e764ce85ebfc78eaa460a0a8071a3)) ([#38](https://github.com/arif98741/laravelbdsms/pull/38))
 
 ## [v1.0.50.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.50.1) - 2023-06-02 21:23:32
 
-## What's Changed
-* Merge Request for PHP 7.2 Support Removal and Others by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/37
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.50.0...v1.0.50.1
-
 ## [v1.0.50.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.50.0) - 2023-05-16 07:19:49
-
-## What's Changed
-* new provider added (https://24bulksms.com/) by @Prantho-das in https://github.com/arif98741/laravelbdsms/pull/34
-* Twenty bulk patch by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/35
-
-## New Contributors
-* @Prantho-das made their first contribution in https://github.com/arif98741/laravelbdsms/pull/34
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.49.3...v1.0.50.0
-
-### Bug Fixes
-
-- general:
-  - Pull Request for 24Bulksms reviewed and refactored ([cece66d](https://github.com/arif98741/laravelbdsms/commit/cece66d4bce3fc5cad38d3c07ec4194235a15c5b)) ([#35](https://github.com/arif98741/laravelbdsms/pull/35))
 
 ## [v1.0.49.3](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.3) - 2023-04-03 09:00:57
 
