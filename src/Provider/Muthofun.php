@@ -45,7 +45,7 @@ class Muthofun extends AbstractProvider
         ];
 
         if (is_array($mobile)) {
-            $mobile = implode(',', $mobile);
+            $query['receiver'] =  implode(',', $mobile);
         }
 
         $requestObject = new Request('https://sysadmin.muthobarta.com/api/v1/send-sms', $query, $queue);
