@@ -38,7 +38,7 @@ composer require xenon/laravelbdsms
 
 ## Step 2:
 
-Then, publish the package
+Publish the package using command
 
 ```
 php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider
@@ -61,13 +61,12 @@ php artisan config:cache && php artisan migrate
 
 ## Usage
 
-### Simply use the facade 
+### Simply use the facade
 `Note: For sending message using facade you must have to set .env credentials and set default provider; Find .env credentials for different providers from inside config/sms.php)`
 <pre>
 use Xenon\LaravelBDSms\Facades\SMS;
 
 SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
-
 SMS::shoot(['017XXYYZZAA','018XXYYZZAA'], 'helloooooooo boss!'); //for Ssl Sms Gateway Only
 </pre>
 
@@ -86,10 +85,10 @@ use Xenon\LaravelBDSms\Provider\Ssl;
 
 $response = SMS::via(Ssl::class)->shoot('017XXYYZZAA', 'helloooooooo boss!');
 </pre>
-That should do it.
 
 
-### Or, if you want to send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run.
+### Or, you can send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run. 
+Make sure you have **jobs** table and other jobs related functionalities enabled
 <pre>
 use Xenon\LaravelBDSms\Facades\SMS;
 use Xenon\LaravelBDSms\Provider\Ssl;
@@ -97,7 +96,6 @@ use Xenon\LaravelBDSms\Provider\Ssl;
 SMS::shootWithQueue("01XXXXXXXXX",'test sms');
 SMS::via(Ssl::class)->shootWithQueue("01XXXXXXXXX",'test sms');
 </pre>
-That should do it.
 
 # Log Generate
 You can generate log in database for every sms api request and save in database. For doing this. Follow below points
@@ -130,11 +128,8 @@ $sender->setConfig(
    ]
 );
 $status = $sender->send();
-</pre>
 
-### Demo Response Using SSL
-
-<pre>
+----------Demo Response Using SSL-------------
 array:6 [▼
   "status" => "response"
   "response" => "{"status":"FAILED","status_code":4003,"error_message":"IP Blacklisted"}"
@@ -143,9 +138,10 @@ array:6 [▼
   "mobile" => "017XXYYZZAA"
   "message" => "helloooooooo boss!"
 ]
+--------------------------------------------------
 </pre>
 
-## MimSMS
+## MimSms
 
 <pre>
 use Xenon\LaravelBDSms\Provider\MimSms;
@@ -168,7 +164,7 @@ $status = $sender->send();
 </pre>
 
 
-# Currently Supported SMS Gateways
+# Currently Supported Sms Gateways
 
 
 | Provider        | Credentials  Required <br>    For Sending SMS                     | Support Multiple | Status         | Comment                | Contact |
