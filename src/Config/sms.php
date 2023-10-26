@@ -39,6 +39,7 @@ use Xenon\LaravelBDSms\Provider\Mobishasra;
 use Xenon\LaravelBDSms\Provider\Muthofun;
 use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
+use Xenon\LaravelBDSms\Provider\QuickSms;
 use Xenon\LaravelBDSms\Provider\RedmoItSms;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
@@ -196,6 +197,12 @@ return [
             'type' => env('SMS_ONNOROKOM_TYPE', ''),
             'maskName' => env('SMS_ONNOROKOM_MASK', ''),
             'campaignName' => env('SMS_ONNOROKOM_CAMPAIGN_NAME', ''),
+        ],
+        QuickSms::class => [
+            'api_key' => env('SMS_QUICKSMS_API_KEY'),
+            'senderid' => env('SMS_QUICKSMS_SENDER_ID'),
+            'type' => env('SMS_QUICKSMS_SENDER_ID'),
+            'scheduledDateTime' => env('SMS_QUICKSMS_SCHEDULED_DATE_TIME'),
         ],
         RedmoItSms::class => [
             'sender_id' => env('SMS_REDMOIT_SENDER_ID', ''),
