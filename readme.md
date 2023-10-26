@@ -190,6 +190,7 @@ $status = $sender->send();
 | Muthofun        | sender_id                                                         | Yes              | Done           | -                      | -       |
 | NovocomBD       | ApiKey , ClientId   , SenderId                                    | -                | Done           | -                      | -       |
 | OnnoRokomSMS    | userName, userPassword, type, maskName, campaignName              | -                | Done           | not tested yet in live | -       |
+| QuickSms        | api_key, senderid, type,scheduledDateTime                         | -                | Done           | not tested yet in live | -       |
 | RedmoITSms      | api_token, sender_id                                              | -                | Support closed | -                      |
 | SmartLabSMS     | user, password, sender                                            | -                | Done           | -                      | -       |
 | SmsinBD         | api_token, senderid                                               | -                | Done           |                        | -       |
