@@ -18,6 +18,7 @@ use Xenon\LaravelBDSms\Facades\Logger;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Provider\AbstractProvider;
+use Xenon\LaravelBDSms\Provider\CustomGateway;
 
 class Sender
 {
@@ -37,34 +38,24 @@ class Sender
      * @var
      */
     private $config;
+
+    /**
+     * @var string
+     */
+    public string $url;
     /**
      * @var
      */
-    private $method;
+    public $method;
 
     /**
      * @var bool
      */
     private bool $queue = false;
 
-    /**
-     * @return mixed
-     */
-    public function getMethod()
-    {
-        return $this->method;
-    }
 
     /**
-     * @param mixed $method
-     */
-    public function setMethod($method): void
-    {
-        $this->method = $method;
-    }
-
-    /**
-     * @var null
+     * @var Sender|null
      */
     private static $instance = null;
 
@@ -81,12 +72,27 @@ class Sender
     public static function getInstance(): Sender
     {
         if (!isset(self::$instance)) {
-            self::$instance = new Sender;
+            self::$instance = new self;
         }
 
         return self::$instance;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
 
+    /**
+     * @param mixed $method
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
+        return self::$instance;
     }
 
     /**
@@ -130,6 +136,17 @@ class Sender
 
     }
 
+    /**
+     * @param array $headers
+     * @return Sender
+     * @since v1.0.55.0-beta
+     */
+    public function setHeaders(array $headers,bool $contentTypeJson = true): Sender
+    {
+        $this->headers = $headers;
+        $this->contentTypeJson = $contentTypeJson;
+        return self::getInstance();
+    }
 
     /**
      * Send Message Finally
@@ -144,13 +161,16 @@ class Sender
             throw  new ParameterException('config must be an array');
         }
 
-        if (empty($this->getMobile())) {
-            throw new ParameterException('Mobile number should not be empty');
+        if(!$this->provider instanceof CustomGateway){ //empty check for all providers mobile and message
+            if (empty($this->getMobile())) {
+                throw new ParameterException('Mobile number should not be empty');
+            }
+
+            if (empty($this->getMessage())) {
+                throw new ParameterException('Message text should not be empty');
+            }
         }
 
-        if (empty($this->getMessage())) {
-            throw new ParameterException('Message text should not be empty');
-        }
 
         $this->provider->errorException();
 
@@ -202,6 +222,16 @@ class Sender
     {
 
         $this->message = $message;
+        return self::getInstance();
+    }
+
+    /**
+     * @param string $url
+     * @return $this
+     */
+    public function setUrl(string $url)
+    {
+        $this->url = $url;
         return self::getInstance();
     }
 
