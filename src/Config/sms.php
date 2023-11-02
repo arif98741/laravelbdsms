@@ -27,15 +27,19 @@ use Xenon\LaravelBDSms\Provider\DianaSms;
 use Xenon\LaravelBDSms\Provider\DnsBd;
 use Xenon\LaravelBDSms\Provider\ElitBuzz;
 use Xenon\LaravelBDSms\Provider\Esms;
+use Xenon\LaravelBDSms\Provider\Grameenphone;
 use Xenon\LaravelBDSms\Provider\GreenWeb;
 use Xenon\LaravelBDSms\Provider\Infobip;
+use Xenon\LaravelBDSms\Provider\Lpeek;
 use Xenon\LaravelBDSms\Provider\MDL;
 use Xenon\LaravelBDSms\Provider\Metronet;
 use Xenon\LaravelBDSms\Provider\MimSms;
 use Xenon\LaravelBDSms\Provider\Mobireach;
 use Xenon\LaravelBDSms\Provider\Mobishasra;
+use Xenon\LaravelBDSms\Provider\Muthofun;
 use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
+use Xenon\LaravelBDSms\Provider\QuickSms;
 use Xenon\LaravelBDSms\Provider\RedmoItSms;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
@@ -53,18 +57,26 @@ use Xenon\LaravelBDSms\Provider\Viatech;
 return [
     /*
      *-----------------------------------------------------------------------------------------------
-     | Sms Log will mainly save sms request, provider name, response in database table called lbs_log
-     | You Can change sms log to true or false according to your need. Default is true
+     | Sms Log will save sms request, provider name, and response in database table called `lbs_log`
+     | You can change sms log to true/false according to your need. Default is set to true
      |---------------------------------------------------------------------------------------------
      */
     'sms_log' => false,
 
     /*
      *-----------------------------------------------------------------------------------------------
-     | Default provider will be used during usage of facade ; SMS
+     | Default provider will be used during usage of facade( Xenon\LaravelBDSms\Facades\SMS )
      |---------------------------------------------------------------------------------------------
      */
     'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
+    /*
+     *---------------------------------------------------------------------------------------------------------------
+     | Providers are companies or gateways those provide sms credentials as well as sell sms to customers.
+     | This providers key store all the necessary credentials needed for using inside .env file; Be sure to use this
+     | credentials in your .env file before sending sms. This will be used while you are sending sms using
+     | facade(Xenon\LaravelBDSms\Facades\SMS)
+     |-------------------------------------------------------------------------------------------------------------
+     */
     'providers' => [
         Adn::class => [
             'senderid' => env('SMS_ADN_SENDER_ID', ''),
@@ -78,7 +90,9 @@ return [
             'secretkey' => env('SMS_AjuraTechReveSms_API_SECRET_KEY', ''),
             'callerID' => env('SMS_AjuraTechReveSms_CALLER_ID', ''),
         ],
-        Alpha::class => [],
+        Alpha::class => [
+            'api_key' => env('SMS_ALPHA_SMS_API_KEY'),
+        ],
         Banglalink::class => [
             'userID' => env('SMS_BANGLALINK_USERID', ''),
             'passwd' => env('SMS_BANGLALINK_PASSWD', ''),
@@ -122,6 +136,11 @@ return [
             'sender_id' => env('SMS_ESMS_SENDER_ID', ''),
             'api_token' => env('SMS_ESMS_API_TOKEN', ''),
         ],
+        Grameenphone::class => [
+            'username' => env('SMS_GRAMEENPHONE_USERNAME', ''),
+            'password' => env('SMS_GRAMEENPHONE_PASSWORD', ''),
+            'messagetype' => env('SMS_GRAMEENPHONE_MESSAGETYPE', 1),
+        ],
         GreenWeb::class => [
             'token' => env('SMS_GREEN_WEB_TOKEN', ''),
         ],
@@ -130,6 +149,14 @@ return [
             'user' => env('SMS_INFOBIP_USER', ''),
             'password' => env('SMS_INFOBIP_PASSWORD', ''),
             'from' => env('SMS_INFOBIP_FROM', ''),
+        ],
+        Lpeek::class => [
+            'acode' => env('SMS_LPEEK_ACODE', ''),
+            'apiKey' => env('SMS_LPEEK_APIKEY', ''),
+            'requestID' => env('SMS_LPEEK_REQUESTID', ''),
+            'masking' => env('SMS_LPEEK_MASKING', ''),
+            'is_unicode' => env('SMS_LPEEK_IS_UNICODE', '0'),
+            'transactionType' => env('SMS_LPEEK_TRANSACTIONTYPE', 'T'),
         ],
         MDL::class => [
             'senderid' => env('SMS_MDL_SENDER_ID', ''),
@@ -155,6 +182,10 @@ return [
             'pwd' => env('SMS_MOBISHASTRA_PASSWORD', ''),
             'senderid' => env('SMS_MOBISHASTRA_SENDER_ID', ''),
         ],
+        Muthofun::class => [
+            'api_key' => env('SMS_MUTHOFUN_API_KEY'),
+            'sender_id' => env('SMS_MUTHOFUN_SENDER_ID'),
+        ],
         NovocomBd::class => [
             'SenderId' => env('SMS_NOVOCOMBD_SENDER_ID', ''),
             'ApiKey' => env('SMS_NOVOCOMBD_API_KEY', ''),
@@ -166,6 +197,12 @@ return [
             'type' => env('SMS_ONNOROKOM_TYPE', ''),
             'maskName' => env('SMS_ONNOROKOM_MASK', ''),
             'campaignName' => env('SMS_ONNOROKOM_CAMPAIGN_NAME', ''),
+        ],
+        QuickSms::class => [
+            'api_key' => env('SMS_QUICKSMS_API_KEY'),
+            'senderid' => env('SMS_QUICKSMS_SENDER_ID'),
+            'type' => env('SMS_QUICKSMS_SENDER_ID'),
+            'scheduledDateTime' => env('SMS_QUICKSMS_SCHEDULED_DATE_TIME'),
         ],
         RedmoItSms::class => [
             'sender_id' => env('SMS_REDMOIT_SENDER_ID', ''),

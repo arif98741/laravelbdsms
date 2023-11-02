@@ -15,10 +15,10 @@ use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
-class Alpha extends AbstractProvider
+class Muthofun extends AbstractProvider
 {
     /**
-     * Alpha SMS constructor.
+     * Muthofun constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -38,29 +38,22 @@ class Alpha extends AbstractProvider
         $queue = $this->senderObject->getQueue();
 
         $query = [
-            'api_key' => $config['api_key'],
-            'msg' => $text,
-            'to' => $mobile,
+            'sender_id' => $config['sender_id'],
+            'remove_duplicate' => true,
+            'receiver' => $mobile,
+            'message' => $text,
         ];
 
-        /**
-         * The schedule date and time to send your message. Date and time must be formatted as Y-m-d H:i:s(eg. 2023-10-05 01:36:03)
-         */
-        if (isset($config['schedule'])) {
-            $query['schedule'] = $config['schedule'];
-        }
-
-        /**
-         * If you have an approved Sender ID, you can use this parameter to set your Sender ID as from in you messages.
-         */
-        if (isset($config['sender_id'])) {
-            $query['sender_id'] = $config['sender_id'];
-        }
         if (is_array($mobile)) {
-            $query['to'] =  implode(',', $mobile);
+            $query['receiver'] =  implode(',', $mobile);
         }
 
-        $requestObject = new Request('https://api.sms.net.bd/sendsms', $query, $queue);
+        $requestObject = new Request('https://sysadmin.muthobarta.com/api/v1/send-sms', $query, $queue);
+
+        if (!str_starts_with($config['api_key'], "Token ")) {
+            $config['api_key'] = "Token " . $config['api_key'];
+        }
+        $requestObject->setHeaders(['Authorization' => $config['api_key']])->setContentTypeJson(true);
 
         $response = $requestObject->post();
         if ($queue) {
@@ -78,6 +71,9 @@ class Alpha extends AbstractProvider
      */
     public function errorException(): void
     {
+        if (!array_key_exists('sender_id', $this->senderObject->getConfig())) {
+            throw new RenderException('sender_id key is absent in configuration');
+        }
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
             throw new RenderException('api_key key is absent in configuration');
         }

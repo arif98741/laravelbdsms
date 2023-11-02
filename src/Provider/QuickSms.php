@@ -1,6 +1,6 @@
 <?php
 /*
- *  Last Modified: 10/04/23, 11:50 PM
+ *  Last Modified: 26/10/23, 10:40 PM
  *  Copyright (c) 2023
  *  -created by Ariful Islam
  *  -All Rights Preserved By
@@ -15,10 +15,10 @@ use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
-class Alpha extends AbstractProvider
+class QuickSms extends AbstractProvider
 {
     /**
-     * Alpha SMS constructor.
+     * QuickSms constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -39,28 +39,25 @@ class Alpha extends AbstractProvider
 
         $query = [
             'api_key' => $config['api_key'],
+            'senderid' => $config['senderid'],
+            'contacts' => $mobile,
             'msg' => $text,
-            'to' => $mobile,
         ];
 
-        /**
-         * The schedule date and time to send your message. Date and time must be formatted as Y-m-d H:i:s(eg. 2023-10-05 01:36:03)
-         */
-        if (isset($config['schedule'])) {
-            $query['schedule'] = $config['schedule'];
+        if (array_key_exists('type', $config)) {
+            $query ['type'] = $config['type'];
         }
 
-        /**
-         * If you have an approved Sender ID, you can use this parameter to set your Sender ID as from in you messages.
-         */
-        if (isset($config['sender_id'])) {
-            $query['sender_id'] = $config['sender_id'];
+        if (array_key_exists('scheduledDateTime', $config)) {
+            $query ['scheduledDateTime'] = $config['scheduledDateTime'];
         }
+
         if (is_array($mobile)) {
-            $query['to'] =  implode(',', $mobile);
+            $query['contacts'] =  implode(',', $mobile);
         }
 
-        $requestObject = new Request('https://api.sms.net.bd/sendsms', $query, $queue);
+        $requestObject = new Request('https://server1.quicksms.xyz/smsapi', $query, $queue);
+        $requestObject->setContentTypeJson(true);
 
         $response = $requestObject->post();
         if ($queue) {
@@ -81,6 +78,8 @@ class Alpha extends AbstractProvider
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
             throw new RenderException('api_key key is absent in configuration');
         }
-
+        if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
+            throw new RenderException('senderid key is absent in configuration');
+        }
     }
 }

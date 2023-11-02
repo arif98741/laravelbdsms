@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## [v1.0.54.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.54.0) - 2023-10-04 20:03:18
+
+## What's Changed
+* :bug: fixed alpha sms bug and updated with new format by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/54
+* :bug: fixed multiple number issue for muthofun sms gateway by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/55
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.53.0...v1.0.54.0
+
+## [v1.0.53.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.53.0) - 2023-10-04 18:42:06
+
+## [v1.0.52.0-beta](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.52.0-beta) - 2023-09-14 09:23:29
+
+## [v1.0.51.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.51.0) - 2023-07-26 17:34:29
+
+## [v1.0.51.0-beta](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.51.0-beta) - 2023-07-26 12:16:28
+
+## [v1.0.50.5](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.50.5) - 2023-06-20 05:41:25
+
+## [v1.0.50.2](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.50.2) - 2023-06-19 15:14:21
+
+## [v1.0.50.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.50.1) - 2023-06-02 21:23:32
+
+## [v1.0.50.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.50.0) - 2023-05-16 07:19:49
+
 ## [v1.0.49.3](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.49.3) - 2023-04-03 09:00:57
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.49.2...v1.0.49.3
