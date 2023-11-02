@@ -9,22 +9,25 @@ gateways for <strong>Laravel Framework</strong>. You can watch installation proc
 
 <!-- TOC -->
 * [Installation](#installation)
-    * [Step 1:](#step-1)
-    * [Step 2:](#step-2)
-    * [Step 3:](#step-3)
-    * [Step 4:](#step-4)
-    * [Usage](#usage)
-        * [Simply use the facade](#simply-use-the-facade)
-        * [Or, with facade alias](#or-with-facade-alias)
-        * [Or, if you need to change the default provider on the fly](#or-if-you-need-to-change-the-default-provider-on-the-fly)
-        * [Or, if you want to send message with queue. This queue will be added in your jobs. Message be sent as soon as job is run.](#or-if-you-want-to-send-message-with-queue-this-queue-will-be-added-in-your-jobs-message-be-sent-as-soon-as-job-is-run)
+  * [Step 1:](#step-1)
+  * [Step 2:](#step-2)
+  * [Step 3:](#step-3)
+  * [Step 4:](#step-4)
+  * [Usage](#usage)
+    * [Simply use the facade](#simply-use-the-facade)
+    * [Or, with facade alias](#or-with-facade-alias)
+    * [Or, if you need to change the default provider on the fly](#or-if-you-need-to-change-the-default-provider-on-the-fly)
+    * [Or, you can send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run.](#or-you-can-send-message-with-queue-this-queue-will-be-added-in-your-jobs-table-message-will-be-sent-as-soon-as-job-is-run-)
 * [Log Generate](#log-generate)
 
 * [Sample Code](#sample-code)
-    * [SSLCommerz](#sslcommerz)
-        * [Demo Response Using SSL](#demo-response-using-ssl)
-    * [MimSMS](#mimsms)
-* [Currently Supported SMS Gateways](#currently-supported-sms-gateways)
+  * [SSLCommerz](#sslcommerz)
+  * [MimSms](#mimsms)
+  * [Sms Send Using Custom Gateway](#sms-send-using-custom-gateway)
+* [Currently Supported Sms Gateways](#currently-supported-sms-gateways)
+    * [Stargazers](#stargazers)
+    * [Forkers](#forkers)
+    * [Contributors](#contributors)
 <!-- TOC -->
 
 
@@ -163,7 +166,7 @@ $sender->setConfig(
 $status = $sender->send();
 </pre>
 
-# Sms Send Using Custom Gateway
+## Sms Send Using Custom Gateway
 `We have tried to added most of the gateways of Bangladesh in this package as much as possible. But still if you don't find your expected gateway in this list, then use Custom Gateway using following code snippet.`
 <pre>
 use Xenon\LaravelBDSms\Provider\CustomGateway;
