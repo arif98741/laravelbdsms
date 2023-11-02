@@ -1,33 +1,23 @@
 # CHANGELOG
 
-## [v1.0.56.0-alpha](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.56.0-alpha) - 2023-11-02 10:54:20
-
-## What's Changed
-* Merge Request to Add Quick Sms Gateway by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/59 🔥 
-* Custom sms gateway by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/60 🔥 
-* Merge Request for Custom Gateway Addition by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/61 🔥 
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.55.0-alpha...v1.0.56.0-alpha 🔥 🔥 🔥 🔥 
-
-### Feature
-
-- general:
-  - added custom gateway message sending feature ([e334c34](https://github.com/arif98741/laravelbdsms/commit/e334c34640f1c4ab2f6780cc3788556d26a26ad2)) ([#60](https://github.com/arif98741/laravelbdsms/pull/60))
-
-## [v1.0.55.0-alpha](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.55.0-alpha) - 2023-10-26 16:47:07
+## [v1.0.56.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.56.0) - 2023-11-02 11:12:21
 
 ## What's Changed
 * fix: modified readme file by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/57
 * QuickSms Gateway Added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/58
+* Merge Request to Add Quick Sms Gateway by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/59
+* Custom sms gateway by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/60
+* Merge Request for Custom Gateway Addition by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/61
+* Update Readme File by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/62
+* Dev by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/63
+* Dev by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/64
 
 
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.54.0...v1.0.55.0-alpha
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.54.0...v1.0.56.0
 
-### Bug Fixes
+## [v1.0.56.0-alpha](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.56.0-alpha) - 2023-11-02 10:54:20
 
-- general:
-  - modified readme file ([48fed60](https://github.com/arif98741/laravelbdsms/commit/48fed60d62c98c1ae5922b02a1241078e3972929)) ([#57](https://github.com/arif98741/laravelbdsms/pull/57))
+## [v1.0.55.0-alpha](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.55.0-alpha) - 2023-10-26 16:47:07
 
 ## [v1.0.54.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.54.0) - 2023-10-04 20:03:18
 
