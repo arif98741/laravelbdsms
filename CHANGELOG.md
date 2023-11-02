@@ -1,13 +1,35 @@
 # CHANGELOG
 
-## [v1.0.54.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.54.0) - 2023-10-04 20:03:18
+## [v1.0.56.0-alpha](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.56.0-alpha) - 2023-11-02 10:54:20
 
 ## What's Changed
-* :bug: fixed alpha sms bug and updated with new format by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/54
-* :bug: fixed multiple number issue for muthofun sms gateway by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/55
+* Merge Request to Add Quick Sms Gateway by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/59 🔥 
+* Custom sms gateway by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/60 🔥 
+* Merge Request for Custom Gateway Addition by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/61 🔥 
 
 
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.53.0...v1.0.54.0
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.55.0-alpha...v1.0.56.0-alpha 🔥 🔥 🔥 🔥 
+
+### Feature
+
+- general:
+  - added custom gateway message sending feature ([e334c34](https://github.com/arif98741/laravelbdsms/commit/e334c34640f1c4ab2f6780cc3788556d26a26ad2)) ([#60](https://github.com/arif98741/laravelbdsms/pull/60))
+
+## [v1.0.55.0-alpha](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.55.0-alpha) - 2023-10-26 16:47:07
+
+## What's Changed
+* fix: modified readme file by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/57
+* QuickSms Gateway Added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/58
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.54.0...v1.0.55.0-alpha
+
+### Bug Fixes
+
+- general:
+  - modified readme file ([48fed60](https://github.com/arif98741/laravelbdsms/commit/48fed60d62c98c1ae5922b02a1241078e3972929)) ([#57](https://github.com/arif98741/laravelbdsms/pull/57))
+
+## [v1.0.54.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.54.0) - 2023-10-04 20:03:18
 
 ## [v1.0.53.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.53.0) - 2023-10-04 18:42:06
 
