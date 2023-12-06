@@ -46,6 +46,7 @@ use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\SmsinBD;
 use Xenon\LaravelBDSms\Provider\SmsNet24;
+use Xenon\LaravelBDSms\Provider\SmsNetBD;
 use Xenon\LaravelBDSms\Provider\SMSNoc;
 use Xenon\LaravelBDSms\Provider\SmsQ;
 use Xenon\LaravelBDSms\Provider\Ssl;
@@ -239,6 +240,9 @@ return [
         SmsinBD::class => [
             'api_token' => env('SMSINBD_API_TOKEN', ''),
             'senderid' => env('SMSINBD_SENDERID', ''),
+        ],
+        SmsNetBD::class => [
+            'api_key' => env('SMS_NET_BD_API_KEY'),
         ],
         SmsQ::class => [
             'sender_id' => env('SMS_SMSQ_SENDER_ID', ''),

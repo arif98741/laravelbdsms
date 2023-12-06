@@ -1,6 +1,6 @@
 <?php
 /*
- *  Last Modified: 10/04/23, 11:50 PM
+ *  Last Modified: 12/06/23, 11:50 PM
  *  Copyright (c) 2023
  *  -created by Ariful Islam
  *  -All Rights Preserved By
@@ -16,13 +16,13 @@ use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 /**
- * ====================================================================================================================
- * Alpha SMS is an advanced SMS service provider in Bangladesh with multiple services such as Bulk SMS, OTP Notification,
+ * =====================================================================================================================================
+ * SMS.NET.BD( Alpha ) SMS is an advanced SMS service provider in Bangladesh with multiple services such as Bulk SMS, OTP Notification,
  * SMS Gateway, Marketing, Masking SMS, etc. It provides a powerful and easy-to-use SMS API for developers that you can use
  * to integration with Software Applications & Websites.
- * =========================================================================================================================
+ * ======================================================================================================================================
  */
-class Alpha extends AbstractProvider
+class SmsNetBD extends AbstractProvider
 {
     /**
      * Alpha SMS constructor.
