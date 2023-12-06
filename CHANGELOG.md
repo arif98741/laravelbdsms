@@ -1,19 +1,14 @@
 # CHANGELOG
 
-## [v1.0.56.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.56.0) - 2023-11-02 11:12:21
+## [v1.0.57.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.57.0) - 2023-12-06 16:45:31
 
 ## What's Changed
-* fix: modified readme file by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/57
-* QuickSms Gateway Added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/58
-* Merge Request to Add Quick Sms Gateway by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/59
-* Custom sms gateway by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/60
-* Merge Request for Custom Gateway Addition by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/61
-* Update Readme File by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/62
-* Dev by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/63
-* Dev by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/64
+* Sms.net.bd provider added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/67
 
 
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.54.0...v1.0.56.0
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.56.0...v1.0.57.0
+
+## [v1.0.56.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.56.0) - 2023-11-02 11:12:21
 
 ## [v1.0.56.0-alpha](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.56.0-alpha) - 2023-11-02 10:54:20
 
