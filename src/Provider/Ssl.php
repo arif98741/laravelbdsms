@@ -17,6 +17,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Ssl extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://smsplus.sslwireless.com/api/v3/send-sms';
+
     /**
      * Ssl constructor.
      * @param Sender $sender
@@ -37,8 +39,8 @@ class Ssl extends AbstractProvider
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
         $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
 
         $query = [
             'api_token' => $config['api_token'],
@@ -47,8 +49,8 @@ class Ssl extends AbstractProvider
             'msisdn' => $mobile,
             'sms' => $text,
         ];
-        $api_endpoint='https://smsplus.sslwireless.com/api/v3/send-sms';
-        $requestObject = new Request($api_endpoint . (is_array($mobile) ? '/bulk' : ''), $query, $queue, [], $queueName,$tries,$backoff);
+
+        $requestObject = new Request($this->apiEndpoint . (is_array($mobile) ? '/bulk' : ''), $query, $queue, [], $queueName, $tries, $backoff);
         $response = $requestObject->post();
         if ($queue) {
             return true;

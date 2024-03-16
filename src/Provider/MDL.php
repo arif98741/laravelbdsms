@@ -17,6 +17,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class MDL extends AbstractProvider
 {
+    private string $apiEndpoint  = 'http://premium.mdlsms.com/smsapi';
+
     /**
      * MDL constructor.
      * @param Sender $sender
@@ -47,7 +49,7 @@ class MDL extends AbstractProvider
             'msg' => $text,
         ];
 
-        $requestObject = new Request('http://premium.mdlsms.com/smsapi', $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

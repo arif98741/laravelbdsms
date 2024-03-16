@@ -22,6 +22,8 @@ use Xenon\LaravelBDSms\Sender;
  */
 class Onnorokom extends AbstractProvider
 {
+    private string $apiEndpoint = "https://api2.onnorokomsms.com/sendsms.asmx?wsdl";
+
     /**
      * Onnorokom constructor.
      * @param Sender $sender
@@ -33,7 +35,7 @@ class Onnorokom extends AbstractProvider
 
     /**
      * Send Request To Server
-     * @throws RenderException
+     * @throws RenderException|\SoapFault
      */
     public function sendRequest()
     {
@@ -42,11 +44,11 @@ class Onnorokom extends AbstractProvider
             'message' => $this->senderObject->getMessage()
         ];
 
-        if (!extension_loaded('soap')) {
+        if (!extension_loaded('soap')) { //check if soap extension is enabled for onnorokom provider
             throw new RenderException("Soap extension is not enabled in your server. Please install/enable it before using onnorokom sms client");
         }
 
-        $soapClient = new SoapClient("https://api2.onnorokomsms.com/sendsms.asmx?wsdl");
+        $soapClient = new SoapClient($this->apiEndpoint);
         $config = $this->senderObject->getConfig();
         $mobile = $this->senderObject->getMobile();
         $message = $this->senderObject->getMessage();

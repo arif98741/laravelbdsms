@@ -32,7 +32,7 @@ class Log
     }
 
     /**
-     * @return Collection|LaravelBDSmsLog[]
+     * @return Collection
      * @since v1.0.35
      * @version v1.0.35
      */

@@ -45,6 +45,7 @@ class Adn extends AbstractProvider
         $requestObject = new Request($this->apiEndpoint, $query, $queue, [
             'Accept' => 'application/json'
         ], $queueName,$tries,$backoff);
+
         $requestObject->setFormParams([
             'api_key' => $config['api_key'],
             'type' => $config['type'],

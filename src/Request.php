@@ -29,11 +29,11 @@ class Request extends Controller
     /**
      * @var int
      */
-    private $tries=3;
+    private int $tries = 3;
     /**
      * @var int
      */
-    private $backoff=60;
+    private $backoff = 60;
 
 
     /**
@@ -42,8 +42,11 @@ class Request extends Controller
      * @param array $query
      * @param bool $queue
      * @param array $headers
+     * @param string $queueName
+     * @param int $tries
+     * @param int $backoff
      */
-    public function __construct($requestUrl, array $query, bool $queue = false, array $headers = [], string $queueName='default', int $tries=3, int $backoff=60)
+    public function __construct($requestUrl, array $query, bool $queue = false, array $headers = [], string $queueName = 'default', int $tries = 3, int $backoff = 60)
     {
         $this->requestUrl = $requestUrl;
         $this->query = $query;
@@ -128,7 +131,7 @@ class Request extends Controller
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getRequestUrl()
     {
@@ -144,7 +147,7 @@ class Request extends Controller
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getQuery()
     {

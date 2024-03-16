@@ -18,6 +18,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class TruboSms extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://panel.trubosms.com/api/v3/sms/send';
+
     /**
      * Trubosms constructor.
      * @param Sender $sender
@@ -52,7 +54,7 @@ class TruboSms extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request('https://panel.trubosms.com/api/v3/sms/send', $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

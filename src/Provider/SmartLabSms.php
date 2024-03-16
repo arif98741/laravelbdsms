@@ -19,6 +19,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class SmartLabSms extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://labapi.smartlabsms.com/smsapi';
+
     /**
      * SmartLabSMS constructor.
      * @param Sender $sender
@@ -50,7 +52,7 @@ class SmartLabSms extends AbstractProvider
             'smstext' => $text,
         ];
 
-        $requestObject = new Request('https://labapi.smartlabsms.com/smsapi', $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

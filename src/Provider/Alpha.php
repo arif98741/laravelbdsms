@@ -24,6 +24,8 @@ use Xenon\LaravelBDSms\Sender;
  */
 class Alpha extends AbstractProvider
 {
+    private $apiEndpoint ='https://api.sms.net.bd/sendsms';
+
     /**
      * Alpha SMS constructor.
      * @param Sender $sender
@@ -70,7 +72,7 @@ class Alpha extends AbstractProvider
             $query['to'] = implode(',', $mobile);
         }
 
-        $requestObject = new Request('https://api.sms.net.bd/sendsms', $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
 
         $response = $requestObject->post();
         if ($queue) {

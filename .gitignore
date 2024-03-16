@@ -8,3 +8,4 @@ src/Test
 vendor/
 .phpintel
 *.lock
+composer.lock

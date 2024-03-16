@@ -11,7 +11,6 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
@@ -20,6 +19,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Robi extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage';
+
     /**
      * Robi constructor.
      * @param Sender $sender
@@ -31,7 +32,6 @@ class Robi extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException
      * @throws RenderException
      */
     public function sendRequest()
@@ -41,14 +41,9 @@ class Robi extends AbstractProvider
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
         $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
 
-        $client = new Client([
-            'base_uri' => 'https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage',
-            'timeout' => 10.0,
-            'verify' => false,
-        ]);
 
         $formParams = [
             'username' => $config['username'],
@@ -57,7 +52,7 @@ class Robi extends AbstractProvider
             'Message' => $text,
         ];
 
-        $requestObject = new Request('https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage', [], $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, [], $queue, [], $queueName, $tries, $backoff);
         $requestObject->setFormParams($formParams);
         $response = $requestObject->post();
         if ($queue) {

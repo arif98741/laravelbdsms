@@ -35,7 +35,7 @@ class SendSmsJob implements ShouldQueue
      *
      * @var int
      */
-    public $backoffSeconds=60;
+    public $backoffSeconds = 60;
 
 
     /**
@@ -46,29 +46,28 @@ class SendSmsJob implements ShouldQueue
     public function __construct(array $jobDetails)
     {
         $this->jobDetails = $jobDetails;
-        if (isset($jobDetails['tries']) && is_integer($jobDetails['tries'])){
-            $this->tries=$jobDetails['tries'];
+        if (isset($jobDetails['tries']) && is_integer($jobDetails['tries'])) {
+            $this->tries = $jobDetails['tries'];
         }
-        if (isset($jobDetails['backoff']) && is_integer($jobDetails['backoff'])){
-            $this->backoffSeconds=$jobDetails['backoff'];
+        if (isset($jobDetails['backoff']) && is_integer($jobDetails['backoff'])) {
+            $this->backoffSeconds = $jobDetails['backoff'];
         }
     }
 
     /**
      * Execute the job.
      *
-     * @return ResponseInterface|null
+     * @return void
      * @throws GuzzleException|JsonException
      */
     public function handle()
     {
 
         if ($this->jobDetails['method'] == 'post') {
-            return $this->postMethodHandler();
-
+             $this->postMethodHandler();
         }
 
-        return $this->getMethodHandler();
+         $this->getMethodHandler();
     }
 
     /**

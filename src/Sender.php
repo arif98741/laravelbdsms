@@ -48,9 +48,9 @@ class Sender
      */
     public $method;
 
-    public $tries=3;
+    public $tries = 3;
 
-    public $backoff=60;
+    public $backoff = 60;
 
     /**
      * @var bool
@@ -67,7 +67,7 @@ class Sender
     /**
      * @var string
      */
-    private $queueName='default';
+    private $queueName = 'default';
 
 
     /**
@@ -132,7 +132,7 @@ class Sender
     }
 
     /**
-     * @param int $tries
+     * @param int $backoff
      * @return $this
      */
     public function setBackoff(int $backoff)
@@ -194,10 +194,11 @@ class Sender
 
     /**
      * @param array $headers
+     * @param bool $contentTypeJson
      * @return Sender
      * @since v1.0.55.0-beta
      */
-    public function setHeaders(array $headers,bool $contentTypeJson = true): Sender
+    public function setHeaders(array $headers, bool $contentTypeJson = true): Sender
     {
         $this->headers = $headers;
         $this->contentTypeJson = $contentTypeJson;
@@ -217,7 +218,7 @@ class Sender
             throw  new ParameterException('config must be an array');
         }
 
-        if(!$this->provider instanceof CustomGateway){ //empty check for all providers mobile and message
+        if (!$this->provider instanceof CustomGateway) { //empty check for all providers mobile and message
             if (empty($this->getMobile())) {
                 throw new ParameterException('Mobile number should not be empty');
             }
