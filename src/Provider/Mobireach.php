@@ -40,6 +40,9 @@ class Mobireach extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'Username' => $config['Username'],
@@ -49,7 +52,7 @@ class Mobireach extends AbstractProvider
             'Message' => $text,
         ];
 
-        $requestObject = new Request('https://api.mobireach.com.bd/SendTextMessage', $query, $queue);
+        $requestObject = new Request('https://api.mobireach.com.bd/SendTextMessage', $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

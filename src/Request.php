@@ -15,6 +15,8 @@ class Request extends Controller
 {
     private bool $queue;
 
+    private bool $queueName;
+
     private string $requestUrl;
 
     private array $query;
@@ -24,6 +26,14 @@ class Request extends Controller
     private array $headers;
 
     private bool $contentTypeJson = false;
+    /**
+     * @var int
+     */
+    private $tries=3;
+    /**
+     * @var int
+     */
+    private $backoff=60;
 
 
     /**
@@ -33,12 +43,15 @@ class Request extends Controller
      * @param bool $queue
      * @param array $headers
      */
-    public function __construct($requestUrl, array $query, bool $queue = false, array $headers = [])
+    public function __construct($requestUrl, array $query, bool $queue = false, array $headers = [], string $queueName='default', int $tries=3, int $backoff=60)
     {
         $this->requestUrl = $requestUrl;
         $this->query = $query;
         $this->queue = $queue;
         $this->headers = $headers;
+        $this->queueName = $queueName;
+        $this->tries = $tries;
+        $this->backoff = $backoff;
     }
 
 
@@ -57,7 +70,7 @@ class Request extends Controller
 
         $requestOptions = $this->optionsGetRequest($verify, $timeout);
         if ($this->getQueue()) {
-            dispatch(new SendSmsJob($requestOptions));
+            dispatch(new SendSmsJob($requestOptions))->onQueue($this->queueName);
         } else {
 
             try {
@@ -86,8 +99,7 @@ class Request extends Controller
 
         try {
             if ($this->getQueue()) {
-
-                dispatch(new SendSmsJob($requestOptions));
+                dispatch(new SendSmsJob($requestOptions))->onQueue($this->queueName);
             } else {
                 return $client->request('post', $this->requestUrl, $requestOptions);
             }
@@ -214,6 +226,8 @@ class Request extends Controller
             'verify' => $verify,
             'timeout' => $timeout,
             'method' => 'get',
+            'tries' => $this->tries,
+            'backoff' => $this->backoff
         ];
         if (!empty($this->headers)) {
             $options['headers'] = $this->headers;
@@ -239,6 +253,8 @@ class Request extends Controller
             'verify' => $verify,
             'timeout' => $timeout,
             'method' => 'post',
+            'tries' => $this->tries,
+            'backoff' => $this->backoff
         ];
         if (!empty($this->headers)) {
             $options['headers'] = $this->headers;

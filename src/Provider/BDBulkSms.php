@@ -37,13 +37,16 @@ class BDBulkSms extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'token' => $config['token'],
             'to' => $number,
             'message' => $text,
         ];
-        $requestObject = new Request($this->apiEndpoint, $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
 
         $response = $requestObject->get();
         if ($queue) {

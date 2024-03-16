@@ -48,6 +48,9 @@ class MimSms extends AbstractProvider
     {
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
         $text = $this->senderObject->getMessage();
         $number = $this->senderObject->getMobile();
 
@@ -59,7 +62,7 @@ class MimSms extends AbstractProvider
             'msg' => $text,
         ];
 
-        $requestObject = new Request('https://esms.mimsms.com/smsapi', $query, $queue);
+        $requestObject = new Request('https://esms.mimsms.com/smsapi', $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

@@ -44,7 +44,9 @@ composer require xenon/laravelbdsms
 Publish the package using command
 
 ```
-php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider
+php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider --tag="migrations"
+php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider --tag="config"
+php artisan migrate
 ```
 
 ## Step 3:

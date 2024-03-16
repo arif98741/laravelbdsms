@@ -37,6 +37,9 @@ class Brilliant extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'ApiKey' => $config['ApiKey'],
@@ -47,7 +50,7 @@ class Brilliant extends AbstractProvider
             'Is_Unicode' => true,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

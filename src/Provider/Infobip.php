@@ -47,6 +47,9 @@ class Infobip extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $url = $config['base_url'] . "/sms/2/text/single";
         $headers = $this->getHeaders($config);
@@ -56,7 +59,7 @@ class Infobip extends AbstractProvider
             'text' => $text
         ];
 
-        $requestObject = new Request($url, $query, $queue);
+        $requestObject = new Request($url, $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)
             ->setContentTypeJson(true);
         $response = $requestObject->post();

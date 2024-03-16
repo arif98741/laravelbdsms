@@ -36,6 +36,9 @@ class Ssl extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_token' => $config['api_token'],
@@ -44,12 +47,8 @@ class Ssl extends AbstractProvider
             'msisdn' => $mobile,
             'sms' => $text,
         ];
-
-        if (is_array($mobile)) {
-            $requestObject = new Request('https://smsplus.sslwireless.com/api/v3/send-sms/bulk', $query, $queue);
-        } else {
-            $requestObject = new Request('https://smsplus.sslwireless.com/api/v3/send-sms', $query, $queue);
-        }
+        $api_endpoint='https://smsplus.sslwireless.com/api/v3/send-sms';
+        $requestObject = new Request($api_endpoint . (is_array($mobile) ? '/bulk' : ''), $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->post();
         if ($queue) {
             return true;

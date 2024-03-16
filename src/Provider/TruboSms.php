@@ -37,6 +37,9 @@ class TruboSms extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'recipient' => '+88'.$number,
@@ -49,7 +52,7 @@ class TruboSms extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request('https://panel.trubosms.com/api/v3/sms/send', $query, $queue);
+        $requestObject = new Request('https://panel.trubosms.com/api/v3/sms/send', $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

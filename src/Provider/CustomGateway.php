@@ -37,9 +37,12 @@ class CustomGateway extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
         $query = $config;
 
-        $requestObject = new Request($this->senderObject->url, $query, $queue);
+        $requestObject = new Request($this->senderObject->url, $query, $queue, [], $queueName,$tries,$backoff);
 
         if (isset($this->senderObject->headers)) {
             $requestObject->setHeaders($this->senderObject->headers);
