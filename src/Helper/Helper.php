@@ -38,7 +38,7 @@ class Helper
      * @since v1.0.12
      * @version v1.0.43.1-dev
      */
-    public static function checkMobileNumberPrefixExistence($mobile)
+    public static function checkMobileNumberPrefixExistence(string $mobile)
     {
         $prefix = substr($mobile, 0, 3);
         if ($prefix === '880') {

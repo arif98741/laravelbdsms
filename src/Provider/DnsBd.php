@@ -38,7 +38,7 @@ class DnsBd extends AbstractProvider
     }
 
     /**
-     * @return mixed
+     * @return void
      */
     public function errorException()
     {

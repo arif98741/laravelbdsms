@@ -19,6 +19,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class NovocomBd extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://sms.novocom-bd.com/api/v2/SendSMS';
+
     /**
      * Novocom constructor.
      * @param Sender $sender
@@ -53,7 +55,7 @@ class NovocomBd extends AbstractProvider
             'Is_Unicode' => true,
         ];
 
-        $requestObject = new Request('https://sms.novocom-bd.com/api/v2/SendSMS', $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

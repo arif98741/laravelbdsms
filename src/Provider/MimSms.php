@@ -25,6 +25,8 @@ use Xenon\LaravelBDSms\Sender;
  */
 class MimSms extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://esms.mimsms.com/smsapi';
+
     /**
      * Mimsms constructor.
      * @param Sender $sender
@@ -62,7 +64,7 @@ class MimSms extends AbstractProvider
             'msg' => $text,
         ];
 
-        $requestObject = new Request('https://esms.mimsms.com/smsapi', $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

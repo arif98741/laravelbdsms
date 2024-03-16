@@ -9,6 +9,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Viatech extends AbstractProvider
 {
+    private string $apiEndpoint = 'http://masking.viatech.com.bd/smsnet/bulk/api';
+
     /**
      * Viatech Constructor
      * @param Sender $sender
@@ -34,8 +36,8 @@ class Viatech extends AbstractProvider
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
         $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
 
         $query = [
             "api_key" => $config['api_key'],
@@ -44,7 +46,7 @@ class Viatech extends AbstractProvider
             "message" => $text,
         ];
 
-        $requestObject = new Request('http://masking.viatech.com.bd/smsnet/bulk/api', $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;
