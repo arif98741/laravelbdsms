@@ -31,6 +31,9 @@ class ElitBuzz extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $formParams = [
             "api_key" => $config['api_key'],
@@ -41,7 +44,7 @@ class ElitBuzz extends AbstractProvider
         ];
 
         $requestUrl = $config['url'] . "/smsapi";
-        $requestObject = new Request($requestUrl, [], $queue);
+        $requestObject = new Request($requestUrl, [], $queue, [], $queueName,$tries,$backoff);
         $requestObject->setFormParams($formParams);
         $response = $requestObject->post(false, 60);
         if ($queue) {

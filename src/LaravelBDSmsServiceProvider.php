@@ -57,7 +57,7 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/Config/sms.php' => config_path('sms.php'),
-        ]);
+        ], 'config');
 
         if (!Schema::hasTable('lbs_log')) {
             $this->publishes([

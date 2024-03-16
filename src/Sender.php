@@ -48,6 +48,10 @@ class Sender
      */
     public $method;
 
+    public $tries=3;
+
+    public $backoff=60;
+
     /**
      * @var bool
      */
@@ -58,6 +62,12 @@ class Sender
      * @var Sender|null
      */
     private static $instance = null;
+
+
+    /**
+     * @var string
+     */
+    private $queueName='default';
 
 
     /**
@@ -96,6 +106,42 @@ class Sender
     }
 
     /**
+     * @return int
+     */
+    public function getTries()
+    {
+        return $this->tries;
+    }
+
+    /**
+     * @param int $tries
+     * @return $this
+     */
+    public function setTries(int $tries)
+    {
+        $this->tries = $tries;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBackoff()
+    {
+        return $this->backoff;
+    }
+
+    /**
+     * @param int $tries
+     * @return $this
+     */
+    public function setBackoff(int $backoff)
+    {
+        $this->backoff = $backoff;
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getConfig()
@@ -123,6 +169,16 @@ class Sender
     public function setQueue(bool $queue): Sender
     {
         $this->queue = $queue;
+        return $this;
+    }
+
+    /**
+     * @param string $queueName
+     * @return $this
+     */
+    public function setQueueName(string $queueName): Sender
+    {
+        $this->queueName = $queueName;
         return $this;
     }
 
@@ -304,6 +360,14 @@ class Sender
                 'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
             ]);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueueName(): string
+    {
+        return $this->queueName;
     }
 
 }

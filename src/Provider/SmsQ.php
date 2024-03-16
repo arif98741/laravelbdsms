@@ -37,6 +37,9 @@ class SmsQ extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'SenderId' => $config['sender_id'],
@@ -50,7 +53,7 @@ class SmsQ extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request('https://api.smsq.global/api/v2/SendSMS', $query, $queue);
+        $requestObject = new Request('https://api.smsq.global/api/v2/SendSMS', $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

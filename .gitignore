@@ -7,3 +7,4 @@ src/Test.php
 src/Test
 vendor/
 .phpintel
+*.lock

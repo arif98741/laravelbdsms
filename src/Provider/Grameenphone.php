@@ -45,6 +45,9 @@ class Grameenphone extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $formParams = [
             'username' => $config['username'],
@@ -58,7 +61,7 @@ class Grameenphone extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $formParams, $queue);
+        $requestObject = new Request($this->apiEndpoint, $formParams, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

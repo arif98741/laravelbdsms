@@ -39,6 +39,9 @@ class BulkSmsBD extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -52,7 +55,7 @@ class BulkSmsBD extends AbstractProvider
             $query ['senderid'] = $config['senderid'];
         }
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

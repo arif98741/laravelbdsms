@@ -37,6 +37,9 @@ class Esms extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'sender_id' => $config['sender_id'],
@@ -49,7 +52,7 @@ class Esms extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request('https://login.esms.com.bd/api/v3/sms/send', $query, $queue);
+        $requestObject = new Request('https://login.esms.com.bd/api/v3/sms/send', $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

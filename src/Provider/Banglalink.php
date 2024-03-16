@@ -39,6 +39,9 @@ class Banglalink extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $formParams = [
             'userID' => $config['userID'],
@@ -48,7 +51,7 @@ class Banglalink extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, [], $queue);
+        $requestObject = new Request($this->apiEndpoint, [], $queue, [], $queueName,$tries,$backoff);
         $requestObject->setFormParams($formParams);
         $response = $requestObject->post();
         if ($queue) {

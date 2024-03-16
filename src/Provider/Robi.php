@@ -40,6 +40,9 @@ class Robi extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $client = new Client([
             'base_uri' => 'https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage',
@@ -54,7 +57,7 @@ class Robi extends AbstractProvider
             'Message' => $text,
         ];
 
-        $requestObject = new Request('https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage', [], $queue);
+        $requestObject = new Request('https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage', [], $queue, [], $queueName,$tries,$backoff);
         $requestObject->setFormParams($formParams);
         $response = $requestObject->post();
         if ($queue) {
