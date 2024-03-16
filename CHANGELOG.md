@@ -1,12 +1,17 @@
 # CHANGELOG
 
-## [v1.0.57.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.57.0) - 2023-12-06 16:45:31
+## [v1.0.57.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.57.1) - 2024-03-16 19:09:11
 
 ## What's Changed
-* Sms.net.bd provider added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/67
+* added support of tries,backoff and specific queue, updated tag in vendor publish and added queue for adn provider by @wddyousuf in https://github.com/arif98741/laravelbdsms/pull/68
+* Minor refactor and some property type declaration added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/69
 
+## New Contributors
+* @wddyousuf made their first contribution in https://github.com/arif98741/laravelbdsms/pull/68
 
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.56.0...v1.0.57.0
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.57.0...v1.0.57.1
+
+## [v1.0.57.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.57.0) - 2023-12-06 16:45:31
 
 ## [v1.0.56.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.56.0) - 2023-11-02 11:12:21
 
