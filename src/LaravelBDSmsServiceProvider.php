@@ -59,12 +59,32 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
             __DIR__ . '/Config/sms.php' => config_path('sms.php'),
         ], 'config');
 
-        if (!Schema::hasTable('lbs_log')) {
-            $this->publishes([
-                __DIR__ . '/Database/migrations/create_laravelbd_sms_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_laravelbd_sms_table.php'),
+        $fileNamePattern    = '_create_laravelbd_sms_table.php';
+        $migrationFilename  = date('Y_m_d_His') . $fileNamePattern;
 
+        if (!$this->laravelBDSmsMigrationFileExist($fileNamePattern)) {
+            $this->publishes([
+                __DIR__ . '/Database/migrations/create_laravelbd_sms_table.php.stub' => database_path('migrations/' . $migrationFilename),
             ], 'migrations');
         }
+    }
+
+    /**
+     * Check if a migration file with the same pattern exists inside database/migrations/*
+     *
+     * @param string $filename
+     * @return bool
+     */
+    private function laravelBDSmsMigrationFileExist(string $filename): bool
+    {
+        $existingMigrations = glob(database_path('migrations/') . '*_create_laravelbd_sms_table.php');
+
+        foreach ($existingMigrations as $migration) {
+            if (str_contains($migration, $filename)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
