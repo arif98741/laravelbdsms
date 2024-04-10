@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [V1.0.58.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.58.0) - 2024-04-10 07:31:28
+
+## What's Changed
+* SongBird Sms Gateway Added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/71
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.57.2...V1.0.58.0
+
 ## [V1.0.57.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.57.2) - 2024-03-29 05:43:54
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.57.1...V1.0.57.2
