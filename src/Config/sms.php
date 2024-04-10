@@ -49,6 +49,7 @@ use Xenon\LaravelBDSms\Provider\SmsNet24;
 use Xenon\LaravelBDSms\Provider\SmsNetBD;
 use Xenon\LaravelBDSms\Provider\SMSNoc;
 use Xenon\LaravelBDSms\Provider\SmsQ;
+use Xenon\LaravelBDSms\Provider\SongBird;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
 use Xenon\LaravelBDSms\Provider\TruboSms;
@@ -248,6 +249,11 @@ return [
             'sender_id' => env('SMS_SMSQ_SENDER_ID', ''),
             'api_key' => env('SMS_SMSQ_API_KEY', ''),
             'client_id' => env('SMS_SMSQ_CLIENT_ID', ''),
+        ],
+        SongBird::class => [
+            'apikey' => env('SMS_SONGBIRD_API_KEY', ''),
+            'secretkey' => env('SMS_SONGBIRD_SECRET_KEY', ''),
+            'callerID' => env('SMS_SONGBIRD_CALLER_ID', ''),
         ],
         Ssl::class => [
             'api_token' => env('SMS_SSL_API_TOKEN', ''),
