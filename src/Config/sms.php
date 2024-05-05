@@ -54,7 +54,7 @@ use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
 use Xenon\LaravelBDSms\Provider\TruboSms;
 use Xenon\LaravelBDSms\Provider\Twenty4BulkSms;
-use Xenon\LaravelBDSms\Provider\TwentyFourSmsBD;
+use Xenon\LaravelBDSms\Provider\TwentyFourBulkSmsBD;
 use Xenon\LaravelBDSms\Provider\Viatech;
 
 return [
@@ -271,7 +271,7 @@ return [
             'api_token' => env('SMS_TRUBOSMS_API_TOKEN', ''),
             'type' => env('SMS_TRUBOSMS_TYPE', 'string'),
         ],
-        TwentyFourSmsBD::class => [
+        TwentyFourBulkSmsBD::class => [
             'apiKey' => env('SMS_TWENTYFOURSMSBD_APIKEY', ''),
             'sender_id' => env('SMS_TWENTYFOURSMSBD_SENDER_ID', ''),
         ],

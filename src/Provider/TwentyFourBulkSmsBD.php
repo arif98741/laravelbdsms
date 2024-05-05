@@ -16,12 +16,16 @@ use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
-class TwentyFourSmsBD extends AbstractProvider
+/**
+ * TwentyFourBulksSMSBD Class
+ * api endpoint https://www.24bulksmsbd.com/api/smsSendApi
+ */
+class TwentyFourBulkSmsBD extends AbstractProvider
 {
-    private string $apiEndpoint = 'https://24smsbd.com/api/bulkSmsApi';
+    private string $apiEndpoint = 'https://www.24bulksmsbd.com/api/smsSendApi';
 
     /**
-     * TwenforSmsBD constructor.
+     * TwentyFourBulksSMSBD constructor.
      * @param Sender $sender
      */
     public function __construct(Sender $sender)
@@ -41,16 +45,16 @@ class TwentyFourSmsBD extends AbstractProvider
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
         $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
         $query = [
-            'apiKey' => $config['apiKey'],
-            'sender_id' => $config['sender_id'],
-            'mobileNo' => $number,
+            'customer_id' => $config['customer_id'],
+            'api_key' => $config['api_key'],
+            'mobile_no' => (is_array($number)) ? implode(',',$number) : $number,
             'message' => $text,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
         $response = $requestObject->post();
         if ($queue) {
             return true;
@@ -69,12 +73,12 @@ class TwentyFourSmsBD extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('apiKey', $this->senderObject->getConfig())) {
-            throw new ParameterException('apiKey key is absent in configuration');
+        if (!array_key_exists('customer_id', $this->senderObject->getConfig())) {
+            throw new ParameterException('customer_id key is absent in configuration');
         }
 
-        if (!array_key_exists('sender_id', $this->senderObject->getConfig())) {
-            throw new ParameterException('sender_id key is absent in configuration');
+        if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
+            throw new ParameterException('api_key key is absent in configuration');
         }
 
     }
