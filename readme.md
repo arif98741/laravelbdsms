@@ -72,7 +72,7 @@ php artisan config:cache && php artisan migrate
 use Xenon\LaravelBDSms\Facades\SMS;
 
 SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
-SMS::shoot(['017XXYYZZAA','018XXYYZZAA'], 'helloooooooo boss!'); //for Ssl Sms Gateway Only
+SMS::shoot(['017XXYYZZAA','018XXYYZZAA'], 'helloooooooo boss!'); 
 </pre>
 
 ### Or, with facade alias
@@ -109,7 +109,6 @@ You can generate log in database for every sms api request and save in database.
 3. Go to your project directory  and locate ``config/sms.php``
 4. Find and make true ``'sms_log' => true,``
 
-#
 Otherwise, if you want more control, you can use the underlying sender object. This will not touch any laravel facade or
 service provider.
 
@@ -169,7 +168,7 @@ $status = $sender->send();
 </pre>
 
 ## Sms Send Using Custom Gateway
-`We have tried to added most of the gateways of Bangladesh in this package as much as possible. But still if you don't find your expected gateway in this list, then use Custom Gateway using following code snippet.`
+We have tried to added most of the gateways of Bangladesh in this package as much as possible. But still if you don't find your expected gateway in this list, then use Custom Gateway using following code snippet.
 <pre>
 use Xenon\LaravelBDSms\Provider\CustomGateway;
 use Xenon\LaravelBDSms\Sender;
@@ -182,10 +181,10 @@ $sender->setUrl('https://your_cusom_gateway_provider_url_here')
             'Content-Type: application/json',
             'Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ], false);
-$sender->setMobile(true);
-$sender->setMessage(true);
+$sender->setMobile('017XXYYZZAA');
+$sender->setMessage('text message goes here');
 $sender->setQueue(false);
-//use required parameters based on your sms gateway
+//use required parameters based on your sms gateway. This will be changed according to need
 $sender->setConfig(
     [
         'MsgType' => 'TEXT',
@@ -200,44 +199,45 @@ echo $status = $sender->send();
 
 # Currently Supported Sms Gateways
 
-| Provider        | Credentials  Required <br>    For Sending SMS                     | Support Multiple | Status         | Comment                                                  | Contact |
-|-----------------|-------------------------------------------------------------------|------------------|----------------|----------------------------------------------------------|---------|
-| AjuraTech       | apikey, secretkey , callerID                                      | -                | Done           | -                                                        | -       |
-| Adn             | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
-| Alpha           | api_key                                                           | Yes              | Done           | -                                                        | -       |
-| Banglalink      | userID, passwd , sender                                           | -                | Done           | -                                                        | -       |
-| BDBulkSMS       | token                                                             | -                | Done           | -                                                        | -       |
-| BoomCast        | masking  , userName ,   password                                  | -                | Done           | -                                                        | -       |
-| BulksmsBD       | api_key,senderid                                                  | -                | Done           | -                                                        | -       |
-| CustomGateway   | provide necessary token/api_key/others based on requirements      | -                | Done           | Be careful using this and test based on several scenario | -       |
-| DianaHost       | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
-| DianaSMS        | ApiKey, ClientId, SenderId                                        | -                | Done           | -                                                        | -       |
-| Esms            | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
-| ElitBuzz        | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
-| Grameenphone    | username, password, messagetype                                   | -                | Done           | not tested yet in live                                   | -       |
-| Infobip         | user, password                                                    | -                | Done           | not tested yet in live                                   | -       |
-| Lpeek           | acode, apiKey, requestID, masking                                 | -                | Done           | -                                                        | -       |
-| MDL             | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
-| Metronet        | api_key, mask                                                     |                  | Done           | -                                                        | -       |
-| MimSms          | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
-| Mobireach       | Username,Password, From                                           | -                | Done           | -                                                        | -       |
-| Muthofun        | sender_id                                                         | Yes              | Done           | -                                                        | -       |
-| NovocomBD       | ApiKey , ClientId   , SenderId                                    | -                | Done           | -                                                        | -       |
-| OnnoRokomSMS    | userName, userPassword, type, maskName, campaignName              | -                | Done           | not tested yet in live                                   | -       |
-| QuickSms        | api_key, senderid, type,scheduledDateTime                         | -                | Done           | not tested yet in live                                   | -       |
-| RedmoITSms      | api_token, sender_id                                              | -                | Support closed | -                                                        |
-| SmartLabSMS     | user, password, sender                                            | -                | Done           | -                                                        | -       |
-| SmsinBD         | api_token, senderid                                               | -                | Done           |                                                          | -       |
-| SMS.net.bd      | api_key                                                           | -                | Done           |                                                          | -       |
-| SmsQ            | sender_id, client_id, api_key                                     | -                | Done           |                                                          | -       |
-| SMSNet24        | user_id, user_password, route_id(optional), sms_type_id(optional) | -                | Done           | -                                                        |         |
-| SmsNoc          | sender_id, bearer_token                                           | -                | Done           | -                                                        |         |
-| SongBird        | apikey, secretkey, callerID                                       | -                | Done           | -                                                        |         |
-| Sslsms          | api_token, sid, csms_id                                           | Yes              | Done           | -                                                        | -       |
-| Tense           | user, password, campaign, masking                                 | -                | Done           | -                                                        | -       |
-| TwentyFourSmsBD | apiKey, sender_id                                                 | -                | Done           | -                                                        | -       |
-| Trubosms        | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
-| Viatech         | api_key, mask                                                     | -                | Done           | -                                                        | -       |
+| Provider            | Credentials  Required <br>    For Sending SMS                     | Support Multiple | Status         | Comment                                                  | Contact |
+|---------------------|-------------------------------------------------------------------|------------------|----------------|----------------------------------------------------------|---------|
+| AjuraTech           | apikey, secretkey , callerID                                      | -                | Done           | -                                                        | -       |
+| Adn                 | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
+| Alpha               | api_key                                                           | Yes              | Done           | -                                                        | -       |
+| Banglalink          | userID, passwd , sender                                           | -                | Done           | -                                                        | -       |
+| BDBulkSMS           | token                                                             | -                | Done           | -                                                        | -       |
+| BoomCast            | masking  , userName ,   password                                  | -                | Done           | -                                                        | -       |
+| BulksmsBD           | api_key,senderid                                                  | -                | Done           | -                                                        | -       |
+| CustomGateway       | provide necessary token/api_key/others based on requirements      | -                | Done           | Be careful using this and test based on several scenario | -       |
+| DianaHost           | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
+| DianaSMS            | ApiKey, ClientId, SenderId                                        | -                | Done           | -                                                        | -       |
+| Esms                | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
+| ElitBuzz            | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
+| Grameenphone        | username, password, messagetype                                   | -                | Done           | not tested yet in live                                   | -       |
+| Infobip             | user, password                                                    | -                | Done           | not tested yet in live                                   | -       |
+| Lpeek               | acode, apiKey, requestID, masking                                 | -                | Done           | -                                                        | -       |
+| MDL                 | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
+| Metronet            | api_key, mask                                                     |                  | Done           | -                                                        | -       |
+| MimSms              | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
+| Mobireach           | Username,Password, From                                           | -                | Done           | -                                                        | -       |
+| Muthofun            | sender_id                                                         | Yes              | Done           | -                                                        | -       |
+| NovocomBD           | ApiKey , ClientId   , SenderId                                    | -                | Done           | -                                                        | -       |
+| OnnoRokomSMS        | userName, userPassword, type, maskName, campaignName              | -                | Done           | not tested yet in live                                   | -       |
+| QuickSms            | api_key, senderid, type,scheduledDateTime                         | -                | Done           | not tested yet in live                                   | -       |
+| RedmoITSms          | api_token, sender_id                                              | -                | Support closed | -                                                        |
+| SmartLabSMS         | user, password, sender                                            | -                | Done           | -                                                        | -       |
+| SmsinBD             | api_token, senderid                                               | -                | Done           |                                                          | -       |
+| SMS.net.bd          | api_key                                                           | -                | Done           |                                                          | -       |
+| SmsQ                | sender_id, client_id, api_key                                     | -                | Done           |                                                          | -       |
+| SMSNet24            | user_id, user_password, route_id(optional), sms_type_id(optional) | -                | Done           | -                                                        |         |
+| SmsNoc              | sender_id, bearer_token                                           | -                | Done           | -                                                        |         |
+| SongBird            | apikey, secretkey, callerID                                       | -                | Done           | -                                                        |         |
+| Sslsms              | api_token, sid, csms_id                                           | Yes              | Done           | -                                                        | -       |
+| Tense               | user, password, campaign, masking                                 | -                | Done           | -                                                        | -       |
+| Twenty4BulkSms      | api_key, sender_id,user_email                                     | -                | Done           | -                                                        | -       |
+| TwentyFourBulkSmsBD | customer_id, api_key                                              | -                | Done           | -                                                        | -       |
+| Trubosms            | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
+| Viatech             | api_key, mask                                                     | -                | Done           | -                                                        | -       |
 
 
 

@@ -17,6 +17,10 @@ use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
+/**
+ * TwentyFourBulksSMS Class
+ * api endpoint https://24bulksms.com/24bulksms/api/api-sms-send
+ */
 class Twenty4BulkSms extends AbstractProvider
 {
     private string $apiEndpoint = 'https://24bulksms.com/24bulksms/api/api-sms-send';
