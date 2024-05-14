@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [V1.0.59.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.0) - 2024-05-14 13:41:13
+
+## What's Changed
+* Durjoysoft Gateway Added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/72
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.58.1...V1.0.59.0
+
 ## [v1.0.58.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.58.1) - 2024-05-05 06:25:16
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.58.0...v1.0.58.1
