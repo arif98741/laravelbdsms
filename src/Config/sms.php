@@ -26,6 +26,7 @@ use Xenon\LaravelBDSms\Provider\CustomGateway;
 use Xenon\LaravelBDSms\Provider\DianaHost;
 use Xenon\LaravelBDSms\Provider\DianaSms;
 use Xenon\LaravelBDSms\Provider\DnsBd;
+use Xenon\LaravelBDSms\Provider\DurjoySoft;
 use Xenon\LaravelBDSms\Provider\ElitBuzz;
 use Xenon\LaravelBDSms\Provider\Esms;
 use Xenon\LaravelBDSms\Provider\Grameenphone;
@@ -133,6 +134,10 @@ return [
             'ClientId' => env('SMS_DIANA_SMS_CLIENT_ID', ''),
         ],
         DnsBd::class => [],
+        DurjoySoft::class => [
+            'ApiKey' => env('SMS_DURJOYSOFT_SMS_API_KEY', ''),
+            'SenderID' => env('SMS_DURJOYSOFT_SMS_SENDER_ID', ''),
+        ],
         ElitBuzz::class => [
             'url' => env('SMS_ELITBUZZ_URL', ''),
             'senderid' => env('SMS_ELITBUZZ_SENDER_ID', ''),
