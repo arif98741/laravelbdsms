@@ -314,7 +314,9 @@ class Sender
         try {
 
             if ($providerClass === null) {
-                throw new RenderException("Provider is empty. Be sure to run 'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider' and also set provider using setProvider() method. Set default provider from config/sms.php if you use Xenon\LaravelBDSms\Facades\SMS::shoot() facade");
+                throw new RenderException("Provider is empty. Be sure to run 'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider'
+                and also set provider using setProvider() method. Set default provider from config/sms.php
+                if you use Xenon\LaravelBDSms\Facades\SMS::shoot() facade. You can also clear your cache");
             }
 
             if (!class_exists($providerClass)) {
@@ -338,9 +340,18 @@ class Sender
      * @param $response
      * @return void
      * @throws \JsonException
+     * @throws RenderException
      */
     private function logGenerate($config, $response): void
     {
+        if ($config == null)
+        {
+            throw new RenderException("Provider is empty. Be sure to run 'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider'
+            and also set provider using setProvider() method. Set default provider from config/sms.php if
+            you use Xenon\LaravelBDSms\Facades\SMS::shoot() facade.  You can also clear your cache");
+
+        }
+
         if ($config['sms_log']) {
 
             if (is_object($response)) {
