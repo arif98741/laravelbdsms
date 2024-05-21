@@ -1,12 +1,14 @@
 # CHANGELOG
 
-## [V1.0.59.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.0) - 2024-05-14 13:41:13
+## [V1.0.59.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.1) - 2024-05-21 12:40:49
 
 ## What's Changed
-* Durjoysoft Gateway Added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/72
+* Missing sms.php file Explained with Proper Details by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/73
 
 
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.58.1...V1.0.59.0
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.59.0...V1.0.59.1
+
+## [V1.0.59.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.0) - 2024-05-14 13:41:13
 
 ## [v1.0.58.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.58.1) - 2024-05-05 06:25:16
 
