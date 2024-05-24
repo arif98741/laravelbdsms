@@ -375,21 +375,26 @@ class Sender
                 'message' => $this->getMessage()
             ];
 
-            if ($config['log_driver'] === 'database') {
-                $logData = [
-                    'provider' => $providerClass,
-                    'request_json' => json_encode($requestData, JSON_THROW_ON_ERROR),
-                    'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
-                ];
+            $logData = [
+                'provider' => $providerClass,
+                'request_json' => json_encode($requestData, JSON_THROW_ON_ERROR),
+                'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
+            ];
+
+            if (array_key_exists('log_driver', $config)) {
+
+                if ($config['log_driver'] === 'database') {
+                    Logger::createLog($logData);
+                } elseif ($config['log_driver'] === 'file') {
+                    $logData['request_json'] = $requestData;
+                    $logData['response_json'] = $providerResponse;
+                    LaravelLog::info('laravelbdsms', $logData);
+                }
+            } else {
+
                 Logger::createLog($logData);
-            } elseif ($config['log_driver'] === 'file') {
-                $logData = [
-                    'provider' => $providerClass,
-                    'request_json' => $requestData,
-                    'response_json' => $providerResponse,
-                ];
-                LaravelLog::info('laravelbdsms', $logData);
             }
+
         }
     }
 
