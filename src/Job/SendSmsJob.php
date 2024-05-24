@@ -11,7 +11,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Config;
 use JsonException;
-use Psr\Http\Message\ResponseInterface;
 use Xenon\LaravelBDSms\Facades\Logger;
 
 class SendSmsJob implements ShouldQueue
@@ -64,10 +63,11 @@ class SendSmsJob implements ShouldQueue
     {
 
         if ($this->jobDetails['method'] == 'post') {
-             $this->postMethodHandler();
+            $this->postMethodHandler();
+        } else {
+            $this->getMethodHandler();
         }
 
-         $this->getMethodHandler();
     }
 
     /**
