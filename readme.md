@@ -222,6 +222,7 @@ echo $status = $sender->send();
 | TwentyFourBulkSmsBD | customer_id, api_key                                              | -                | Done           | -                                                        | -       |
 | Trubosms            | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
 | Viatech             | api_key, mask                                                     | -                | Done           | -                                                        | -       |
+| ZamanIT             | api_key, senderid,type                                            | -                | Done           | -                                                        | -       |
 
 
 
