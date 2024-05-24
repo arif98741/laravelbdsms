@@ -103,11 +103,15 @@ SMS::via(Ssl::class)->shootWithQueue("01XXXXXXXXX",'test sms');
 </pre>
 
 # Log Generate
-You can generate log in database for every sms api request and save in database. For doing this. Follow below points
-1. Be confirm you have completed **step-2** and **step-3**
-2. Run command ``php artisan migrate``. This will create ``lbs_log`` table in your database
-3. Go to your project directory  and locate ``config/sms.php``
-4. Find and make true ``'sms_log' => true,``
+You can generate log for every sms api request and save in database or file. For doing this. Follow below points
+1. Laravelbdsms stores log in two drivers(`database, file`). `database` is default. You can change it from _config/sms.php_
+2. Find and make true `'sms_log' => true,`
+3. Be confirm you have completed **step-2** and **step-3**
+4. For `database` driver
+   1. Change log driver to `log_driver =>'database'` from `config/sms.php`
+   2. Run command `php artisan migrate`. This will create `lbs_log` table in your database
+5. For `file` driver
+    1. Change log driver to `log_driver =>'file'` from `config/sms.php`
 
 Otherwise, if you want more control, you can use the underlying sender object. This will not touch any laravel facade or
 service provider.
@@ -119,7 +123,7 @@ use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Sender;
 
 $sender = Sender::getInstance();
-$sender->setProvider(Ssl::class); 
+$sender->setProvider(Ssl::class); //change this provider class according to need
 $sender->setMobile('017XXYYZZAA');
 //$sender->setMobile(['017XXYYZZAA','018XXYYZZAA']);
 $sender->setMessage('helloooooooo boss!');
@@ -145,27 +149,6 @@ array:6 [▼
 --------------------------------------------------
 </pre>
 
-## MimSms
-
-<pre>
-use Xenon\LaravelBDSms\Provider\MimSms;
-use Xenon\LaravelBDSms\Sender;
-
-$sender = Sender::getInstance();
-$sender->setProvider(MimSms::class);
-$sender->setMobile('017XXYYZZAA');
-$sender->setMessage('This is test message');
-$sender->setQueue(true); //if you want to sent sms from queue
-$sender->setConfig(
-   [
-       'api_key' => 'api_key_goes_here',
-       'type' => 'text',
-       'senderid' => 'approved_send_id',
-   ]
-);
-
-$status = $sender->send();
-</pre>
 
 ## Sms Send Using Custom Gateway
 We have tried to added most of the gateways of Bangladesh in this package as much as possible. But still if you don't find your expected gateway in this list, then use Custom Gateway using following code snippet.

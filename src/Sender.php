@@ -15,6 +15,7 @@ namespace Xenon\LaravelBDSms;
 use Exception;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log as LaravelLog;
 use JsonException;
 use Xenon\LaravelBDSms\Facades\Logger;
 use Xenon\LaravelBDSms\Handler\ParameterException;
@@ -81,6 +82,9 @@ class Sender
     | On subsequent runs, it returns the client existing object stored in the static field. This implementation
     | lets you subclass the Singleton class while keeping just one instance of each subclass around.
     */
+    private array $headers;
+    private bool $contentTypeJson;
+
     /**
      * @throws RenderException
      */
@@ -364,15 +368,28 @@ class Sender
 
             $providerResponse = $object->response;
 
-            Logger::createLog([
-                'provider' => get_class($this->provider),
-                'request_json' => json_encode([
-                    'config' => $config['providers'][get_class($this->provider)],
-                    'mobile' => $this->getMobile(),
-                    'message' => $this->getMessage()
-                ], JSON_THROW_ON_ERROR),
-                'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
-            ]);
+            $providerClass = get_class($this->provider);
+            $requestData = [
+                'config' => $config['providers'][$providerClass],
+                'mobile' => $this->getMobile(),
+                'message' => $this->getMessage()
+            ];
+
+            if ($config['log_driver'] === 'database') {
+                $logData = [
+                    'provider' => $providerClass,
+                    'request_json' => json_encode($requestData, JSON_THROW_ON_ERROR),
+                    'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
+                ];
+                Logger::createLog($logData);
+            } elseif ($config['log_driver'] === 'file') {
+                $logData = [
+                    'provider' => $providerClass,
+                    'request_json' => $requestData,
+                    'response_json' => $providerResponse,
+                ];
+                LaravelLog::info('laravelbdsms', $logData);
+            }
         }
     }
 
