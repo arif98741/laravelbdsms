@@ -1,12 +1,24 @@
 # CHANGELOG
 
-## [V1.0.59.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.1) - 2024-05-21 12:40:49
+## [V1.0.59.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.2) - 2024-05-24 11:04:23
 
 ## What's Changed
-* Missing sms.php file Explained with Proper Details by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/73
+* Log driver selection and Duplicate Log Error Fixed with Other changes by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/74
 
 
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.59.0...V1.0.59.1
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.59.1...V1.0.59.2
+
+### Feature
+
+- general:
+  - log driver selection feature added - database, or file ([3014e87](https://github.com/arif98741/laravelbdsms/commit/3014e87ecf5f173136eb31596f0f7546d125aba2)) ([#74](https://github.com/arif98741/laravelbdsms/pull/74))
+
+### Bug Fixes
+
+- general:
+  - removed duplicate log insert error ([07c740d](https://github.com/arif98741/laravelbdsms/commit/07c740df6a0a883deed21b8080791721a7f7a0a2)) ([#74](https://github.com/arif98741/laravelbdsms/pull/74))
+
+## [V1.0.59.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.1) - 2024-05-21 12:40:49
 
 ## [V1.0.59.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.0) - 2024-05-14 13:41:13
 
