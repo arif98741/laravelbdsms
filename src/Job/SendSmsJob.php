@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log  as LaravelLog;
+use Illuminate\Support\Facades\Log as LaravelLog;
 use JsonException;
 use Xenon\LaravelBDSms\Facades\Logger;
 
@@ -142,10 +142,15 @@ class SendSmsJob implements ShouldQueue
         $config = Config::get('sms');
         if ($config['sms_log']) {
 
-            if ($config['log_driver'] === 'database') {
+            if (array_key_exists('log_driver', $config)) {
+
+                if ($config['log_driver'] === 'database') {
+                    Logger::createLog($log);
+                } else if ($config['log_driver'] === 'file') {
+                    LaravelLog::info('laravelbdsms', $log);
+                }
+            } else {
                 Logger::createLog($log);
-            } else if ($config['log_driver'] === 'file') {
-                LaravelLog::info('laravelbdsms',$log);
             }
         }
     }

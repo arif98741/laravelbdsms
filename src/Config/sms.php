@@ -63,14 +63,22 @@ return [
      *-----------------------------------------------------------------------------------------------
      | Sms Log will save sms request, provider name, and response in database table called `lbs_log`
      | You can change sms log to true/false according to your need. Default is set to true
-     |---------------------------------------------------------------------------------------------
+     |-----------------------------------------------------------------------------------------------
      */
     'sms_log' => false,
 
     /*
      *-----------------------------------------------------------------------------------------------
+     | Sms log will be saved in database(lbs_log table) or file(storage/logs/laravel.log).
+     | You can choose one according to need
+     |-----------------------------------------------------------------------------------------------
+     */
+    'log_driver' => 'database', //database, file
+
+    /*
+     *-----------------------------------------------------------------------------------------------
      | Default provider will be used during usage of facade( Xenon\LaravelBDSms\Facades\SMS )
-     |---------------------------------------------------------------------------------------------
+     |-----------------------------------------------------------------------------------------------
      */
     'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
     /*
@@ -79,7 +87,7 @@ return [
      | This providers key store all the necessary credentials needed for using inside .env file; Be sure to use this
      | credentials in your .env file before sending sms. This will be used while you are sending sms using
      | facade(Xenon\LaravelBDSms\Facades\SMS)
-     |-------------------------------------------------------------------------------------------------------------
+     |---------------------------------------------------------------------------------------------------------------
      */
     'providers' => [
         Adn::class => [
