@@ -10,8 +10,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log  as LaravelLog;
 use JsonException;
-use Psr\Http\Message\ResponseInterface;
 use Xenon\LaravelBDSms\Facades\Logger;
 
 class SendSmsJob implements ShouldQueue
@@ -64,10 +64,11 @@ class SendSmsJob implements ShouldQueue
     {
 
         if ($this->jobDetails['method'] == 'post') {
-             $this->postMethodHandler();
+            $this->postMethodHandler();
+        } else {
+            $this->getMethodHandler();
         }
 
-         $this->getMethodHandler();
     }
 
     /**
@@ -140,7 +141,12 @@ class SendSmsJob implements ShouldQueue
     {
         $config = Config::get('sms');
         if ($config['sms_log']) {
-            Logger::createLog($log);
+
+            if ($config['log_driver'] === 'database') {
+                Logger::createLog($log);
+            } else if ($config['log_driver'] === 'file') {
+                LaravelLog::info('laravelbdsms',$log);
+            }
         }
     }
 

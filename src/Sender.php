@@ -14,6 +14,9 @@ namespace Xenon\LaravelBDSms;
 
 use Exception;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log as LaravelLog;
+use JsonException;
 use Xenon\LaravelBDSms\Facades\Logger;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
@@ -70,17 +73,30 @@ class Sender
     private $queueName = 'default';
 
 
+    /*
+    |------------------------------------------------------------------------------------------
+    | Instance of Sender class
+    |------------------------------------------------------------------------------------------
+    | This is the static method that controls the access to the singleton instance. On the first run,
+    | it creates a singleton object and places it into the static field.
+    | On subsequent runs, it returns the client existing object stored in the static field. This implementation
+    | lets you subclass the Singleton class while keeping just one instance of each subclass around.
+    */
+    private array $headers;
+    private bool $contentTypeJson;
+
     /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
-     * into the static field. On subsequent runs, it returns the client existing
-     * object stored in the static field.
-     *
-     * This implementation lets you subclass the Singleton class while keeping
-     * just one instance of each subclass around.
+     * @throws RenderException
      */
     public static function getInstance(): Sender
     {
+        if (!File::exists(config_path('sms.php'))) {
+            throw new RenderException("missing config/sms.php. Be sure to run
+            'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider'
+             and also set provider using setProvider() method. Set default provider from config/sms.php if
+             you use Xenon\LaravelBDSms\Facades\SMS::shoot() facade. You can also clear your cache");
+        }
+
         if (!isset(self::$instance)) {
             self::$instance = new self;
         }
@@ -196,6 +212,7 @@ class Sender
      * @param array $headers
      * @param bool $contentTypeJson
      * @return Sender
+     * @throws RenderException
      * @since v1.0.55.0-beta
      */
     public function setHeaders(array $headers, bool $contentTypeJson = true): Sender
@@ -208,7 +225,6 @@ class Sender
     /**
      * Send Message Finally
      * @throws ParameterException
-     * @throws \JsonException
      * @since v1.0.5
      */
     public function send()
@@ -253,6 +269,7 @@ class Sender
     /**
      * @param mixed $mobile
      * @return Sender
+     * @throws RenderException
      * @since v1.0.0
      */
     public function setMobile($mobile): Sender
@@ -273,6 +290,7 @@ class Sender
     /**
      * @param mixed $message
      * @return Sender
+     * @throws RenderException
      * @since v1.0.0
      */
     public function setMessage($message = ''): Sender
@@ -285,6 +303,7 @@ class Sender
     /**
      * @param string $url
      * @return $this
+     * @throws RenderException
      */
     public function setUrl(string $url)
     {
@@ -313,12 +332,6 @@ class Sender
 
         try {
 
-            if ($providerClass === null) {
-                throw new RenderException("Provider is empty. Be sure to run 'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider'
-                and also set provider using setProvider() method. Set default provider from config/sms.php
-                if you use Xenon\LaravelBDSms\Facades\SMS::shoot() facade. You can also clear your cache");
-            }
-
             if (!class_exists($providerClass)) {
                 throw new RenderException("Sms Gateway Provider '$providerClass' not found. ");
             }
@@ -339,18 +352,11 @@ class Sender
      * @param $config
      * @param $response
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      * @throws RenderException
      */
     private function logGenerate($config, $response): void
     {
-        if ($config == null)
-        {
-            throw new RenderException("Provider is empty. Be sure to run 'php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider'
-            and also set provider using setProvider() method. Set default provider from config/sms.php if
-            you use Xenon\LaravelBDSms\Facades\SMS::shoot() facade.  You can also clear your cache");
-
-        }
 
         if ($config['sms_log']) {
 
@@ -362,15 +368,28 @@ class Sender
 
             $providerResponse = $object->response;
 
-            Logger::createLog([
-                'provider' => get_class($this->provider),
-                'request_json' => json_encode([
-                    'config' => $config['providers'][get_class($this->provider)],
-                    'mobile' => $this->getMobile(),
-                    'message' => $this->getMessage()
-                ], JSON_THROW_ON_ERROR),
-                'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
-            ]);
+            $providerClass = get_class($this->provider);
+            $requestData = [
+                'config' => $config['providers'][$providerClass],
+                'mobile' => $this->getMobile(),
+                'message' => $this->getMessage()
+            ];
+
+            if ($config['log_driver'] === 'database') {
+                $logData = [
+                    'provider' => $providerClass,
+                    'request_json' => json_encode($requestData, JSON_THROW_ON_ERROR),
+                    'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
+                ];
+                Logger::createLog($logData);
+            } elseif ($config['log_driver'] === 'file') {
+                $logData = [
+                    'provider' => $providerClass,
+                    'request_json' => $requestData,
+                    'response_json' => $providerResponse,
+                ];
+                LaravelLog::info('laravelbdsms', $logData);
+            }
         }
     }
 
