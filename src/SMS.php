@@ -50,18 +50,17 @@ class SMS
      * @version v1.0.46-dev
      * @since v1.0.46-dev
      */
-    public function shootWithQueue(string $number, string $text, ?string $queue, ?int $tries, ?int $backoff)
+    public function shootWithQueue(string $number, string $text, string $queueName = 'default', int $tries = 3, int $backoff = 60)
     {
         $this->sender->setMobile($number);
         $this->sender->setMessage($text);
         $this->sender->setQueue(true);
-        if (isset($queue)){
-            $this->sender->setQueueName($queue);
-        }
-        if (isset($tries)){
+        $this->sender->setQueueName($queueName);
+
+        if (isset($tries)) {
             $this->sender->setTries($tries);
         }
-        if (isset($backoff)){
+        if (isset($backoff)) {
             $this->sender->setBackoff($backoff);
         }
         return $this->sender->send();

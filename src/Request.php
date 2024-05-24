@@ -15,7 +15,7 @@ class Request extends Controller
 {
     private bool $queue;
 
-    private bool $queueName;
+    private string $queueName;
 
     private string $requestUrl;
 
@@ -29,11 +29,11 @@ class Request extends Controller
     /**
      * @var int
      */
-    private int $tries = 3;
+    private int $tries;
     /**
      * @var int
      */
-    private $backoff = 60;
+    private int $backoff;
 
 
     /**
@@ -133,7 +133,7 @@ class Request extends Controller
     /**
      * @return string
      */
-    public function getRequestUrl()
+    public function getRequestUrl(): string
     {
         return $this->requestUrl;
     }
@@ -149,7 +149,7 @@ class Request extends Controller
     /**
      * @return array
      */
-    public function getQuery()
+    public function getQuery(): array
     {
         return $this->query;
     }
