@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [V1.0.60.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.60.2) - 2024-06-25 13:03:00
+
+## What's Changed
+* Removed support for PHP 7.4 and fixed to PHP 8 by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/76
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.60.0...V1.0.60.2
+
 ## [V1.0.60.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.60.1) - 2024-05-24 16:45:53
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.59.3...V1.0.60.0
