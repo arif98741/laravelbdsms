@@ -1,5 +1,40 @@
 # CHANGELOG
 
+## [V1.0.60.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.60.2) - 2024-06-25 13:03:00
+
+## What's Changed
+* Removed support for PHP 7.4 and fixed to PHP 8 by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/76
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.60.0...V1.0.60.2
+
+## [V1.0.60.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.60.1) - 2024-05-24 16:45:53
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.59.3...V1.0.60.0
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.59.3...V1.0.60.1
+
+## [V1.0.59.3](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.3) - 2024-05-24 11:35:07
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.59.2...V1.0.59.3
+
+### Bug Fixes
+
+- general:
+  - log-driver undefined index issue solved ([5178433](https://github.com/arif98741/laravelbdsms/commit/5178433c9e8db4d6e4d09b530c52dffdc3c9c849))
+
+## [V1.0.59.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.2) - 2024-05-24 11:04:23
+
+## [V1.0.59.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.1) - 2024-05-21 12:40:49
+
+## [V1.0.59.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.59.0) - 2024-05-14 13:41:13
+
+## [v1.0.58.1](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.58.1) - 2024-05-05 06:25:16
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.58.0...v1.0.58.1
+
+## [V1.0.58.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.58.0) - 2024-04-10 07:31:28
+
 ## [V1.0.57.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.57.2) - 2024-03-29 05:43:54
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.57.1...V1.0.57.2
