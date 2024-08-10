@@ -19,7 +19,7 @@ use Xenon\LaravelBDSms\Sender;
 
 class AjuraTech extends AbstractProvider
 {
-    private string $apiEndpoint = 'https://smpp.ajuratech.com:7790/sendtext?json';
+    private string $apiEndpoint = 'https://smpp.revesms.com:7790/sendtext?json';
 
     /**
      * Ajuratech constructor.
