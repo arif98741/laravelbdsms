@@ -1,12 +1,17 @@
 # CHANGELOG
 
-## [V1.0.60.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.60.2) - 2024-06-25 13:03:00
+## [V1.0.60.3](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.60.3) - 2024-08-10 06:31:50
 
 ## What's Changed
-* Removed support for PHP 7.4 and fixed to PHP 8 by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/76
+* Update New Endpoint by @aboutjubair in https://github.com/arif98741/laravelbdsms/pull/77
+* Merge dev to Master for Ajuratech Endpoint Replacement by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/78
 
+## New Contributors
+* @aboutjubair made their first contribution in https://github.com/arif98741/laravelbdsms/pull/77
 
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.60.0...V1.0.60.2
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.60.2...V1.0.60.3
+
+## [V1.0.60.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.60.2) - 2024-06-25 13:03:00
 
 ## [V1.0.60.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.60.1) - 2024-05-24 16:45:53
 
