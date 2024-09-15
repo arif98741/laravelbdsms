@@ -194,6 +194,7 @@ echo $status = $sender->send();
 | CustomGateway       | provide necessary token/api_key/others based on requirements      | -                | Done           | Be careful using this and test based on several scenario | -       |
 | DianaHost           | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
 | DianaSMS            | ApiKey, ClientId, SenderId                                        | -                | Done           | -                                                        | -       |
+| DhorolaSms          | apikey, sender                                                    | -                | Done           | -                                                        | -       |
 | DurjoySoft          | ApiKey, SenderID                                                  | -                | Done           | -                                                        | -       |
 | Esms                | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
 | ElitBuzz            | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
