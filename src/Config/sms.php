@@ -23,6 +23,7 @@ use Xenon\LaravelBDSms\Provider\BoomCast;
 use Xenon\LaravelBDSms\Provider\Brilliant;
 use Xenon\LaravelBDSms\Provider\BulkSmsBD;
 use Xenon\LaravelBDSms\Provider\CustomGateway;
+use Xenon\LaravelBDSms\Provider\DhorolaSms;
 use Xenon\LaravelBDSms\Provider\DianaHost;
 use Xenon\LaravelBDSms\Provider\DianaSms;
 use Xenon\LaravelBDSms\Provider\DnsBd;
@@ -141,6 +142,10 @@ return [
             'SenderId' => env('SMS_DIANA_SMS_SENDER_ID', ''),
             'ApiKey' => env('SMS_DIANA_SMS_API_KEY', ''),
             'ClientId' => env('SMS_DIANA_SMS_CLIENT_ID', ''),
+        ],
+        DhorolaSms::class => [
+            'apikey' => env('SMS_DHOROLA_SMS_APIKEY', ''),
+            'sender' => env('SMS_DHOROLA_SMS_SENDERID', ''),
         ],
         DnsBd::class => [],
         DurjoySoft::class => [
