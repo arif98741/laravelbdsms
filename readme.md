@@ -192,12 +192,12 @@ echo $status = $sender->send();
 | BoomCast            | masking  , userName ,   password                                  | -                | Done           | -                                                        | -       |
 | BulksmsBD           | api_key,senderid                                                  | -                | Done           | -                                                        | -       |
 | CustomGateway       | provide necessary token/api_key/others based on requirements      | -                | Done           | Be careful using this and test based on several scenario | -       |
+| DhorolaSms          | apikey, sender                                                    | -                | Done           | -                                                        | -       |
 | DianaHost           | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
 | DianaSMS            | ApiKey, ClientId, SenderId                                        | -                | Done           | -                                                        | -       |
-| DhorolaSms          | apikey, sender                                                    | -                | Done           | -                                                        | -       |
 | DurjoySoft          | ApiKey, SenderID                                                  | -                | Done           | -                                                        | -       |
-| Esms                | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
 | ElitBuzz            | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
+| Esms                | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
 | Grameenphone        | username, password, messagetype                                   | -                | Done           | not tested yet in live                                   | -       |
 | Infobip             | user, password                                                    | -                | Done           | not tested yet in live                                   | -       |
 | Lpeek               | acode, apiKey, requestID, masking                                 | -                | Done           | -                                                        | -       |
