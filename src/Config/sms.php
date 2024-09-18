@@ -59,6 +59,7 @@ use Xenon\LaravelBDSms\Provider\TruboSms;
 use Xenon\LaravelBDSms\Provider\Twenty4BulkSms;
 use Xenon\LaravelBDSms\Provider\TwentyFourBulkSmsBD;
 use Xenon\LaravelBDSms\Provider\Viatech;
+use Xenon\LaravelBDSms\Provider\WinText;
 use Xenon\LaravelBDSms\Provider\ZamanIt;
 
 return [
@@ -308,6 +309,12 @@ return [
             'sender_id' => env('SMS_TWENTYFOUR_BULKSMS_SENDER_ID', ''),
             'user_email' => env('SMS_TWENTYFOUR_BULKSMS_USER_EMAIL', ''),
             'api_key' => env('SMS_TWENTYFOUR_BULKSMS_APP_KEY', ''),
+        ],
+        WinText::class => [
+            'token' => env('SMS_WINTEXT_TOKEN', ''),
+            'messagetype' => env('SMS_WINTEXT_MESSAGE_TYPE', ''),
+            'ismasking' => env('SMS_WINTEXT_IS_MASKING', ''),
+            'masking' => env('SMS_WINTEXT_MASKING',''),
         ],
         ZamanIt::class => [
             'api_key' => env('SMS_ZAMANIT_API_KEY', ''),
