@@ -46,6 +46,7 @@ use Xenon\LaravelBDSms\Provider\QuickSms;
 use Xenon\LaravelBDSms\Provider\RedmoItSms;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
+use Xenon\LaravelBDSms\Provider\SmsBangladesh;
 use Xenon\LaravelBDSms\Provider\SmsinBD;
 use Xenon\LaravelBDSms\Provider\SmsNet24;
 use Xenon\LaravelBDSms\Provider\SmsNetBD;
@@ -245,6 +246,11 @@ return [
             'type' => env('SMS_SMS4BD_TYPE', ''),
             'sender' => env('SMS_SMS4BD_SENDER', ''),
             'delay' => env('SMS_SMS4BD_DELAY', ''),
+        ],
+        SmsBangladesh::class => [
+            'user' => env('SMS_BANGLADESH_USER', ''),
+            'password' => env('SMS_BANGLADESH_PASSWORD', ''),
+            'from' => env('SMS_BANGLADESH_FROM', ''),
         ],
         SmsNet24::class => [
             'user_id' => env('SMS_SMSNET24_USER_ID', ''),
