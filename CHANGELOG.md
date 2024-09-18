@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [V1.0.63.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.63.0) - 2024-09-18 12:35:07
+
+## What's Changed
+* Wintext Gateway Added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/79
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.62.0...V1.0.63.0
+
 ## [V1.0.62.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.62.0) - 2024-09-18 10:30:57
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.61.0...V1.0.62.0
