@@ -244,7 +244,6 @@ class Sender
             }
         }
 
-
         $this->provider->errorException();
 
         $config = Config::get('sms');
@@ -329,7 +328,6 @@ class Sender
      */
     public function setProvider($providerClass): Sender
     {
-
         try {
 
             if (!class_exists($providerClass)) {
