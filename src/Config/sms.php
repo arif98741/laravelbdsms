@@ -44,6 +44,7 @@ use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\QuickSms;
 use Xenon\LaravelBDSms\Provider\RedmoItSms;
+use Xenon\LaravelBDSms\Provider\SendMySms;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
 use Xenon\LaravelBDSms\Provider\SmsBangladesh;
@@ -235,6 +236,10 @@ return [
             'sender_id' => env('SMS_REDMOIT_SENDER_ID', ''),
             'api_token' => env('SMS_REDMOIT_API_TOKEN', ''),
             'type' => env('SMS_REDMOIT_TYPE', 'string'),
+        ],
+        SendMySms::class => [
+            'user' => env('SMS_SENDMYSMS_USER', ''),
+            'key' => env('SMS_SENDMYSMS_PASSWORD', ''),
         ],
         SmartLabSms::class => [
             'user' => env('SMS_SMARTLAB_USER', ''),
