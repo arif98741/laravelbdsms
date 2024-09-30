@@ -210,7 +210,7 @@ echo $status = $sender->send();
 | OnnoRokomSMS        | userName, userPassword, type, maskName, campaignName              | -                | Done           | not tested yet in live                                   | -       |
 | QuickSms            | api_key, senderid, type,scheduledDateTime                         | -                | Done           | not tested yet in live                                   | -       |
 | RedmoITSms          | api_token, sender_id                                              | -                | Support closed | -                                                        |
-| RedmoITSms          | api_token, sender_id                                              | -                | Support closed | -                                                        |
+| SendMySms           | user, closed                                                      | -                | Done           | tested in live                                           |
 | SmartLabSMS         | user, password, sender                                            | -                | Done           | -                                                        | -       |
 | Sms4BD              | publickey, privatekey, type,sender, delay                         | -                | Done           | -                                                        | -       |
 | SmsBangladesh       | user, password, from                                              | -                | Done           | -                                                        | -       |

@@ -1,6 +1,6 @@
 <?php
 /*
- *  Last Modified: 09/16/24, 12:14 AM
+ *  Last Modified: 10/01/24, 03:10 AM
  *  Copyright (c) 2024
  *  -created by Ariful Islam
  *  -All Rights Preserved By
@@ -18,7 +18,6 @@ use Xenon\LaravelBDSms\Sender;
 
 /**
  * Sendmysms Class
- * api endpoint https://sendmysms.net/api.php
  */
 class SendMySms extends AbstractProvider
 {
@@ -54,12 +53,6 @@ class SendMySms extends AbstractProvider
             'msg' => $text,
         ];
 
-        if (is_array($number)) {
-        //    $query['to'] = ['01733499574', '01750840217'];
-        }
-
-
-
         $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
         $requestObject->setFormParams($query);
         $response = $requestObject->post();
@@ -84,7 +77,7 @@ class SendMySms extends AbstractProvider
             throw new ParameterException('user key is absent in configuration');
         }
         if (!array_key_exists('key', $this->senderObject->getConfig())) {
-            throw new ParameterException('key key is absent in configuration');
+            throw new ParameterException('key is absent in configuration');
         }
 
     }
