@@ -35,12 +35,12 @@ class ElitBuzz extends AbstractProvider
         $tries=$this->senderObject->getTries();
         $backoff=$this->senderObject->getBackoff();
 
-        $formParams = [
+      $formParams = [
             "api_key" => $config['api_key'],
-            "type" => "text",
+            "type" => $config['type'],
             "senderid" => $config['senderid'],
             "contacts" => $mobile,
-            "msg" => urlencode($text),
+            "msg" => $text,
         ];
 
         $requestUrl = $config['url'] . "/smsapi";
