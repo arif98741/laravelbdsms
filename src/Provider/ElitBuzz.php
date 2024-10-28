@@ -80,5 +80,9 @@ class ElitBuzz extends AbstractProvider
         if (!array_key_exists('senderid', $config)) {
             throw new RenderException('senderid key is absent in configuration');
         }
+
+        if (!array_key_exists('type', $config)) {
+            throw new RenderException('type key is absent in configuration');
+        }
     }
 }

@@ -196,7 +196,7 @@ echo $status = $sender->send();
 | DianaHost           | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
 | DianaSMS            | ApiKey, ClientId, SenderId                                        | -                | Done           | -                                                        | -       |
 | DurjoySoft          | ApiKey, SenderID                                                  | -                | Done           | -                                                        | -       |
-| ElitBuzz            | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
+| ElitBuzz            | api_key, type, senderid, type                                     | -                | Done           | not tested yet in live                                   | -       |
 | Esms                | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
 | Grameenphone        | username, password, messagetype                                   | -                | Done           | not tested yet in live                                   | -       |
 | Infobip             | user, password                                                    | -                | Done           | not tested yet in live                                   | -       |

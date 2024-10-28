@@ -158,6 +158,7 @@ return [
         ElitBuzz::class => [
             'url' => env('SMS_ELITBUZZ_URL', ''),
             'senderid' => env('SMS_ELITBUZZ_SENDER_ID', ''),
+            'type' => env('SMS_ELITBUZZ_TYPE', ''),
             'api_key' => env('SMS_ELITBUZZ_API_KEY', ''),
         ],
         Esms::class => [
