@@ -151,7 +151,7 @@ array:6 [▼
 
 
 ## Sms Send Using Custom Gateway
-We have tried to added most of the gateways of Bangladesh in this package as much as possible. But still if you don't find your expected gateway in this list, then use Custom Gateway using following code snippet.
+We have tried to add most of the gateways of Bangladesh in this package as much as possible. But still if you don't find your expected gateway in this list, then use Custom Gateway using following code snippet.
 <pre>
 use Xenon\LaravelBDSms\Provider\CustomGateway;
 use Xenon\LaravelBDSms\Sender;
