@@ -18,6 +18,7 @@ use Xenon\LaravelBDSms\Sender;
 
 class Esms extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://login.esms.com.bd/api/v3/sms/send';
     /**
      * DianaHost constructor.
      * @param Sender $sender
@@ -52,7 +53,7 @@ class Esms extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request('https://login.esms.com.bd/api/v3/sms/send', $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = new Request($this->apiEndPoint, $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {
