@@ -291,6 +291,7 @@ return [
             'api_token' => env('SMS_SSL_API_TOKEN', ''),
             'sid' => env('SMS_SSL_SID', ''),
             'csms_id' => env('SMS_SSL_CSMS_ID', ''),
+            'batch_csms_id ' => env('SMS_SSL_BATCH_CSMS_ID ', ''),
         ],
         Tense::class => [
             'user' => env('SMS_TENSE_USER', ''),
