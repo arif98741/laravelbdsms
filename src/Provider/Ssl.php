@@ -45,12 +45,17 @@ class Ssl extends AbstractProvider
         $query = [
             'api_token' => $config['api_token'],
             'sid' => $config['sid'],
-            'csms_id' => $config['csms_id'],
             'msisdn' => $mobile,
+            'csms_id' => $config['csms_id'],
             'sms' => $text,
+            'batch_csms_id' => $config['batch_csms_id'] ?? null,
         ];
 
         $requestObject = new Request($this->apiEndpoint . (is_array($mobile) ? '/bulk' : ''), $query, $queue, [], $queueName, $tries, $backoff);
+        $requestObject->setHeaders([
+            'Content-Type' => 'application/json',
+        ])->setContentTypeJson(true);
+
         $response = $requestObject->post();
         if ($queue) {
             return true;
@@ -77,6 +82,10 @@ class Ssl extends AbstractProvider
 
         if (!array_key_exists('csms_id', $this->senderObject->getConfig())) {
             throw new RenderException('csms_id key is absent in configuration');
+        }
+
+        if (is_array($this->senderObject->getMobile()) && !array_key_exists('batch_csms_id', $this->senderObject->getConfig())) {
+            throw new RenderException('batch_csms_id key is absent in configuration. This is required if you send array of receivers');
         }
 
     }

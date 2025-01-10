@@ -55,6 +55,10 @@ class BulkSmsBD extends AbstractProvider
             $query ['senderid'] = $config['senderid'];
         }
 
+        if (is_array($number)) {
+            $query['number'] =  implode(',', $number);
+        }
+
         $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
@@ -77,6 +81,12 @@ class BulkSmsBD extends AbstractProvider
         if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
             throw new ParameterException('api_key key is absent in configuration');
         }
+
+        if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
+            throw new ParameterException('senderid key is absent in configuration');
+        }
+
+
 
     }
 }
