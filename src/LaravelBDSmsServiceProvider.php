@@ -11,8 +11,8 @@
 
 namespace Xenon\LaravelBDSms;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Xenon\LaravelBDSms\Helper\Helper;
 use Xenon\LaravelBDSms\Log\Log;
 
 class LaravelBDSmsServiceProvider extends ServiceProvider
@@ -27,9 +27,8 @@ class LaravelBDSmsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('LaravelBDSms', function () {
-
             $provider = config('sms.default_provider');
-
+            $provider = Helper::ensurePrefix($provider);
             $sender = Sender::getInstance();
             $sender->setProvider($provider);
             $sender->setConfig(config('sms.providers')[$provider]);

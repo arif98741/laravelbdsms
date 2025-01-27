@@ -4,6 +4,10 @@ namespace Xenon\LaravelBDSms\Helper;
 
 class Helper
 {
+    public static function ensurePrefix($text) {
+        return str_starts_with($text, 'Xenon\\LaravelBDSms\\Provider\\') ? $text : 'Xenon\\LaravelBDSms\\Provider\\' . $text;
+    }
+
     /**
      * Mobile Number Validation
      * @param $number
