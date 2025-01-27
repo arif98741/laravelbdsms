@@ -20,6 +20,7 @@ use JsonException;
 use Xenon\LaravelBDSms\Facades\Logger;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
+use Xenon\LaravelBDSms\Helper\Helper;
 use Xenon\LaravelBDSms\Provider\AbstractProvider;
 use Xenon\LaravelBDSms\Provider\CustomGateway;
 
@@ -329,6 +330,8 @@ class Sender
     public function setProvider($providerClass): Sender
     {
         try {
+
+            $providerClass = Helper::ensurePrefix($providerClass);
 
             if (!class_exists($providerClass)) {
                 throw new RenderException("Sms Gateway Provider '$providerClass' not found. ");
