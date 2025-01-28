@@ -1,0 +1,41 @@
+name: Check Composer Install on Multiple PHP Versions 8.0,8.1,8.2,8.3
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  check-php-versions:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [8.0, 8.1, 8.2, 8.3]  # Added PHP 8.0 to the matrix
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up PHP version
+      - name: Set up PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, intl, bcmath, curl, json  # Add any required PHP extensions
+
+      # Step 3: Install Composer
+      - name: Install Composer
+        run: curl -sS https://getcomposer.org/installer | php
+
+      # Step 4: Install dependencies using Composer
+      - name: Install dependencies with Composer
+        run: php composer.phar install --no-progress --prefer-dist
+
+      # Step 5: Run tests or any checks (optional)
+      - name: Run PHPUnit tests (if applicable)
+        run: vendor/bin/phpunit --configuration phpunit.xml.dist || true  # Adjust as needed
