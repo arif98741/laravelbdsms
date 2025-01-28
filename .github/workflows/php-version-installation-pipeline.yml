@@ -3,10 +3,10 @@ name: Check Composer Install on Multiple PHP Versions 8.0,8.1,8.2,8.3
 on:
   push:
     branches:
-      - php-version-installation-pipeline
+      - master
   pull_request:
     branches:
-      - php-version-installation-pipeline
+      - master
 
 jobs:
   check-php-versions:
