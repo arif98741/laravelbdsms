@@ -1,5 +1,63 @@
 # CHANGELOG
 
+## [V1.0.64.5](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.5) - 2025-01-28 04:51:55
+
+## What's Changed
+* Added Support for PHP ^8.0 by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/88
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.64.4...V1.0.64.5
+
+## [V1.0.64.4](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.4) - 2025-01-27 18:19:47
+
+## What's Changed
+* Provider Not found issue fixed for Facade Sms Sending by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/86
+* Merge dev to Master  by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/87
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.64.3...V1.0.64.4
+
+## [V1.0.64.3](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.3) - 2025-01-10 07:07:08
+
+## What's Changed
+* Sms formatting and reoptimized done for Bulksmsbd and SSL Sms by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/83
+* Merge Latest Updates for Fine Tuning from Dev to Master by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/84
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.64.2...V1.0.64.3
+
+## [V1.0.64.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.2) - 2024-12-22 08:51:56
+
+## What's Changed
+* fix: update wording in documentation by @mehedijaman in https://github.com/arif98741/laravelbdsms/pull/82
+
+## New Contributors
+* @mehedijaman made their first contribution in https://github.com/arif98741/laravelbdsms/pull/82
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.64.1...V1.0.64.2
+
+### Bug Fixes
+
+- general:
+  - update wording in documentation
+Changed "added" to "add" in the sentence "We have tried to add most" for improved clarity in the documentation. ([11d065b](https://github.com/arif98741/laravelbdsms/commit/11d065bd55066b72bf6d2519b58873a38dabe703)) ([#82](https://github.com/arif98741/laravelbdsms/pull/82))
+
+## [V1.0.64.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.1) - 2024-10-28 16:54:55
+
+## What's Changed
+* Update ElitBuzz.php by @RaihanIIUC in https://github.com/arif98741/laravelbdsms/pull/80
+* fix: Added type param for config and modified readme file by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/81
+
+## New Contributors
+* @RaihanIIUC made their first contribution in https://github.com/arif98741/laravelbdsms/pull/80
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.64.0...V1.0.64.1
+
+### Bug Fixes
+
+- general:
+  - added type param for config and modified readme file ([55c2b95](https://github.com/arif98741/laravelbdsms/commit/55c2b954a140da3805882961b3c3e5db866636a3)) ([#81](https://github.com/arif98741/laravelbdsms/pull/81))
+
 ## [V1.0.64.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.0) - 2024-09-30 21:32:56
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.63.0...V1.0.64.0
