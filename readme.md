@@ -185,7 +185,7 @@ echo $status = $sender->send();
 | Provider            | Credentials  Required <br>    For Sending SMS                     | Support Multiple | Status         | Comment                                                  | Contact |
 |---------------------|-------------------------------------------------------------------|------------------|----------------|----------------------------------------------------------|---------|
 | AjuraTech           | apikey, secretkey , callerID                                      | -                | Done           | -                                                        | -       |
-| Adn                 | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
+| Adn                 | api_key, api_secret, messsage_type, request_type                                           | -                | Done           | -                                                        | -       |
 | Alpha               | api_key                                                           | Yes              | Done           | -                                                        | -       |
 | Banglalink          | userID, passwd , sender                                           | -                | Done           | -                                                        | -       |
 | BDBulkSMS           | token                                                             | -                | Done           | -                                                        | -       |
