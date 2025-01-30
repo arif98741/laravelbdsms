@@ -99,8 +99,8 @@ return [
             'senderid' => env('SMS_ADN_SENDER_ID', ''),
             'api_key' => env('SMS_ADN_API_KEY', ''),
             'api_secret' => env('SMS_ADN_API_SECRET', ''),
-            'request_type' => env('SMS_ADN_API_REQUEST_TYPE', ''),
-            'message_type' => env('SMS_ADN_API_MESSAGE_TYPE', ''),
+            'request_type' => env('SMS_ADN_API_REQUEST_TYPE', 'SINGLE_SMS'), //SINGLE_SMS, OTP, GENERAL_CAMPAIGN, MULTIBODY_CAMPAIGN
+            'message_type' => env('SMS_ADN_API_MESSAGE_TYPE', 'TEXT'),
         ],
         AjuraTech::class => [
             'apikey' => env('SMS_AjuraTechReveSms_API_KEY', ''),

@@ -11,15 +11,14 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class Adn extends AbstractProvider
 {
-    private string $apiEndpoint = 'https://portal.adnsms.com';
+    private string $apiEndpoint = 'https://portal.adnsms.com/api/v1/secure/send-sms';
+
     /**
      * Adn constructor.
      * @param Sender $sender
@@ -39,20 +38,23 @@ class Adn extends AbstractProvider
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
         $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
         $query = [];
         $requestObject = new Request($this->apiEndpoint, $query, $queue, [
             'Accept' => 'application/json'
-        ], $queueName,$tries,$backoff);
+        ], $queueName, $tries, $backoff);
 
         $requestObject->setFormParams([
             'api_key' => $config['api_key'],
-            'type' => $config['type'],
-            'senderid' => $config['senderid'],
+            'api_secret' => $config['api_secret'],
+            'request_type' => $config['request_type'],
+            'message_type' => $config['message_type'],
+            'senderid' => $config['senderid'] ?? null,
             'mobile' => $number,
             'message_body' => $text,
         ]);
+
         $response = $requestObject->post();
         if ($queue) {
             return true;
@@ -70,18 +72,25 @@ class Adn extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
+        $configArray = $this->senderObject->getConfig();
+
+        if (!array_key_exists('api_key', $configArray)) {
             throw new ParameterException('api_key is absent in configuration');
         }
-        if (!array_key_exists('api_secret', $this->senderObject->getConfig())) {
+        if (!array_key_exists('api_secret', $configArray)) {
             throw new ParameterException('api_secret key is absent in configuration');
         }
-        if (!array_key_exists('request_type', $this->senderObject->getConfig())) {
+        if (!array_key_exists('request_type', $configArray)) {
             throw new ParameterException('request_type key is absent in configuration');
         }
-        if (!array_key_exists('message_type', $this->senderObject->getConfig())) {
+        if (!array_key_exists('message_type', $configArray)) {
             throw new ParameterException('message_type key is absent in configuration');
         }
 
+        $allowedRequestTypes = ['SINGLE_SMS', 'OTP', 'GENERAL_CAMPAIGN', 'MULTIBODY_CAMPAIGN'];
+
+        if (!in_array($configArray['request_type'], $allowedRequestTypes)) {
+            throw new ParameterException('request_type key is invalid. Allowed request_type values are ' . implode(', ', $allowedRequestTypes));
+        }
     }
 }
