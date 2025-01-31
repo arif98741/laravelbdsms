@@ -18,10 +18,7 @@ class CongfigAndDataTest extends TestCase
     {
         parent::setUp();
 
-        // Get the correct path to the src/Config/sms.php file from the package root
-        //$packageRootPath = dirname(__DIR__, 2); // Go two directories up from the test file
         $packageRootPath = realpath(dirname(__DIR__, 2)); // Get the absolute path of the root directory by going two directories up
-        //dd($packageRootPath);;
 
         $srcConfigPath = $packageRootPath . '/src/Config/sms.php';
         $destConfigPath = $packageRootPath . '/config/sms.php';
@@ -29,8 +26,8 @@ class CongfigAndDataTest extends TestCase
         // Ensure the source config file exists
         if (file_exists($srcConfigPath)) {
             // Create config directory if it doesn't exist
-            if (!is_dir('config')) {
-                mkdir('config', 0755, true);
+            if (!is_dir($packageRootPath . '/config')) {
+                mkdir($packageRootPath . '/config', 0755, true);
             }
             copy($srcConfigPath, $destConfigPath);
         } else {
