@@ -25,9 +25,14 @@ class CongfigAndDataTest extends TestCase
 
         // Ensure the source config file exists
         if (file_exists($srcConfigPath)) {
+            echo 'src config path exist';
             // Create config directory if it doesn't exist
             if (!is_dir($packageRootPath . '/config')) {
+                echo 'inside 2';
                 mkdir($packageRootPath . '/config', 0755, true);
+            }else{
+                echo 'not created';
+                echo $packageRootPath . '/config';
             }
             copy($srcConfigPath, $destConfigPath);
         } else {
