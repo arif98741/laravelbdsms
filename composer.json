@@ -20,6 +20,11 @@
             "Xenon\\LaravelBDSms\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
@@ -30,5 +35,9 @@
                 "LaravelBDSms": "Xenon\\LaravelBDSms\\Facades\\SMS"
             }
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.2.0 || ^11.5",
+        "orchestra/testbench": "^9.9"
     }
 }

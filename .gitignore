@@ -5,7 +5,9 @@
 *.zip
 src/Test.php
 src/Test
+config
 vendor/
 .phpintel
 *.lock
 composer.lock
+.phpunit.result.cache
