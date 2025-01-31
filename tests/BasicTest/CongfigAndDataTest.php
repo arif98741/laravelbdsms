@@ -29,7 +29,7 @@ class CongfigAndDataTest extends TestCase
             // Create config directory if it doesn't exist
             if (!is_dir($packageRootPath . '/config')) {
                 echo 'inside 2';
-                mkdir($packageRootPath . '/config', 0755, true);
+                mkdir($packageRootPath . '/config', 0775, true);
             }else{
                 echo 'not created';
                 echo $packageRootPath . '/config';
