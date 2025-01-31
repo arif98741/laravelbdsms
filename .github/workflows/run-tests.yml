@@ -32,7 +32,6 @@ jobs:
       # Step 4: Set up Laravel application
       - name: Set up Laravel Environment
         run: |
-          cp .env.example .env
           php artisan key:generate
 
       # Step 5: Run PHPUnit tests
