@@ -29,11 +29,6 @@ jobs:
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      # Step 4: Set up Laravel application
-      - name: Set up Laravel Environment
-        run: |
-          php artisan key:generate
-
       # Step 5: Run PHPUnit tests
       - name: Run PHPUnit
         run: vendor/bin/phpunit
