@@ -20,6 +20,8 @@ class CongfigAndDataTest extends TestCase
 
         // Get the correct path to the src/Config/sms.php file from the package root
         $packageRootPath = dirname(__DIR__, 2); // Go two directories up from the test file
+        $packageRootPath = getenv('GITHUB_ACTIONS') ? '/home/runner/work/laravelbdsms/laravelbdsms' : dirname(__DIR__, 2);
+
         $srcConfigPath = $packageRootPath . '/src/Config/sms.php';
         $destConfigPath = $packageRootPath . '/config/sms.php';
 
