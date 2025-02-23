@@ -10,9 +10,6 @@ use Xenon\LaravelBDSms\Sender;
 class SenderTest extends TestCase
 {
 
-    /**
-     * @throws \Exception
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,6 +18,7 @@ class SenderTest extends TestCase
         $packageRootPath = dirname(__DIR__, 2); // Go two directories up from the test file
         $srcConfigPath = $packageRootPath . '/src/Config/sms.php';
         $destConfigPath = $packageRootPath . '/config/sms.php';
+
 
         // Ensure the source config file exists
         if (file_exists($srcConfigPath)) {
