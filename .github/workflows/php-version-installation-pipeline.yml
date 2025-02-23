@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - phpunit_test
   pull_request:
     branches:
       - master
