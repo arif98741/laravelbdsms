@@ -38,4 +38,4 @@ jobs:
 
       # Step 5: Run tests or any checks (optional)
       - name: Run PHPUnit tests (if applicable)
-        run: vendor/bin/phpunit --configuration phpunit.xml.dist || true  # Adjust as needed
+        run: vendor/bin/phpunit
