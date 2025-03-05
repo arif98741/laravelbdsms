@@ -25,7 +25,7 @@ use Xenon\LaravelBDSms\Sender;
  */
 class MimSms extends AbstractProvider
 {
-    private string $apiEndpoint = 'https://esms.mimsms.com/smsapi';
+    private string $apiEndpoint = 'https://api.mimsms.com/api/SmsSending/SMS';
 
     /**
      * Mimsms constructor.
@@ -49,23 +49,29 @@ class MimSms extends AbstractProvider
     public function sendRequest()
     {
         $config = $this->senderObject->getConfig();
+
         $queue = $this->senderObject->getQueue();
         $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
         $text = $this->senderObject->getMessage();
         $number = $this->senderObject->getMobile();
 
-        $query = [
-            'api_key' => $config['api_key'],
-            'type' => $config['type'],
-            'senderid' => $config['senderid'],
-            'contacts' => $number,
-            'msg' => $text,
+        $queryArray = [
+            'ApiKey' => $config['ApiKey'],
+            'SenderName' => $config['SenderName'],
+            'UserName' => $config['UserName'],
+            'TransactionType' => $config['TransactionType'] ?? 'T',
+            'CampaignId' => $config['CampaignId'] ?? 'null',
+            'CampaignName' => $config['CampaignName'] ?? "",
+            'MobileNumber' => $number,
+            'Message' => $text,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
-        $response = $requestObject->get();
+        $requestObject = new Request($this->apiEndpoint, $queryArray, $queue, [], $queueName, $tries, $backoff);
+        $requestObject->setContentTypeJson(true);
+
+        $response = $requestObject->post();
         if ($queue) {
             return true;
         }
@@ -85,15 +91,17 @@ class MimSms extends AbstractProvider
      */
     public function errorException()
     {
-        if (!array_key_exists('api_key', $this->senderObject->getConfig())) {
-            throw new ParameterException('api_key is absent in configuration');
+
+        if (!array_key_exists('ApiKey', $this->senderObject->getConfig())) {
+            throw new ParameterException('ApiKey is absent in configuration');
         }
-        if (!array_key_exists('type', $this->senderObject->getConfig())) {
-            throw new ParameterException('type key is absent in configuration');
+        if (!array_key_exists('SenderName', $this->senderObject->getConfig())) {
+            throw new ParameterException('SenderName key is absent in configuration');
         }
-        if (!array_key_exists('senderid', $this->senderObject->getConfig())) {
-            throw new ParameterException('senderid key is absent in configuration');
+        if (!array_key_exists('UserName', $this->senderObject->getConfig())) {
+            throw new ParameterException('UserName key is absent in configuration');
         }
+
     }
 
 }

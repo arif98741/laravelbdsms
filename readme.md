@@ -127,7 +127,7 @@ $sender->setProvider(Ssl::class); //change this provider class according to need
 $sender->setMobile('017XXYYZZAA');
 //$sender->setMobile(['017XXYYZZAA','018XXYYZZAA']);
 $sender->setMessage('helloooooooo boss!');
-$sender->setQueue(true); //if you want to sent sms from queue
+$sender->setQueue(false); //set true if you want to sent sms from queue
 $sender->setConfig(
    [
        'api_token' => 'api token goes here',
@@ -203,7 +203,7 @@ echo $status = $sender->send();
 | Lpeek               | acode, apiKey, requestID, masking                                 | -                | Done           | -                                                        | -       |
 | MDL                 | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
 | Metronet            | api_key, mask                                                     |                  | Done           | -                                                        | -       |
-| MimSms              | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
+| MimSms              | ApiKey, UserName, SenderName                                      | -                | Done           | -                                                        | -       |
 | Mobireach           | Username,Password, From                                           | -                | Done           | -                                                        | -       |
 | Muthofun            | sender_id                                                         | Yes              | Done           | -                                                        | -       |
 | NovocomBD           | ApiKey , ClientId   , SenderId                                    | -                | Done           | -                                                        | -       |
