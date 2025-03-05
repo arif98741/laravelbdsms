@@ -127,7 +127,7 @@ $sender->setProvider(Ssl::class); //change this provider class according to need
 $sender->setMobile('017XXYYZZAA');
 //$sender->setMobile(['017XXYYZZAA','018XXYYZZAA']);
 $sender->setMessage('helloooooooo boss!');
-$sender->setQueue(true); //if you want to sent sms from queue
+$sender->setQueue(false); //set true if you want to sent sms from queue
 $sender->setConfig(
    [
        'api_token' => 'api token goes here',

@@ -9,3 +9,4 @@ vendor/
 .phpintel
 *.lock
 composer.lock
+.phpunit.result.cache
