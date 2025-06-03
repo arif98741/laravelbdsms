@@ -2,18 +2,6 @@
 
 ## [V1.0.64.7](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.7) - 2025-03-05 15:16:54+00:00
 
-## What's Changed
-* Mimsms Changed APi Endpoint and Doc by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/93
-
-
-**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.64.6...V1.0.64.7
-
-### Bug Fixes
-
-- general:
-  - changed readme doc for mimsms ([a97f7e4](https://github.com/arif98741/laravelbdsms/commit/a97f7e4b2dc05d5b12ecaffe34b6e1cdbfb086f2)) ([#93](https://github.com/arif98741/laravelbdsms/pull/93))
-  - mim sms api endpoint changed with modification ([8b13ec5](https://github.com/arif98741/laravelbdsms/commit/8b13ec5a4e831d1c5cbef43da9944d6af6cf1fc8)) ([#93](https://github.com/arif98741/laravelbdsms/pull/93))
-
 ## [V1.0.64.6](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.6) - 2025-01-30 09:13:48
 
 ## [V1.0.64.5](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.5) - 2025-01-28 04:51:55
