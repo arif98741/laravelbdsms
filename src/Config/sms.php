@@ -62,6 +62,7 @@ use Xenon\LaravelBDSms\Provider\TwentyFourBulkSmsBD;
 use Xenon\LaravelBDSms\Provider\Viatech;
 use Xenon\LaravelBDSms\Provider\WinText;
 use Xenon\LaravelBDSms\Provider\ZamanIt;
+use Xenon\LaravelBDSms\Provider\EAmarseba;
 
 return [
     /*
@@ -154,6 +155,12 @@ return [
         DurjoySoft::class => [
             'ApiKey' => env('SMS_DURJOYSOFT_SMS_API_KEY', ''),
             'SenderID' => env('SMS_DURJOYSOFT_SMS_SENDER_ID', ''),
+        ],
+        EAmarseba::class => [
+            'x-app-key' => env('SMS_EAMARSEBA_X_APP_KEY', ''),
+            'x-app-secret' => env('SMS_EAMARSEBA_X_APP_SECRET', ''),
+            'is_maksing' => env('SMS_EAMARSEBA_IS_MASKING', ''),
+            'masking_name' => env('SMS_EAMARSEBA_MASKING_NAME', ''),
         ],
         ElitBuzz::class => [
             'url' => env('SMS_ELITBUZZ_URL', ''),
