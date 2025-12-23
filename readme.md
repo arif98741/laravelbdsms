@@ -184,7 +184,7 @@ echo $status = $sender->send();
 
 | Provider            | Credentials  Required <br>    For Sending SMS                     | Support Multiple | Status         | Comment                                                  | Contact |
 |---------------------|-------------------------------------------------------------------|------------------|----------------|----------------------------------------------------------|---------|
-| AjuraTech           | apikey, secretkey , callerID                                      | -                | Done           | -                                                        | -       |
+| AjuraTech           | apikey, secretkey , callerID                                      | -                | Done           | Uses Reve SMS API (smpp.revesms.com)                    | -       |
 | Adn                 | api_key, api_secret, messsage_type, request_type                  | -                | Done           | -                                                        | -       |
 | Alpha               | api_key                                                           | Yes              | Done           | -                                                        | -       |
 | Banglalink          | userID, passwd , sender                                           | -                | Done           | -                                                        | -       |
@@ -211,6 +211,7 @@ echo $status = $sender->send();
 | OnnoRokomSMS        | userName, userPassword, type, maskName, campaignName              | -                | Done           | not tested yet in live                                   | -       |
 | QuickSms            | api_key, senderid, type,scheduledDateTime                         | -                | Done           | not tested yet in live                                   | -       |
 | RedmoITSms          | api_token, sender_id                                              | -                | Support closed | -                                                        |
+| Reve SMS            | apikey, secretkey , callerID                                      | -                | Done           | Use AjuraTech provider for the Reve SMS                      | -       |
 | SendMySms           | user, closed                                                      | -                | Done           | tested in live                                           |
 | SmartLabSMS         | user, password, sender                                            | -                | Done           | -                                                        | -       |
 | Sms4BD              | publickey, privatekey, type,sender, delay                         | -                | Done           | -                                                        | -       |
