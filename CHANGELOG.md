@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## [V1.0.65.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.65.1) - 2025-12-23 12:54:01+00:00
+
+## What's Changed
+* Clarify Reve SMS support (AjuraTech) by @JimNewaz in https://github.com/arif98741/laravelbdsms/pull/97
+
+## New Contributors
+* @JimNewaz made their first contribution in https://github.com/arif98741/laravelbdsms/pull/97
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.65.0...V1.0.65.1
+
+## [V1.0.65.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.65.0) - 2025-06-03 08:13:05+00:00
+
+## What's Changed
+* Eamarseba provider added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/95
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.64.7...V1.0.65.0
+
 ## [V1.0.64.7](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.7) - 2025-03-05 15:16:54+00:00
 
 ## [V1.0.64.6](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.64.6) - 2025-01-30 09:13:48
