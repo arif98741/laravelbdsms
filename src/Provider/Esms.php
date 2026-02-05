@@ -18,7 +18,7 @@ use Xenon\LaravelBDSms\Sender;
 
 class Esms extends AbstractProvider
 {
-    private string $apiEndPoint = 'https://login.esms.com.bd/api/v3/sms/send';
+    private string $apiEndPoint = 'https://login.dianasms.com/api/v3/sms/send';
     /**
      * DianaHost constructor.
      * @param Sender $sender
