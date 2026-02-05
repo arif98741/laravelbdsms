@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [V1.0.65.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.65.2) - 2026-02-05 12:49:45+00:00
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.65.1...V1.0.65.2
+
 ## [V1.0.65.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.65.1) - 2025-12-23 12:54:01+00:00
 
 ## What's Changed
@@ -94,6 +98,15 @@
 ## [v1.0.54.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.54.0) - 2023-10-04 20:03:18
 
 ## [v1.0.53.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.53.0) - 2023-10-04 18:42:06
+
+## [v1.0.52.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.52.0) - 2023-09-14 09:23:29+00:00
+
+## What's Changed
+* Feat lpeek sms gateway by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/48
+* Lpeek Sms Gateway by @sim8568X in https://github.com/arif98741/laravelbdsms/pull/49
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.51.0...v1.0.52.0
 
 ## [v1.0.52.0-beta](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.52.0-beta) - 2023-09-14 09:23:29
 
@@ -240,6 +253,10 @@ fix queue insert log based on config status
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/v1.0.41.1...v1.0.41.2
 
 ## [v1.0.41.0](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.41.0) - 2022-08-04 09:02:08
+
+*No description*
+
+## [v1.0.41-beta](https://github.com/arif98741/laravelbdsms/releases/tag/v1.0.41-beta) - 2022-08-04 06:38:19+00:00
 
 *No description*
 
