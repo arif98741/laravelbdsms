@@ -44,7 +44,7 @@ class Esms extends AbstractProvider
 
         $query = [
             'sender_id' => $config['sender_id'],
-            'recipient' => $number,
+            'recipient' => str_starts_with($number, '+88') ? $number : '+88' . $number,
             'message' => $text,
         ];
 
