@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [V1.0.65.3](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.65.3) - 2026-02-05 18:41:31+00:00
+
+## What's Changed
+* Esms api url changed by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/98
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.65.2...V1.0.65.3
+
 ## [V1.0.65.2](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.65.2) - 2026-02-05 12:49:45+00:00
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.65.1...V1.0.65.2
