@@ -191,6 +191,7 @@ echo $status = $sender->send();
 | BDBulkSMS           | token                                                             | -                | Done           | -                                                        | -       |
 | BoomCast            | masking  , userName ,   password                                  | -                | Done           | -                                                        | -       |
 | BulksmsBD           | api_key,senderid                                                  | -                | Done           | -                                                        | -       |
+| BulkSmsDhaka        | api_key, callerID                                                 | -                | Done           | -                                                        | -       |
 | CustomGateway       | provide necessary token/api_key/others based on requirements      | -                | Done           | Be careful using this and test based on several scenario | -       |
 | DhorolaSms          | apikey, sender                                                    | -                | Done           | -                                                        | -       |
 | DianaHost           | api_key, type, senderid                                           | -                | Done           | -                                                        | -       |
