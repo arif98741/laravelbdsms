@@ -22,6 +22,7 @@ use Xenon\LaravelBDSms\Provider\BDBulkSms;
 use Xenon\LaravelBDSms\Provider\BoomCast;
 use Xenon\LaravelBDSms\Provider\Brilliant;
 use Xenon\LaravelBDSms\Provider\BulkSmsBD;
+use Xenon\LaravelBDSms\Provider\BulkSmsDhaka;
 use Xenon\LaravelBDSms\Provider\CustomGateway;
 use Xenon\LaravelBDSms\Provider\DhorolaSms;
 use Xenon\LaravelBDSms\Provider\DianaHost;
@@ -133,6 +134,10 @@ return [
         BulkSmsBD::class => [
             'api_key' => env('SMS_BULK_SMS_BD_API_KEY', ''),
             'senderid' => env('SMS_BULK_SMS_BD_SENDERID', ''),
+        ],
+        BulkSmsDhaka::class => [
+            'api_key' => env('SMS_BULK_SMS_DHAKA_API_KEY', ''),
+            'callerID' => env('SMS_BULK_SMS_DHAKA_CALLER_ID', ''),
         ],
         CustomGateway::class => [
 
