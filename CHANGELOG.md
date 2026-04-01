@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [V1.0.66.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.66.0) - 2026-04-01 12:04:33+00:00
+
+## What's Changed
+* bulksms dhaka provider added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/99
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.65.4...V1.0.66.0
+
 ## [V1.0.65.4](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.65.4) - 2026-02-05 19:00:54+00:00
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.65.3...V1.0.65.4
