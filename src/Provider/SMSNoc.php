@@ -2,19 +2,22 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
 use Xenon\LaravelBDSms\Sender;
 
 class SMSNoc extends AbstractProvider
 {
-    private string $apiEndpoint = 'https://app.smsnoc.com/api/v3/sms/send';
+    /**
+     * Official API Endpoint for SMS NOC
+     * @var string
+     */
+    private string $apiEndpoint = 'https://smsnoc.com/api/v1/send-sms';
 
     /**
-     * Infobip Constructor
+     * SMSNoc constructor.
      * @param Sender $sender
-     * @version v1.0.32
-     * @since v1.0.31
      */
     public function __construct(Sender $sender)
     {
@@ -22,62 +25,60 @@ class SMSNoc extends AbstractProvider
     }
 
     /**
-     * @param $config
-     * @return string[]
-     * @version v1.0.32
-     * @since v1.0.31
-     */
-    private function getHeaders($config): array
-    {
-        return [
-            'Authorization' => 'Bearer ' . $config['bearer_token'],
-            'Content-Type' => 'application/json',
-        ];
-    }
-
-    /**
-     * @return false|string
+     * Send Request To Api and Send Message
+     * @return mixed
      * @throws RenderException
-     * @version v1.0.32
-     * @since v1.0.31
      */
     public function sendRequest()
     {
-        $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
+        $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
-        $number = $this->senderObject->getMobile();
+        $config = $this->senderObject->getConfig();
 
-        $query = [
-            'recipient' => '+88'.$number,
-            'message' => $text,
-            'type' => "plain",
-            'sender_id' => $config['sender_id'],
-        ];
+        // Handle array of numbers if passed
+        $numberStr = is_array($mobile) ? implode(',', $mobile) : $mobile;
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
-        $requestObject->setHeaders($this->getHeaders($config))->setContentTypeJson(true);
-
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
+        // Robust number normalization to +880 format
+        $phone = preg_replace('/[^0-9+]/', '', $numberStr);
+        if (!str_starts_with($phone, '+880') && !str_starts_with($phone, '880')) {
+            $phone = str_starts_with($phone, '0') ? '+88' . $phone : '+880' . $phone;
+        } elseif (str_starts_with($phone, '880')) {
+            $phone = '+' . $phone;
         }
 
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
+        $client = new Client([
+            'timeout' => 20.0,
+        ]);
 
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        try {
+            $response = $client->request('POST', $this->apiEndpoint, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $config['bearer_token'],
+                    'Content-Type'  => 'application/json',
+                    'Accept'        => 'application/json',
+                ],
+                'json' => [
+                    'to'        => $phone,
+                    'message'   => $text,
+                    'sender_id' => $config['sender_id'],
+                ],
+            ]);
+
+            $body = $response->getBody();
+            $smsResult = $body->getContents();
+
+            $data['number'] = $mobile;
+            $data['message'] = $text;
+
+            return $this->generateReport($smsResult, $data)->getContent();
+
+        } catch (GuzzleException $e) {
+            throw new RenderException($e->getMessage());
+        }
     }
 
     /**
      * @throws RenderException
-     * @version v1.0.32
-     * @since v1.0.31
      */
     public function errorException()
     {
