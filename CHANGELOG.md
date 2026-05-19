@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [V1.0.66.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.66.1) - 2026-05-19 19:54:17+00:00
+
+## What's Changed
+* Fix: Update SMSNoc provider to use official v1 API endpoint by @ashikhasnat in https://github.com/arif98741/laravelbdsms/pull/101
+
+## New Contributors
+* @ashikhasnat made their first contribution in https://github.com/arif98741/laravelbdsms/pull/101
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.66.0...V1.0.66.1
+
 ## [V1.0.66.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.66.0) - 2026-04-01 12:04:33+00:00
 
 ## What's Changed
