@@ -8,26 +8,25 @@ gateways for <strong>Laravel Framework</strong>. You can watch installation proc
 </p>
 
 <!-- TOC -->
-* [Installation](#installation)
-  * [Step 1:](#step-1)
-  * [Step 2:](#step-2)
-  * [Step 3:](#step-3)
-  * [Step 4:](#step-4)
-  * [Usage](#usage)
-    * [Simply use the facade](#simply-use-the-facade)
-    * [Or, with facade alias](#or-with-facade-alias)
-    * [Or, if you need to change the default provider on the fly](#or-if-you-need-to-change-the-default-provider-on-the-fly)
-    * [Or, you can send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run.](#or-you-can-send-message-with-queue-this-queue-will-be-added-in-your-jobs-table-message-will-be-sent-as-soon-as-job-is-run-)
-* [Log Generate](#log-generate)
-
-* [Sample Code](#sample-code)
-  * [SSLCommerz](#sslcommerz)
-  * [MimSms](#mimsms)
-  * [Sms Send Using Custom Gateway](#sms-send-using-custom-gateway)
-* [Currently Supported Sms Gateways](#currently-supported-sms-gateways)
-    * [Stargazers](#stargazers)
-    * [Forkers](#forkers)
-    * [Contributors](#contributors)
+- [Installation](#installation)
+  - [Step 1:](#step-1)
+  - [Step 2:](#step-2)
+  - [Step 3:](#step-3)
+  - [Step 4:](#step-4)
+  - [Usage](#usage)
+    - [Simply use the facade](#simply-use-the-facade)
+    - [Or, with facade alias](#or-with-facade-alias)
+    - [Or, if you need to change the default provider on the fly](#or-if-you-need-to-change-the-default-provider-on-the-fly)
+    - [Or, you can send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run.](#or-you-can-send-message-with-queue-this-queue-will-be-added-in-your-jobs-table-message-will-be-sent-as-soon-as-job-is-run)
+- [Log Generate](#log-generate)
+- [Sample Code](#sample-code)
+  - [SSLCommerz](#sslcommerz)
+  - [\]](#)
+  - [Sms Send Using Custom Gateway](#sms-send-using-custom-gateway)
+- [Currently Supported Sms Gateways](#currently-supported-sms-gateways)
+    - [Stargazers](#stargazers)
+    - [Forkers](#forkers)
+    - [Contributors](#contributors)
 <!-- TOC -->
 
 
@@ -225,6 +224,7 @@ echo $status = $sender->send();
 | SongBird            | apikey, secretkey, callerID                                       | -                | Done           | -                                                        |         |
 | Sslsms              | api_token, sid, csms_id                                           | Yes              | Done           | -                                                        | -       |
 | Tense               | user, password, campaign, masking                                 | -                | Done           | -                                                        | -       |
+| TmssIct             | api_key, request_type, message_type, campaign_title               | Yes              | Done           | Endpoint: `/api/v001/sent_sms` (https://sms.tmssict.com) | -       |
 | Twenty4BulkSms      | api_key, sender_id,user_email                                     | -                | Done           | -                                                        | -       |
 | TwentyFourBulkSmsBD | customer_id, api_key                                              | -                | Done           | -                                                        | -       |
 | Trubosms            | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
