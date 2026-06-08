@@ -57,6 +57,7 @@ use Xenon\LaravelBDSms\Provider\SmsQ;
 use Xenon\LaravelBDSms\Provider\SongBird;
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Provider\Tense;
+use Xenon\LaravelBDSms\Provider\TmssIct;
 use Xenon\LaravelBDSms\Provider\TruboSms;
 use Xenon\LaravelBDSms\Provider\Twenty4BulkSms;
 use Xenon\LaravelBDSms\Provider\TwentyFourBulkSmsBD;
@@ -313,6 +314,13 @@ return [
             'password' => env('SMS_TENSE_PASSWORD', ''),
             'campaign' => env('SMS_TENSE_CAMPAIGN', ''),
             'masking' => env('SMS_TENSE_MASKING', ''),
+        ],
+        TmssIct::class => [
+            'api_key' => env('SMS_TMSSICT_API_KEY', ''),
+            'request_type' => env('SMS_TMSSICT_REQUEST_TYPE', 'SINGLE_SMS'),
+            'message_type' => env('SMS_TMSSICT_MESSAGE_TYPE', 'TEXT'), //TEXT, UNICODE
+            'campaign_title' => env('SMS_TMSSICT_CAMPAIGN_TITLE', 'LaravelBDSms'),
+            'isPromotional' => env('SMS_TMSSICT_IS_PROMOTIONAL', ''), //0 or 1, leave blank to omit
         ],
         TruboSms::class => [
             'sender_id' => env('SMS_TRUBOSMS_SENDER_ID', ''),

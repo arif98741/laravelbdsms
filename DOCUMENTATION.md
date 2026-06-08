@@ -585,12 +585,13 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 | 41 | `SongBird` | SongBird SMS |
 | 42 | `Ssl` | SSL Wireless (Default) |
 | 43 | `Tense` | Tense SMS |
-| 44 | `TruboSms` | Trubo SMS |
-| 45 | `Twenty4BulkSms` | 24 Bulk SMS |
-| 46 | `TwentyFourBulkSmsBD` | 24 Bulk SMS BD |
-| 47 | `Viatech` | Viatech SMS |
-| 48 | `WinText` | WinText SMS |
-| 49 | `ZamanIt` | Zaman IT SMS |
+| 44 | `TmssIct` | TMSS ICT SMS (`/api/v001/sent_sms`) |
+| 45 | `TruboSms` | Trubo SMS |
+| 46 | `Twenty4BulkSms` | 24 Bulk SMS |
+| 47 | `TwentyFourBulkSmsBD` | 24 Bulk SMS BD |
+| 48 | `Viatech` | Viatech SMS |
+| 49 | `WinText` | WinText SMS |
+| 50 | `ZamanIt` | Zaman IT SMS |
 
 ### Provider Configuration Examples
 
@@ -637,6 +638,29 @@ SMS_INFOBIP_FROM=YourBrand
 use Xenon\LaravelBDSms\Provider\Infobip;
 
 SMS::via(Infobip::class)->shoot('017XXXXXXXXX', 'Message');
+```
+
+#### TMSS ICT
+
+Endpoint: `POST https://sms.tmssict.com/api/v001/sent_sms`. Numbers must be 11 digits without `88` prefix; the provider strips `+88` / `88` automatically. Pass multiple numbers as a comma-separated string (max 1000 per request).
+
+```env
+SMS_TMSSICT_API_KEY=your_api_key
+SMS_TMSSICT_REQUEST_TYPE=SINGLE_SMS
+SMS_TMSSICT_MESSAGE_TYPE=TEXT          # TEXT or UNICODE
+SMS_TMSSICT_CAMPAIGN_TITLE=LaravelBDSms
+SMS_TMSSICT_IS_PROMOTIONAL=            # 0 or 1, leave blank to omit
+```
+
+```php
+use Xenon\LaravelBDSms\Provider\TmssIct;
+use Xenon\LaravelBDSms\Facades\SMS;
+
+// single recipient
+SMS::via(TmssIct::class)->shoot('017XXXXXXXX', 'Hello from TMSS ICT');
+
+// multiple recipients (comma-separated)
+SMS::via(TmssIct::class)->shoot('017XXXXXXXX,018XXXXXXXX', 'Bulk message');
 ```
 
 ---
