@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [V1.0.67.0](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.67.0) - 2026-06-08 07:48:24+00:00
+
+## What's Changed
+* TMSSIct Provider Added by @arif98741 in https://github.com/arif98741/laravelbdsms/pull/102
+
+
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.66.1...V1.0.67.0
+
 ## [V1.0.66.1](https://github.com/arif98741/laravelbdsms/releases/tag/V1.0.66.1) - 2026-05-19 19:54:17+00:00
 
 ## What's Changed
