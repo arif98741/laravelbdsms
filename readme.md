@@ -8,178 +8,370 @@ gateways for <strong>Laravel Framework</strong>. You can watch installation proc
 </p>
 
 <!-- TOC -->
+- [Requirements](#requirements)
 - [Installation](#installation)
-  - [Step 1:](#step-1)
-  - [Step 2:](#step-2)
-  - [Step 3:](#step-3)
-  - [Step 4:](#step-4)
-  - [Usage](#usage)
-    - [Simply use the facade](#simply-use-the-facade)
-    - [Or, with facade alias](#or-with-facade-alias)
-    - [Or, if you need to change the default provider on the fly](#or-if-you-need-to-change-the-default-provider-on-the-fly)
-    - [Or, you can send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run.](#or-you-can-send-message-with-queue-this-queue-will-be-added-in-your-jobs-table-message-will-be-sent-as-soon-as-job-is-run)
-- [Log Generate](#log-generate)
-- [Sample Code](#sample-code)
-  - [SSLCommerz](#sslcommerz)
-  - [\]](#)
-  - [Sms Send Using Custom Gateway](#sms-send-using-custom-gateway)
-- [Currently Supported Sms Gateways](#currently-supported-sms-gateways)
-    - [Stargazers](#stargazers)
-    - [Forkers](#forkers)
-    - [Contributors](#contributors)
+- [Usage](#usage)
+  - [Send with the default provider](#send-with-the-default-provider)
+  - [Choose a provider per message](#choose-a-provider-per-message)
+  - [Send through a queue](#send-through-a-queue)
+  - [What a send returns](#what-a-send-returns)
+  - [Sending to more than one number](#sending-to-more-than-one-number)
+- [Using the Sender object directly](#using-the-sender-object-directly)
+  - [Custom gateway](#custom-gateway)
+- [Logging](#logging)
+  - [database driver](#database-driver)
+  - [file driver](#file-driver)
+  - [discord driver](#discord-driver)
+  - [Reading the log](#reading-the-log)
+- [Supported SMS gateways](#supported-sms-gateways)
+  - [Known limitations](#known-limitations)
+- [Writing your own provider](#writing-your-own-provider)
+- [Contributing](#contributing)
 <!-- TOC -->
 
+# Requirements
+
+| Requirement | Version                  |
+|-------------|--------------------------|
+| PHP         | `^8.0`                   |
+| Laravel     | 8+ (implied by the PHP 8 requirement) |
+| Extensions  | `ext-json`, `ext-curl`   |
+| HTTP client | `guzzlehttp/guzzle` `^6.3` or `^7.3` |
 
 # Installation
 
-## Step 1:
+**Step 1** — require the package:
 
-```
+```bash
 composer require xenon/laravelbdsms
 ```
 
-## Step 2:
+**Step 2** — publish the config and the migration:
 
-Publish the package using command
-
-```
-php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider --tag="migrations"
+```bash
 php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider --tag="config"
+php artisan vendor:publish --provider=Xenon\LaravelBDSms\LaravelBDSmsServiceProvider --tag="migrations"
 php artisan migrate
 ```
 
-## Step 3:
+This creates `config/sms.php` and the `lbs_log` table. The migration is only needed if you intend to use the
+`database` log driver.
 
-Select Vendor From Console <br>
-<img src="https://raw.githubusercontent.com/arif98741/laravelbdsms/master/img/installation.png" style="width: 60%; height: 60%">
+**Step 3** — pick your gateway in `config/sms.php` and put its credentials in `.env`. Every provider's env
+variable names are listed in `config/sms.php`:
 
-## Step 4:
-
+```php
+'default_provider' => env('SMS_DEFAULT_PROVIDER', Ssl::class),
 ```
-php artisan config:cache && php artisan migrate
+
+```dotenv
+SMS_SSL_API_TOKEN=your_token
+SMS_SSL_SID=your_sid
+SMS_SSL_CSMS_ID=your_csms_id
 ```
 
-[//]: # (This will create a `sms.php` in the `config/` directory and also table in your database. Set your desired provider as `default_provider` and fill up the)
+**Step 4** — refresh the config cache:
 
-[//]: # (necessary environment variable of that provider.)
+```bash
+php artisan config:cache
+```
 
-## Usage
+The service provider is auto-discovered, so no manual registration is required.
 
-### Simply use the facade
-`Note: For sending message using facade you must have to set .env credentials and set default provider; Find .env credentials for different providers from inside config/sms.php)`
-<pre>
+# Usage
+
+## Send with the default provider
+
+`shoot()` sends immediately and uses the `default_provider` from `config/sms.php`.
+
+```php
 use Xenon\LaravelBDSms\Facades\SMS;
 
-SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
-SMS::shoot(['017XXYYZZAA','018XXYYZZAA'], 'helloooooooo boss!'); 
-</pre>
+$response = SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
+```
 
-### Or, with facade alias
-<pre>
-use LaravelBDSms, SMS;
+The `LaravelBDSms` alias points at the same facade:
+
+```php
+use LaravelBDSms;
 
 LaravelBDSms::shoot('017XXYYZZAA', 'helloooooooo boss!');
-SMS::shoot('017XXYYZZAA', 'helloooooooo boss!');
-</pre>
+```
 
-### Or, if you need to change the default provider on the fly
-<pre>
+## Choose a provider per message
+
+`via()` selects the gateway for the message you are about to send:
+
+```php
 use Xenon\LaravelBDSms\Facades\SMS;
 use Xenon\LaravelBDSms\Provider\Ssl;
 
 $response = SMS::via(Ssl::class)->shoot('017XXYYZZAA', 'helloooooooo boss!');
-</pre>
+```
 
+`via()` returns an instance bound to that provider, so you can reuse it:
 
-### Or, you can send message with queue. This queue will be added in your jobs table. Message will be sent as soon as job is run. 
-Make sure you have **jobs** table and other jobs related functionalities enabled
-<pre>
+```php
+$ssl = SMS::via(Ssl::class);
+$ssl->shoot('017XXYYZZAA', 'first message');
+$ssl->shoot('018XXYYZZAA', 'second message');   // still goes through Ssl
+```
+
+A plain `SMS::shoot()` always uses `default_provider`, whether or not `via()` was called earlier in the
+request. The provider you pass to `via()` never leaks into unrelated sends.
+
+The class name may also be given as a short string:
+
+```php
+SMS::via('Ssl')->shoot('017XXYYZZAA', 'helloooooooo boss!');
+```
+
+## Send through a queue
+
+`shootWithQueue()` hands the gateway call to a queued job instead of sending inline. Make sure your queue
+connection and `jobs` table are configured.
+
+```php
 use Xenon\LaravelBDSms\Facades\SMS;
 use Xenon\LaravelBDSms\Provider\Ssl;
 
-SMS::shootWithQueue("01XXXXXXXXX",'test sms');
-SMS::via(Ssl::class)->shootWithQueue("01XXXXXXXXX",'test sms');
-</pre>
+SMS::via(Ssl::class)->shootWithQueue('01XXXXXXXXX', 'test sms');
 
-# Log Generate
-You can generate log for every sms api request and save in database or file. For doing this. Follow below points
-1. Laravelbdsms stores log in two drivers(`database, file`). `database` is default. You can change it from _config/sms.php_
-2. Find and make true `'sms_log' => true,`
-3. Be confirm you have completed **step-2** and **step-3**
-4. For `database` driver
-   1. Change log driver to `log_driver =>'database'` from `config/sms.php`
-   2. Run command `php artisan migrate`. This will create `lbs_log` table in your database
-5. For `file` driver
-    1. Change log driver to `log_driver =>'file'` from `config/sms.php`
+// queue name, retry attempts and retry delay in seconds
+SMS::via(Ssl::class)->shootWithQueue('01XXXXXXXXX', 'test sms', 'sms', 5, 90);
+```
 
-Otherwise, if you want more control, you can use the underlying sender object. This will not touch any laravel facade or
-service provider.
+| Parameter    | Default     | Meaning                                    |
+|--------------|-------------|--------------------------------------------|
+| `$queueName` | `'default'` | Queue the job is pushed onto               |
+| `$tries`     | `3`         | How many times the job may be attempted    |
+| `$backoff`   | `60`        | Seconds to wait before retrying            |
 
-# Sample Code
-## SSLCommerz
-<pre>
+A queued send returns `true` as soon as the job is dispatched — the gateway response is not available yet, so
+it is written to the log when the worker runs. `shoot()` and `shootWithQueue()` never affect each other:
+`shoot()` is always synchronous, even if a queued send happened earlier in the same process.
+
+## What a send returns
+
+A synchronous send returns the gateway response wrapped in a JSON report:
+
+```php
+$response = SMS::via(Ssl::class)->shoot('017XXYYZZAA', 'helloooooooo boss!');
+
+// {
+//     "status": "response",
+//     "response": "{\"status\":\"SUCCESS\",\"status_code\":200}",
+//     "provider": "Xenon\\LaravelBDSms\\Provider\\Ssl",
+//     "send_time": "2026-09-01 08:03:23",
+//     "mobile": "017XXYYZZAA",
+//     "message": "helloooooooo boss!"
+// }
+```
+
+`response` holds the gateway's own reply verbatim, so its shape differs per gateway. Decode the report and
+inspect `response` to decide whether the gateway accepted the message:
+
+```php
+$report = json_decode($response, true);
+$gateway = json_decode($report['response'], true);
+```
+
+A failed HTTP call throws `Xenon\LaravelBDSms\Handler\RenderException`, and a configuration problem throws
+`Xenon\LaravelBDSms\Handler\ParameterException`. Both extend `Exception`:
+
+```php
+use Xenon\LaravelBDSms\Handler\ParameterException;
+use Xenon\LaravelBDSms\Handler\RenderException;
+
+try {
+    SMS::via(Ssl::class)->shoot('017XXYYZZAA', 'helloooooooo boss!');
+} catch (ParameterException $e) {
+    // a credential is missing from config/sms.php
+} catch (RenderException $e) {
+    // the gateway could not be reached
+}
+```
+
+## Sending to more than one number
+
+The facade takes a single number per call. To send to several numbers in one request, use the `Sender`
+object with a provider whose **Support Multiple** column says `Yes`:
+
+```php
+use Xenon\LaravelBDSms\Provider\Alpha;
+use Xenon\LaravelBDSms\Sender;
+
+$sender = Sender::getInstance();
+$sender->setProvider(Alpha::class);
+$sender->setConfig(['api_key' => 'your api key']);
+$sender->setMobile(['017XXYYZZAA', '018XXYYZZAA']);
+$sender->setMessage('helloooooooo boss!');
+$sender->setQueue(false);
+
+$response = $sender->send();
+```
+
+For every other provider, loop over the numbers and send one message each.
+
+# Using the Sender object directly
+
+If you want full control, and no facade or published config in the way, drive the `Sender` yourself:
+
+```php
 use Xenon\LaravelBDSms\Provider\Ssl;
 use Xenon\LaravelBDSms\Sender;
 
 $sender = Sender::getInstance();
-$sender->setProvider(Ssl::class); //change this provider class according to need
+$sender->setProvider(Ssl::class);        // change this provider class according to need
 $sender->setMobile('017XXYYZZAA');
-//$sender->setMobile(['017XXYYZZAA','018XXYYZZAA']);
 $sender->setMessage('helloooooooo boss!');
-$sender->setQueue(false); //set true if you want to sent sms from queue
-$sender->setConfig(
-   [
-       'api_token' => 'api token goes here',
-       'sid' => 'text',
-       'csms_id' => 'sender_id'
-   ]
-);
-$status = $sender->send();
+$sender->setQueue(false);                // true to dispatch the gateway call as a job
+$sender->setConfig([
+    'api_token' => 'api token goes here',
+    'sid' => 'text',
+    'csms_id' => 'sender_id',
+]);
 
-----------Demo Response Using SSL-------------
-array:6 [▼
-  "status" => "response"
-  "response" => "{"status":"FAILED","status_code":4003,"error_message":"IP Blacklisted"}"
-  "provider" => "Xenon\LaravelBDSms\Provider\Ssl"
-  "send_time" => "2021-07-06 08:03:23"
-  "mobile" => "017XXYYZZAA"
-  "message" => "helloooooooo boss!"
-]
---------------------------------------------------
-</pre>
+$response = $sender->send();
+```
 
+`Sender::getInstance()` returns a shared instance, and every setter returns it so calls can be chained.
+Values you set stay set until you change them, so set the ones that matter for each send.
 
-## Sms Send Using Custom Gateway
-We have tried to add most of the gateways of Bangladesh in this package as much as possible. But still if you don't find your expected gateway in this list, then use Custom Gateway using following code snippet.
-<pre>
+| Method                                | Purpose                                                     |
+|---------------------------------------|-------------------------------------------------------------|
+| `setProvider(string $class)`          | Gateway to send through                                     |
+| `setConfig(array $config)`            | Credentials for that gateway                                |
+| `setMobile(string\|array $mobile)`    | Recipient, or recipients where the gateway supports it      |
+| `setMessage(string $text)`            | Message body                                                |
+| `setQueue(bool $queue)`               | Dispatch the gateway call as a job instead of sending inline |
+| `setQueueName(string $name)`          | Queue to dispatch onto                                      |
+| `setTries(int $tries)`                | Job attempts                                                |
+| `setBackoff(int $seconds)`            | Seconds between job attempts                                |
+| `setUrl(string $url)`                 | Endpoint, for `CustomGateway`                                |
+| `setMethod(string $method)`           | `get` or `post`, for `CustomGateway`                         |
+| `setHeaders(array $h, bool $json)`    | Extra request headers, for `CustomGateway`                    |
+| `send()`                              | Validate, send, and log                                     |
+
+## Custom gateway
+
+If your gateway is not in the list, `CustomGateway` lets you describe the request yourself. Whatever you pass
+to `setConfig()` becomes the request payload:
+
+```php
 use Xenon\LaravelBDSms\Provider\CustomGateway;
 use Xenon\LaravelBDSms\Sender;
 
 $sender = Sender::getInstance();
 $sender->setProvider(CustomGateway::class);
-$sender->setUrl('https://your_cusom_gateway_provider_url_here')
-        ->setMethod('post')
-        ->setHeaders([
-            'Content-Type: application/json',
-            'Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-        ], false);
+$sender->setUrl('https://your_custom_gateway_provider_url_here')
+    ->setMethod('post')
+    ->setHeaders([
+        'Authorization' => 'Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    ], true);
 $sender->setMobile('017XXYYZZAA');
 $sender->setMessage('text message goes here');
 $sender->setQueue(false);
-//use required parameters based on your sms gateway. This will be changed according to need
-$sender->setConfig(
-    [
-        'MsgType' => 'TEXT',
-        'masking' => 'sample',
-        'userName' => 'test_user',
-        'message' => 'test message',
-        'receiver' => '017xxxxxxxxxx',
-    ]
-);
-echo $status = $sender->send();
-</pre>
+$sender->setConfig([
+    'MsgType' => 'TEXT',
+    'masking' => 'sample',
+    'userName' => 'test_user',
+    'message' => 'test message',
+    'receiver' => '017xxxxxxxxxx',
+]);
 
-# Currently Supported Sms Gateways
+echo $sender->send();
+```
+
+The second argument of `setHeaders()` controls how the payload is encoded: `true` sends it as a JSON body,
+`false` sends it as query or form parameters. Headers may be given as `name => value` pairs, or as
+`'Name: value'` lines:
+
+```php
+$sender->setHeaders(['Authorization' => 'Bearer xxx'], true);
+$sender->setHeaders(['Authorization: Bearer xxx'], false);   // also accepted
+```
+
+# Logging
+
+Every request and response can be recorded. Turn it on in `config/sms.php`:
+
+```php
+'sms_log' => true,
+```
+
+Then choose where the log goes. `log_driver` takes one driver name, or a list of them so a log can go to
+several places at once:
+
+```php
+'log_driver' => 'database',                 // one driver
+'log_driver' => ['database', 'discord'],    // or several
+```
+
+| Driver     | Destination                                              |
+|------------|----------------------------------------------------------|
+| `database` | `lbs_log` table                                          |
+| `file`     | `storage/logs/laravel.log`                               |
+| `discord`  | a discord channel, through an incoming webhook           |
+
+A driver that fails never fails the send — the message has already gone out by the time logging happens, so
+the problem is reported in `storage/logs/laravel.log` and the remaining drivers still run.
+
+## database driver
+
+```php
+'log_driver' => 'database',
+```
+
+Run `php artisan migrate` so the `lbs_log` table exists.
+
+## file driver
+
+```php
+'log_driver' => 'file',
+```
+
+Entries are written to `storage/logs/laravel.log` under the `laravelbdsms` label.
+
+## discord driver
+
+```php
+'log_driver' => ['discord'],
+```
+
+1. In your discord channel, open **Channel Settings → Integrations → Webhooks** and create an incoming webhook.
+2. Put the webhook URL in `.env`:
+
+```dotenv
+SMS_LOG_DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/xxxxx/yyyyy
+```
+
+Each log arrives as an embed: a small table with the provider, recipient, status and time, followed by the
+message and the gateway response. The embed is green when the gateway reports success and red when it
+reports a failure.
+
+Credential **values** are never sent to discord, only the names of the config keys that were used. If the
+webhook is missing, unreachable or rate limited, the send still succeeds and the reason is written to
+`storage/logs/laravel.log`.
+
+## Reading the log
+
+```php
+use Xenon\LaravelBDSms\Facades\Logger;
+
+Logger::viewLastLog();          // most recent entry
+Logger::viewAllLog();           // every entry
+Logger::logByProvider(Xenon\LaravelBDSms\Provider\Ssl::class);
+Logger::total();                // number of entries
+Logger::clearLog();             // empty the table
+```
+
+These read the `lbs_log` table, so they apply to the `database` driver.
+
+# Supported SMS gateways
+
+Credentials for each gateway are configured in `config/sms.php`, and the matching `.env` variable names are
+listed there.
 
 | Provider            | Credentials  Required <br>    For Sending SMS                     | Support Multiple | Status         | Comment                                                  | Contact |
 |---------------------|-------------------------------------------------------------------|------------------|----------------|----------------------------------------------------------|---------|
@@ -212,6 +404,7 @@ echo $status = $sender->send();
 | QuickSms            | api_key, senderid, type,scheduledDateTime                         | -                | Done           | not tested yet in live                                   | -       |
 | RedmoITSms          | api_token, sender_id                                              | -                | Support closed | -                                                        |
 | Reve SMS            | apikey, secretkey , callerID                                      | -                | Done           | Use AjuraTech provider for the Reve SMS                      | -       |
+| Robi                | username, password                                                | -                | Done           | not tested yet in live                                       | -       |
 | SendMySms           | user, closed                                                      | -                | Done           | tested in live                                           |
 | SmartLabSMS         | user, password, sender                                            | -                | Done           | -                                                        | -       |
 | Sms4BD              | publickey, privatekey, type,sender, delay                         | -                | Done           | -                                                        | -       |
@@ -232,8 +425,83 @@ echo $status = $sender->send();
 | WinText             | token, messagetype, ismasking, masking                            | -                | Done           | -                                                        | -       |
 | ZamanIT             | api_key, senderid,type                                            | -                | Done           | -                                                        | -       |
 
+## Known limitations
 
+| Provider     | Limitation                                                                                       |
+|--------------|--------------------------------------------------------------------------------------------------|
+| `DnsBd`      | Not implemented. Selecting it throws a `RenderException` instead of silently sending nothing.      |
+| `Onnorokom`  | Talks to a SOAP endpoint, which the queued job cannot carry. Use `shoot()`, not `shootWithQueue()`. Requires the `soap` PHP extension. |
+| `Robi`       | Implemented but never verified against the live gateway.                                          |
 
+Gateways marked *not tested yet in live* in the table above were written from the provider's documentation
+but have not been confirmed against a real account. Reports are welcome.
+
+# Writing your own provider
+
+A provider only has to describe its own request. `AbstractProvider` supplies the constructor, forwards the
+queue settings and builds the report, so a new gateway is usually two short methods:
+
+```php
+namespace Xenon\LaravelBDSms\Provider;
+
+use Xenon\LaravelBDSms\Handler\ParameterException;
+
+class MyGateway extends AbstractProvider
+{
+    private string $apiEndpoint = 'https://api.mygateway.com/send';
+
+    public function sendRequest()
+    {
+        $config = $this->senderObject->getConfig();
+
+        $query = [
+            'token' => $config['token'],
+            'to' => $this->senderObject->getMobile(),
+            'message' => $this->senderObject->getMessage(),
+        ];
+
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
+
+        return $this->respond($requestObject->get());
+    }
+
+    public function errorException()
+    {
+        if (!array_key_exists('token', $this->senderObject->getConfig())) {
+            throw new ParameterException('token key is absent in configuration');
+        }
+    }
+}
+```
+
+| Helper                                          | What it does                                                                              |
+|-------------------------------------------------|-------------------------------------------------------------------------------------------|
+| `makeRequest($url, $query = [], $headers = [])` | Builds the request already carrying the sender's queue name, tries and backoff             |
+| `respond($response)`                            | Returns `true` for a queued send, otherwise reads the body and builds the report           |
+| `errorException()`                              | Runs before the send; throw here when a required credential is missing                     |
+
+For a JSON body instead of query parameters, set it on the request object:
+
+```php
+$requestObject = $this->makeRequest($this->apiEndpoint, $query, ['Authorization' => $config['api_key']]);
+$requestObject->setContentTypeJson(true);
+
+return $this->respond($requestObject->post());
+```
+
+Finally, register the class and its credentials in `src/Config/sms.php` so `via(MyGateway::class)` can find
+its configuration.
+
+# Contributing
+
+We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel
+something is missing then make an issue regarding that. If you want to contribute in this library, then you
+are highly welcome to do that.
+
+For clear documentation read this blog
+in [Medium!](https://send-sms-using-laravelbdsms.medium.com/laravel-sms-gateway-package-for-bangladesh-e70af99f2060)
+and also you can download several sms providers documentations as pdf from
+[this link!](https://github.com/arif98741/laravelbdsms/archive/refs/heads/doc.zip)
 
 ### Stargazers
 [![Stargazers repo roster for @arif98741/laravelbdsms](https://reporoster.com/stars/arif98741/laravelbdsms)](https://github.com/arif98741/laravelbdsms/stargazers)
@@ -246,17 +514,6 @@ echo $status = $sender->send();
   <img src="https://contrib.rocks/image?repo=arif98741/laravelbdsms" />
 </a>
 
-<br> 
-We are continuously working in this open source library for adding more Bangladeshi sms gateway. If you feel something
-is missing then make a issue regarding that. If you want to contribute in this library, then you are highly welcome to
-do that....
-
-For clear documentation read this blog
-in  [Medium!](https://send-sms-using-laravelbdsms.medium.com/laravel-sms-gateway-package-for-bangladesh-e70af99f2060)
-and also you can download several sms providers documentations as pdf from [this link!](https://github.com/arif98741/laravelbdsms/archive/refs/heads/doc.zip)
-
-
 Special thanks to <br>
 [tusharkhan](https://github.com/tusharkhan) <br>
 [tusher9352](https://github.com/tusher9352)
-

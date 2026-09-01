@@ -4,23 +4,11 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Helper\Helper;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
 
 class WinText extends AbstractProvider
 {
     private string $apiEndpoint = 'https://api.wintextbd.com/SingleSms';
 
-    /**
-     * WinText Constructor
-     * @param Sender $sender
-     * @version v1.0.32
-     * @since v1.0.31
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * @return false|string
@@ -33,10 +21,6 @@ class WinText extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries = $this->senderObject->getTries();
-        $backoff = $this->senderObject->getBackoff();
 
         $formParams = [
             "token" => $config['token'],
@@ -56,20 +40,9 @@ class WinText extends AbstractProvider
         }
 
         //dd($this->apiEndpoint, $formParams);
-        $requestObject = new Request($this->apiEndpoint, [], $queue, [], $queueName, $tries, $backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint);
         $requestObject->setFormParams($formParams);
-        $response = $requestObject->post(false, 60);
-        if ($queue) {
-            return true;
-        }
-
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post(false, 60));
     }
 
     /**

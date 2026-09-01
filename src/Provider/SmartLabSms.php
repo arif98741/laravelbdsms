@@ -15,21 +15,10 @@ use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Helper\Helper;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class SmartLabSms extends AbstractProvider
 {
     private string $apiEndpoint = 'https://labapi.smartlabsms.com';
 
-    /**
-     * SmartLabSMS constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -40,10 +29,6 @@ class SmartLabSms extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries = $this->senderObject->getTries();
-        $backoff = $this->senderObject->getBackoff();
 
         $query = [
             'user' => $config['user'],
@@ -63,18 +48,8 @@ class SmartLabSms extends AbstractProvider
             $query['msisdn'] = implode(',', $tempMobile);
         }
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
-        $response = $requestObject->get();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
+        return $this->respond($requestObject->get());
     }
 
     /**

@@ -12,21 +12,10 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class Ssl extends AbstractProvider
 {
     private string $apiEndpoint = 'https://smsplus.sslwireless.com/api/v3/send-sms';
 
-    /**
-     * Ssl constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -37,10 +26,6 @@ class Ssl extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries = $this->senderObject->getTries();
-        $backoff = $this->senderObject->getBackoff();
 
         $query = [
             'api_token' => $config['api_token'],
@@ -51,20 +36,12 @@ class Ssl extends AbstractProvider
             'batch_csms_id' => $config['batch_csms_id'] ?? null,
         ];
 
-        $requestObject = new Request($this->apiEndpoint . (is_array($mobile) ? '/bulk' : ''), $query, $queue, [], $queueName, $tries, $backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint . (is_array($mobile) ? '/bulk' : ''), $query);
         $requestObject->setHeaders([
             'Content-Type' => 'application/json',
         ])->setContentTypeJson(true);
 
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**

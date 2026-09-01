@@ -12,21 +12,9 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\ParameterException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class Tense extends AbstractProvider
 {
     private string $apiEndpoint = 'http://sms.tense.com.bd/api-sendsms';
-    /**
-     * Tense constructor.
-     * @param Sender $sender
-     * @since v1.0.25
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -37,10 +25,6 @@ class Tense extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
         $query = [
             'user' => $config['user'],
             'password' => $config['password'],
@@ -50,18 +34,8 @@ class Tense extends AbstractProvider
             'text' => $text,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
-        $response = $requestObject->get();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
+        return $this->respond($requestObject->get());
     }
 
     /**

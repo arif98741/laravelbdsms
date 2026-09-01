@@ -12,21 +12,10 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class QuickSms extends AbstractProvider
 {
     private string $apiEndpoint = 'https://server1.quicksms.xyz/smsapi';
 
-    /**
-     * QuickSms constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -37,10 +26,6 @@ class QuickSms extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -61,18 +46,10 @@ class QuickSms extends AbstractProvider
             $query['contacts'] =  implode(',', $mobile);
         }
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
         $requestObject->setContentTypeJson(true);
 
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**

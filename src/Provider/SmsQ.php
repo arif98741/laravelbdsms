@@ -13,21 +13,10 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class SmsQ extends AbstractProvider
 {
     private string $apiEndpoint = 'https://api.smsq.global/api/v2/SendSMS';
 
-    /**
-     * SmsQ constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -38,10 +27,6 @@ class SmsQ extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'SenderId' => $config['sender_id'],
@@ -55,19 +40,9 @@ class SmsQ extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**

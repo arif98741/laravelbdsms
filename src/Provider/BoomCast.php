@@ -4,22 +4,10 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
 
 class BoomCast extends AbstractProvider
 {
     private string $apiEndpoint = 'https://api.boom-cast.com/boomcast/WebFramework/boomCastWebService/OTPMessage.php';
-    /**
-     * BoomCast Constructor
-     * @param Sender $sender
-     * @version v1.0.32
-     * @since v1.0.31
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * @return false|string
@@ -33,10 +21,6 @@ class BoomCast extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             "masking" => $config['masking'],
@@ -47,19 +31,9 @@ class BoomCast extends AbstractProvider
             "message" => $text,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
 
-        $response = $requestObject->get();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->get());
     }
 
     /**

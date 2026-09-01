@@ -14,7 +14,6 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use SoapClient;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Sender;
 
 /**
  * Class Onnorokom
@@ -24,14 +23,6 @@ class Onnorokom extends AbstractProvider
 {
     private string $apiEndpoint = "https://api2.onnorokomsms.com/sendsms.asmx?wsdl";
 
-    /**
-     * Onnorokom constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Server
@@ -71,6 +62,11 @@ class Onnorokom extends AbstractProvider
      */
     public function errorException()
     {
+        if ($this->senderObject->getQueue()) { //this provider talks soap, the sms job speaks http only
+            throw new RenderException('Onnorokom sends over a soap client, which the queued sms job does not
+            support. Use shoot() instead of shootWithQueue() for this provider.');
+        }
+
         if (!extension_loaded('soap')) {
             throw new RenderException('Soap client is not installed or loaded');
         }

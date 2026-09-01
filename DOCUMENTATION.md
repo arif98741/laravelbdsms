@@ -126,7 +126,7 @@ return [
     |--------------------------------------------------------------------------
     | Where to store logs: 'database' (lbs_log table) or 'file' (laravel.log)
     */
-    'log_driver' => 'database', // database, file
+    'log_driver' => ['database', 'discord'], // one driver or a list: database, file, discord
 
     /*
     |--------------------------------------------------------------------------
@@ -466,7 +466,7 @@ In `config/sms.php`:
 
 ```php
 'sms_log' => true,
-'log_driver' => 'database', // or 'file'
+'log_driver' => 'database', // or 'file', 'discord', or a list like ['database', 'discord']
 ```
 
 ### 7.2 Database Logging
@@ -573,25 +573,26 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 | 29 | `Onnorokom` | Onnorokom SMS |
 | 30 | `QuickSms` | Quick SMS |
 | 31 | `RedmoItSms` | Redmo IT SMS |
-| 32 | `SendMySms` | Send My SMS |
-| 33 | `SmartLabSms` | SmartLab SMS |
-| 34 | `Sms4BD` | SMS4BD |
-| 35 | `SmsBangladesh` | SMS Bangladesh |
-| 36 | `SmsinBD` | SMS in BD |
-| 37 | `SmsNet24` | SMS Net 24 |
-| 38 | `SmsNetBD` | SMS Net BD |
-| 39 | `SMSNoc` | SMS NOC |
-| 40 | `SmsQ` | SMS Q |
-| 41 | `SongBird` | SongBird SMS |
-| 42 | `Ssl` | SSL Wireless (Default) |
-| 43 | `Tense` | Tense SMS |
-| 44 | `TmssIct` | TMSS ICT SMS (`/api/v001/sent_sms`) |
-| 45 | `TruboSms` | Trubo SMS |
-| 46 | `Twenty4BulkSms` | 24 Bulk SMS |
-| 47 | `TwentyFourBulkSmsBD` | 24 Bulk SMS BD |
-| 48 | `Viatech` | Viatech SMS |
-| 49 | `WinText` | WinText SMS |
-| 50 | `ZamanIt` | Zaman IT SMS |
+| 32 | `Robi` | Robi SMS |
+| 33 | `SendMySms` | Send My SMS |
+| 34 | `SmartLabSms` | SmartLab SMS |
+| 35 | `Sms4BD` | SMS4BD |
+| 36 | `SmsBangladesh` | SMS Bangladesh |
+| 37 | `SmsinBD` | SMS in BD |
+| 38 | `SmsNet24` | SMS Net 24 |
+| 39 | `SmsNetBD` | SMS Net BD |
+| 40 | `SMSNoc` | SMS NOC |
+| 41 | `SmsQ` | SMS Q |
+| 42 | `SongBird` | SongBird SMS |
+| 43 | `Ssl` | SSL Wireless (Default) |
+| 44 | `Tense` | Tense SMS |
+| 45 | `TmssIct` | TMSS ICT SMS (`/api/v001/sent_sms`) |
+| 46 | `TruboSms` | Trubo SMS |
+| 47 | `Twenty4BulkSms` | 24 Bulk SMS |
+| 48 | `TwentyFourBulkSmsBD` | 24 Bulk SMS BD |
+| 49 | `Viatech` | Viatech SMS |
+| 50 | `WinText` | WinText SMS |
+| 51 | `ZamanIt` | Zaman IT SMS |
 
 ### Provider Configuration Examples
 

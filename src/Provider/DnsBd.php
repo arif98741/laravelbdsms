@@ -12,36 +12,34 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 
-use Illuminate\Http\JsonResponse;
+use Xenon\LaravelBDSms\Handler\RenderException;
 
+/**
+ * Class DnsBd
+ *
+ * This provider has never been implemented - it carries no api endpoint and no
+ * credentials. Until it is written, it refuses loudly rather than returning null
+ * and letting the caller believe an sms went out.
+ *
+ * @package Xenon\LaravelBDSms\Provider
+ */
 class DnsBd extends AbstractProvider
 {
 
-    public function getData()
-    {
-        // TODO: Implement getData() method.
-    }
-
-    public function setData()
-    {
-        // TODO: Implement setData() method.
-    }
-
+    /**
+     * @throws RenderException
+     */
     public function sendRequest()
     {
-        // TODO: Implement sendRequest() method.
-    }
-
-    public function generateReport($result, $data): JsonResponse
-    {
-
+        $this->errorException();
     }
 
     /**
-     * @return void
+     * @throws RenderException
      */
     public function errorException()
     {
-        // TODO: Implement errorException() method.
+        throw new RenderException('DnsBd provider is not implemented yet, so no sms can be sent through it.
+        Pick another provider from config/sms.php.');
     }
 }

@@ -14,21 +14,10 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class Metronet extends AbstractProvider
 {
     private string $apiEndpoint = '202.164.208.212/smsnet/bulk/api';
 
-    /**
-     * MentroNet constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -41,10 +30,6 @@ class Metronet extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -53,18 +38,8 @@ class Metronet extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
-        $response = $requestObject->get();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
+        return $this->respond($requestObject->get());
     }
 
     /**

@@ -14,21 +14,10 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class Mobishasra extends AbstractProvider
 {
     private string $apiEndpoint = 'https://mshastra.com/sendurlcomma.aspx';
 
-    /**
-     * BulkSmsBD constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -39,10 +28,6 @@ class Mobishasra extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries = $this->senderObject->getTries();
-        $backoff = $this->senderObject->getBackoff();
         $query = [
             'user' => $config['user'],
             'pwd' => $config['pwd'],
@@ -52,18 +37,9 @@ class Mobishasra extends AbstractProvider
             'priority' => 'High',
             'CountryCode' => 'ALL',
         ];
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
 
-        $response = $requestObject->get();
-        if ($queue) {
-            return true;
-        }
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->get());
     }
 
     /**
