@@ -2,6 +2,9 @@
 
 ## [V2.0.0.0](https://github.com/arif98741/laravelbdsms/releases/tag/V2.0.0.0) - 2026-09-01 08:50:57+00:00
 
+## Upgrade command for version v2.0.0.0
+<pre>composer require xenon/laravelbdsms:^2.0</pre>
+
 ## What's New
 
 ### Discord log driver
