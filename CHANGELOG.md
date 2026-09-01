@@ -1,5 +1,187 @@
 # CHANGELOG
 
+## [V2.0.0.0](https://github.com/arif98741/laravelbdsms/releases/tag/V2.0.0.0) - 2026-09-01 08:50:57+00:00
+
+## What's New
+
+### Discord log driver
+
+`log_driver` can now post every SMS log straight into a Discord channel through an incoming webhook.
+
+```php
+// config/sms.php
+'sms_log' => true,
+'log_driver' => ['database', 'discord'],
+'discord_webhook_url' => env('SMS_LOG_DISCORD_WEBHOOK_URL', ''),
+```
+
+```dotenv
+SMS_LOG_DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/xxxxx/yyyyy
+```
+
+Each log arrives as an embed containing a small table (provider, recipient, status, time) plus the message
+and the gateway response. Green when the gateway reports success, red when it reports a failure.
+
+- **Credential values are never sent to Discord** — only the names of the config keys that were used.
+- A missing, unreachable or rate limited webhook **never fails the SMS**. The reason is written to
+  `storage/logs/laravel.log`.
+
+### `log_driver` accepts a list of drivers
+
+A log can now go to several destinations at once. The old single-string form keeps working exactly as before,
+so no existing configuration needs to change.
+
+```php
+'log_driver' => 'database',                 // still valid
+'log_driver' => ['database', 'discord'],    // new
+```
+
+Each driver is also isolated now: one failing driver no longer stops the others.
+
+## Bug Fixes
+
+### Sender state leaked between sends
+
+`Sender` is a shared instance, and each entry point only set part of its state, so whatever the previous send
+left behind carried over. Two consequences, both silent:
+
+- After any `shootWithQueue()`, a later `shoot()` **queued the message instead of sending it**, returned
+  `true` instead of a report, and skipped logging. `tries` and `backoff` leaked the same way.
+- After any `via()`, a plain `SMS::shoot()` used that provider instead of `default_provider`.
+
+Both are fixed. `shoot()` is now always synchronous, and `via()` returns an instance bound to that provider
+without repointing anything else.
+
+```php
+SMS::via(Ssl::class)->shootWithQueue('017XXXXXXXX', 'queued');
+SMS::via(Ssl::class)->shoot('017XXXXXXXX', 'sent right now');  // really sends now
+SMS::shoot('017XXXXXXXX', 'uses default_provider');            // really uses the default
+```
+
+An instance returned by `via()` is still reusable, so `$ssl = SMS::via(Ssl::class);` followed by several
+`$ssl->shoot(...)` calls all go through `Ssl`.
+
+### `Sender::setHeaders()` had no effect
+
+The headers were stored in private properties that `CustomGateway` read from outside the class, so
+`isset()` silently returned `false` and every custom header was dropped — including `Authorization`, which
+made bearer-token gateways fail with no clue why. Broken since `V1.0.59.2`.
+
+Custom headers now actually reach the request, and both documented formats are accepted:
+
+```php
+$sender->setHeaders(['Authorization' => 'Bearer xxx'], true);
+$sender->setHeaders(['Authorization: Bearer xxx'], false);   // also accepted
+```
+
+### Recipient number and message text were being put in the URL
+
+Every provider that sends a JSON body was passing its payload **twice**: once as the JSON body and once as
+URL query parameters, so phone numbers and message text ended up in request URLs, and therefore in server
+access logs and proxies. 18 providers were affected.
+
+`Request::optionsPostRequest()` now drops the query for JSON requests, matching what the GET path already did.
+
+### Providers that ignored the queue
+
+- **`SMSNoc`** bypassed `Request` with its own Guzzle client, so it silently opted out of the queue, retries
+  and the shared header handling. It now goes through `Request` and honours `shootWithQueue()`, `tries` and
+  `backoff`. The request it sends is otherwise unchanged.
+- **`Onnorokom`** talks to a SOAP endpoint, which the queued job cannot carry. Previously a queued send was
+  performed synchronously *and* skipped logging. It now raises a clear `RenderException` telling you to use
+  `shoot()`. Synchronous sends are unaffected.
+- **`DnsBd`** has never been implemented and used to return `null`, so callers believed an SMS had gone out.
+  It now throws a `RenderException` naming the problem.
+
+### `Robi` provider was unusable
+
+`Robi` was the only provider missing from `config/sms.php`, so `via(Robi::class)` died with
+*"config must be an array"*. Its validation also demanded a `telcom_from` key that the request never sends.
+
+It is now registered with the two credentials it actually uses, and appears in the documentation.
+
+```php
+Robi::class => [
+    'username' => env('SMS_ROBI_USERNAME', ''),
+    'password' => env('SMS_ROBI_PASSWORD', ''),
+],
+```
+
+Note: `Robi` still has not been verified against the live gateway. If your account needs a sender ID or
+masking parameter, that has yet to be added.
+
+### `ZamanIt` reported a null mobile number
+
+`ZamanIt` filled `$data['phone']` while the report builder reads `$data['number']`, so every synchronous send
+raised an *Undefined array key* warning and reported the recipient as `null`.
+
+### Queued logs recorded an empty payload
+
+`SendSmsJob` read the request payload from a key that is absent on JSON requests, so those log rows could be
+written empty.
+
+## Internal
+
+### Providers deduplicated
+
+All 52 providers carried a byte-identical constructor, and 50 of them repeated the same seven-line getter
+preamble and the same report-building tail. All three moved into `AbstractProvider`, removing **1,194 lines**
+from the provider directory (4,737 → 3,543) with no change to the requests any provider sends.
+
+Writing a provider is now two short methods:
+
+```php
+class MyGateway extends AbstractProvider
+{
+    private string $apiEndpoint = 'https://api.mygateway.com/send';
+
+    public function sendRequest()
+    {
+        $config = $this->senderObject->getConfig();
+
+        $query = [
+            'token' => $config['token'],
+            'to' => $this->senderObject->getMobile(),
+            'message' => $this->senderObject->getMessage(),
+        ];
+
+        return $this->respond($this->makeRequest($this->apiEndpoint, $query)->get());
+    }
+
+    public function errorException()
+    {
+        if (!array_key_exists('token', $this->senderObject->getConfig())) {
+            throw new ParameterException('token key is absent in configuration');
+        }
+    }
+}
+```
+
+`makeRequest()` forwards the sender's queue name, tries and backoff automatically, so a new provider cannot
+forget to support the queue — which is what caused the bugs above in the first place.
+
+Log driver selection also moved into a single `LogDispatcher`, shared by the direct send and the queued job.
+It used to be duplicated in both, which is why drivers behaved differently on the two paths.
+
+## Upgrade Notes
+
+No configuration changes are required, and no public method was removed. These behaviour changes are worth
+knowing about:
+
+| Change | Effect |
+|--------|--------|
+| `via()` is no longer sticky | A bare `SMS::shoot()` now uses `default_provider`. If you relied on `via()` persisting to later unrelated sends, pass the provider explicitly. |
+| `shoot()` is always synchronous | Previously it could queue silently after a `shootWithQueue()`. |
+| `setHeaders()` now works | Headers you already pass will start being sent. Its second argument defaults to `true`, which sends the payload as a JSON body — pass `false` to keep form/query encoding. |
+| JSON requests no longer send query parameters | If a gateway of yours reads parameters from the URL despite receiving a JSON body, tell us. |
+| Logging failures no longer propagate | A broken log driver (for example an unmigrated `lbs_log` table) is now reported in `storage/logs/laravel.log` instead of throwing out of `send()`, which used to report an already-delivered SMS as a failure. |
+
+## Documentation
+
+The README has been rewritten: task-based usage sections, a documented return value and exception list, the
+full `Sender` API, logging setup for all three drivers, a known-limitations table, and a guide to writing
+your own provider.
+
 ## [V2.0.0.0-beta](https://github.com/arif98741/laravelbdsms/releases/tag/V2.0.0.0-beta) - 2026-09-01 07:27:17+00:00
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V1.0.67.2...V2.0.0.0-beta
