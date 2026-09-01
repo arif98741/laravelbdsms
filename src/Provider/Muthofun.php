@@ -12,21 +12,10 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class Muthofun extends AbstractProvider
 {
     private string $apiEndpoint = 'https://sysadmin.muthobarta.com/api/v1/send-sms';
 
-    /**
-     * Muthofun constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -37,10 +26,6 @@ class Muthofun extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries = $this->senderObject->getTries();
-        $backoff = $this->senderObject->getBackoff();
 
         $query = [
             'sender_id' => $config['sender_id'],
@@ -53,22 +38,14 @@ class Muthofun extends AbstractProvider
             $query['receiver'] = implode(',', $mobile);
         }
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
 
         if (!str_starts_with($config['api_key'], "Token ")) {
             $config['api_key'] = "Token " . $config['api_key'];
         }
         $requestObject->setHeaders(['Authorization' => $config['api_key']])->setContentTypeJson(true);
 
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**

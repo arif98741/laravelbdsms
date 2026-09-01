@@ -12,21 +12,10 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\ParameterException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class Adn extends AbstractProvider
 {
     private string $apiEndpoint = 'https://portal.adnsms.com/api/v1/secure/send-sms';
 
-    /**
-     * Adn constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -36,14 +25,10 @@ class Adn extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries = $this->senderObject->getTries();
-        $backoff = $this->senderObject->getBackoff();
         $query = [];
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query, [
             'Accept' => 'application/json'
-        ], $queueName, $tries, $backoff);
+        ]);
 
         $requestObject->setFormParams([
             'api_key' => $config['api_key'],
@@ -55,16 +40,7 @@ class Adn extends AbstractProvider
             'message_body' => $text,
         ]);
 
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**

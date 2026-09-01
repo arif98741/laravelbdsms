@@ -3,21 +3,9 @@
 namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
 
 class ElitBuzz extends AbstractProvider
 {
-    /**
-     * Elitbuzz Constructor
-     * @param Sender $sender
-     * @version v1.0.32
-     * @since v1.0.31
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * @return false|string
@@ -30,10 +18,6 @@ class ElitBuzz extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
       $formParams = [
             "api_key" => $config['api_key'],
@@ -44,20 +28,9 @@ class ElitBuzz extends AbstractProvider
         ];
 
         $requestUrl = $config['url'] . "/smsapi";
-        $requestObject = new Request($requestUrl, [], $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($requestUrl);
         $requestObject->setFormParams($formParams);
-        $response = $requestObject->post(false, 60);
-        if ($queue) {
-            return true;
-        }
-
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post(false, 60));
     }
 
     /**

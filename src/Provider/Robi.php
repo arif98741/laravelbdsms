@@ -14,21 +14,10 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class Robi extends AbstractProvider
 {
     private string $apiEndpoint = 'https://bmpws.robi.com.bd/ApacheGearWS/SendTextMessage';
 
-    /**
-     * Robi constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -39,10 +28,6 @@ class Robi extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries = $this->senderObject->getTries();
-        $backoff = $this->senderObject->getBackoff();
 
 
         $formParams = [
@@ -52,19 +37,9 @@ class Robi extends AbstractProvider
             'Message' => $text,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, [], $queue, [], $queueName, $tries, $backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint);
         $requestObject->setFormParams($formParams);
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**
@@ -78,9 +53,5 @@ class Robi extends AbstractProvider
         if (!array_key_exists('password', $this->senderObject->getConfig())) {
             throw new ParameterException('password key is absent in configuration');
         }
-        if (!array_key_exists('telcom_from', $this->senderObject->getConfig())) {
-            throw new ParameterException('telcom_from key is absent in configuration');
-        }
-
     }
 }

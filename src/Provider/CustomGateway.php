@@ -13,19 +13,8 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class CustomGateway extends AbstractProvider
 {
-    /**
-     * Custom Gateway constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -36,30 +25,19 @@ class CustomGateway extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
         $query = $config;
 
-        $requestObject = new Request($this->senderObject->url, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($this->senderObject->url, $query);
 
-        if (isset($this->senderObject->headers)) {
-            $requestObject->setHeaders($this->senderObject->headers);
-            $this->senderObject->contentTypeJson && $requestObject->setContentTypeJson(true);
+        $headers = $this->senderObject->getHeaders();
+        if (!empty($headers)) {
+            $requestObject->setHeaders($headers);
         }
+        $this->senderObject->isContentTypeJson() && $requestObject->setContentTypeJson(true);
 
-        $response = $this->senderObject->method === 'post' ? $requestObject->post() : $requestObject->get();
-
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond(
+            $this->senderObject->method === 'post' ? $requestObject->post() : $requestObject->get()
+        );
     }
 
     /**

@@ -11,9 +11,7 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
+use Xenon\LaravelBDSms\Handler\RenderException;use Xenon\LaravelBDSms\Sender;
 
 /**
  * =====================================================================================================================================
@@ -26,14 +24,6 @@ class SmsNetBD extends AbstractProvider
 {
     private string $apiEndpoint = 'https://api.sms.net.bd/sendsms';
 
-    /**
-     * Alpha SMS constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -44,10 +34,6 @@ class SmsNetBD extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -72,17 +58,9 @@ class SmsNetBD extends AbstractProvider
             $query['to'] =  implode(',', $mobile);
         }
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
 
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**

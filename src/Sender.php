@@ -14,13 +14,10 @@ namespace Xenon\LaravelBDSms;
 
 use Exception;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log as LaravelLog;
-use JsonException;
-use Xenon\LaravelBDSms\Facades\Logger;
-use Xenon\LaravelBDSms\Handler\ParameterException;
+use Illuminate\Support\Facades\File;use JsonException;use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Helper\Helper;
+use Xenon\LaravelBDSms\Log\LogDispatcher;
 use Xenon\LaravelBDSms\Provider\AbstractProvider;
 use Xenon\LaravelBDSms\Provider\CustomGateway;
 
@@ -83,8 +80,8 @@ class Sender
     | On subsequent runs, it returns the client existing object stored in the static field. This implementation
     | lets you subclass the Singleton class while keeping just one instance of each subclass around.
     */
-    private array $headers;
-    private bool $contentTypeJson;
+    private array $headers = [];
+    private bool $contentTypeJson = false;
 
     /**
      * @throws RenderException
@@ -119,7 +116,7 @@ class Sender
     public function setMethod($method)
     {
         $this->method = $method;
-        return self::$instance;
+        return $this;
     }
 
     /**
@@ -218,9 +215,47 @@ class Sender
      */
     public function setHeaders(array $headers, bool $contentTypeJson = true): Sender
     {
-        $this->headers = $headers;
+        $this->headers = self::normalizeHeaders($headers);
         $this->contentTypeJson = $contentTypeJson;
-        return self::getInstance();
+        return $this;
+    }
+
+    /**
+     * Guzzle needs name => value pairs. Accept the curl style 'Name: value'
+     * lines as well, since they are what the readme has always shown.
+     *
+     * @param array $headers
+     * @return array
+     */
+    private static function normalizeHeaders(array $headers): array
+    {
+        $normalized = [];
+        foreach ($headers as $name => $value) {
+            if (is_int($name) && is_string($value) && str_contains($value, ':')) {
+                [$name, $value] = explode(':', $value, 2);
+            }
+            $normalized[trim((string)$name)] = is_string($value) ? trim($value) : $value;
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * @return array
+     * @since v1.0.55.0-beta
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @return bool
+     * @since v1.0.55.0-beta
+     */
+    public function isContentTypeJson(): bool
+    {
+        return $this->contentTypeJson;
     }
 
     /**
@@ -275,7 +310,7 @@ class Sender
     public function setMobile($mobile): Sender
     {
         $this->mobile = $mobile;
-        return self::getInstance();
+        return $this;
     }
 
     /**
@@ -297,7 +332,7 @@ class Sender
     {
 
         $this->message = $message;
-        return self::getInstance();
+        return $this;
     }
 
     /**
@@ -308,7 +343,7 @@ class Sender
     public function setUrl(string $url)
     {
         $this->url = $url;
-        return self::getInstance();
+        return $this;
     }
 
     /**
@@ -382,19 +417,11 @@ class Sender
                 'response_json' => json_encode($providerResponse, JSON_THROW_ON_ERROR)
             ];
 
-            if (array_key_exists('log_driver', $config)) {
+            $fileData = $logData;
+            $fileData['request_json'] = $requestData;
+            $fileData['response_json'] = $providerResponse;
 
-                if ($config['log_driver'] === 'database') {
-                    Logger::createLog($logData);
-                } elseif ($config['log_driver'] === 'file') {
-                    $logData['request_json'] = $requestData;
-                    $logData['response_json'] = $providerResponse;
-                    LaravelLog::info('laravelbdsms', $logData);
-                }
-            } else {
-
-                Logger::createLog($logData);
-            }
+            LogDispatcher::dispatch($logData, $fileData);
 
         }
     }

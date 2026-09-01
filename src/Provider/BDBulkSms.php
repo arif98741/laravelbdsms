@@ -13,20 +13,9 @@ namespace Xenon\LaravelBDSms\Provider;
 
 
 use Xenon\LaravelBDSms\Handler\ParameterException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class BDBulkSms extends AbstractProvider
 {
     private string $apiEndpoint = 'http://api.greenweb.com.bd/api2.php';
-    /**
-     * BDBulkSms constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request TO Server
@@ -36,29 +25,15 @@ class BDBulkSms extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'token' => $config['token'],
             'to' => $number,
             'message' => $text,
         ];
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
 
-        $response = $requestObject->get();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->get());
 
     }
 

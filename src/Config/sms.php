@@ -45,6 +45,7 @@ use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\QuickSms;
 use Xenon\LaravelBDSms\Provider\RedmoItSms;
+use Xenon\LaravelBDSms\Provider\Robi;
 use Xenon\LaravelBDSms\Provider\SendMySms;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
 use Xenon\LaravelBDSms\Provider\Sms4BD;
@@ -77,11 +78,19 @@ return [
 
     /*
      *-----------------------------------------------------------------------------------------------
-     | Sms log will be saved in database(lbs_log table) or file(storage/logs/laravel.log).
-     | You can choose one according to need
+     | Sms log will be saved in database(lbs_log table), file(storage/logs/laravel.log) or
+     | posted to a discord channel through an incoming webhook. You can choose one according to need
      |-----------------------------------------------------------------------------------------------
      */
-    'log_driver' => 'database', //database, file
+    'log_driver' => ['database', 'discord'], //one driver or a list: database, file, discord
+
+    /*
+     *-----------------------------------------------------------------------------------------------
+     | Incoming webhook of the discord channel that receives the log when log_driver is set to
+     | `discord`. Create one from Channel Settings > Integrations > Webhooks and keep it in .env
+     |-----------------------------------------------------------------------------------------------
+     */
+    'discord_webhook_url' => env('SMS_LOG_DISCORD_WEBHOOK_URL', ''),
 
     /*
      *-----------------------------------------------------------------------------------------------
@@ -253,6 +262,10 @@ return [
             'sender_id' => env('SMS_REDMOIT_SENDER_ID', ''),
             'api_token' => env('SMS_REDMOIT_API_TOKEN', ''),
             'type' => env('SMS_REDMOIT_TYPE', 'string'),
+        ],
+        Robi::class => [
+            'username' => env('SMS_ROBI_USERNAME', ''),
+            'password' => env('SMS_ROBI_PASSWORD', ''),
         ],
         SendMySms::class => [
             'user' => env('SMS_SENDMYSMS_USER', ''),

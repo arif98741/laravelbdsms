@@ -268,6 +268,7 @@ class Request extends Controller
         }
 
         if ($this->isContentTypeJson()) {
+            unset($options['query']);
             $options[RequestOptions::JSON] = $this->query;
         }
         return $options;

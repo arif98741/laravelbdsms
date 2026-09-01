@@ -13,21 +13,10 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Helper\Helper;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class SmsNet24 extends AbstractProvider
 {
     private string $apiEndpoint = 'https://sms.apinet.club/sendSms';
 
-    /**
-     * SmsNet24 constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -38,10 +27,6 @@ class SmsNet24 extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'user_id' => $config['user_id'],
@@ -68,16 +53,8 @@ class SmsNet24 extends AbstractProvider
             $query['sms_type_id'] = $config['sms_type_id'];
         }
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
+        return $this->respond($requestObject->post());
     }
 
     /**

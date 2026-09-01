@@ -14,21 +14,10 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class NovocomBd extends AbstractProvider
 {
     private string $apiEndpoint = 'https://sms.novocom-bd.com/api/v2/SendSMS';
 
-    /**
-     * Novocom constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -41,10 +30,6 @@ class NovocomBd extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $number = $this->senderObject->getMobile();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'ApiKey' => $config['ApiKey'],
@@ -55,18 +40,8 @@ class NovocomBd extends AbstractProvider
             'Is_Unicode' => true,
         ];
 
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
-        $response = $requestObject->get();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
+        return $this->respond($requestObject->get());
     }
 
     /**

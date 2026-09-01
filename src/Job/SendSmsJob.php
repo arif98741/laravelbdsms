@@ -9,10 +9,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log as LaravelLog;
-use JsonException;
-use Xenon\LaravelBDSms\Facades\Logger;
+use Illuminate\Support\Facades\Config;use JsonException;
+use Xenon\LaravelBDSms\Log\LogDispatcher;
 
 class SendSmsJob implements ShouldQueue
 {
@@ -87,14 +85,14 @@ class SendSmsJob implements ShouldQueue
             $smsResult = $body->getContents();
             $log = [
                 'provider' => $this->jobDetails['requestUrl'],
-                'request_json' => json_encode($this->jobDetails['query'], JSON_THROW_ON_ERROR),
+                'request_json' => json_encode($this->loggablePayload(), JSON_THROW_ON_ERROR),
                 'response_json' => json_encode($smsResult, JSON_THROW_ON_ERROR)
             ];
         } catch (GuzzleException|JsonException $e) {
 
             $log = [
                 'provider' => $this->jobDetails['requestUrl'],
-                'request_json' => json_encode($this->jobDetails['query'], JSON_THROW_ON_ERROR),
+                'request_json' => json_encode($this->loggablePayload(), JSON_THROW_ON_ERROR),
                 'response_json' => json_encode($e->getMessage()),
             ];
         }
@@ -119,13 +117,13 @@ class SendSmsJob implements ShouldQueue
             $smsResult = $body->getContents();
             $log = [
                 'provider' => $this->jobDetails['requestUrl'],
-                'request_json' => json_encode($this->jobDetails['query'], JSON_THROW_ON_ERROR),
+                'request_json' => json_encode($this->loggablePayload(), JSON_THROW_ON_ERROR),
                 'response_json' => json_encode($smsResult, JSON_THROW_ON_ERROR)
             ];
         } catch (GuzzleException $e) {
             $log = [
                 'provider' => $this->jobDetails['requestUrl'],
-                'request_json' => json_encode($this->jobDetails['query'], JSON_THROW_ON_ERROR),
+                'request_json' => json_encode($this->loggablePayload(), JSON_THROW_ON_ERROR),
                 'response_json' => json_encode($e->getMessage(), JSON_THROW_ON_ERROR),
             ];
         }
@@ -134,25 +132,23 @@ class SendSmsJob implements ShouldQueue
     }
 
     /**
+     * Payload to record in the log. A json request carries it under 'json',
+     * because the query option is dropped for those.
+     *
+     * @return array
+     */
+    private function loggablePayload(): array
+    {
+        return $this->jobDetails['query'] ?? $this->jobDetails['json'] ?? [];
+    }
+
+    /**
      * @param array $log
      * @return void
      */
     private function insertLoggerLog(array $log): void
     {
-        $config = Config::get('sms');
-        if ($config['sms_log']) {
-
-            if (array_key_exists('log_driver', $config)) {
-
-                if ($config['log_driver'] === 'database') {
-                    Logger::createLog($log);
-                } else if ($config['log_driver'] === 'file') {
-                    LaravelLog::info('laravelbdsms', $log);
-                }
-            } else {
-                Logger::createLog($log);
-            }
-        }
+        LogDispatcher::dispatch($log);
     }
 
     /**

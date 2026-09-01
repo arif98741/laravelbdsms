@@ -2,11 +2,7 @@
 
 namespace Xenon\LaravelBDSms\Provider;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Sender;
-
 class SMSNoc extends AbstractProvider
 {
     /**
@@ -15,14 +11,6 @@ class SMSNoc extends AbstractProvider
      */
     private string $apiEndpoint = 'https://smsnoc.com/api/v1/send-sms';
 
-    /**
-     * SMSNoc constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -46,35 +34,22 @@ class SMSNoc extends AbstractProvider
             $phone = '+' . $phone;
         }
 
-        $client = new Client([
-            'timeout' => 20.0,
-        ]);
+        $query = [
+            'to' => $phone,
+            'message' => $text,
+            'sender_id' => $config['sender_id'],
+        ];
 
-        try {
-            $response = $client->request('POST', $this->apiEndpoint, [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $config['bearer_token'],
-                    'Content-Type'  => 'application/json',
-                    'Accept'        => 'application/json',
-                ],
-                'json' => [
-                    'to'        => $phone,
-                    'message'   => $text,
-                    'sender_id' => $config['sender_id'],
-                ],
-            ]);
+        $headers = [
+            'Authorization' => 'Bearer ' . $config['bearer_token'],
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ];
 
-            $body = $response->getBody();
-            $smsResult = $body->getContents();
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query, $headers);
+        $requestObject->setContentTypeJson(true);
 
-            $data['number'] = $mobile;
-            $data['message'] = $text;
-
-            return $this->generateReport($smsResult, $data)->getContent();
-
-        } catch (GuzzleException $e) {
-            throw new RenderException($e->getMessage());
-        }
+        return $this->respond($requestObject->post());
     }
 
     /**

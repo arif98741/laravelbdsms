@@ -13,20 +13,9 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 class Esms extends AbstractProvider
 {
     private string $apiEndPoint = 'https://login.esms.com.bd/api/v3/sms/send';
-    /**
-     * DianaHost constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -37,10 +26,6 @@ class Esms extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'sender_id' => $config['sender_id'],
@@ -53,19 +38,9 @@ class Esms extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request($this->apiEndPoint, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($this->apiEndPoint, $query);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**

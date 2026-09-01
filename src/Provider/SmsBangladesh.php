@@ -4,23 +4,11 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use Xenon\LaravelBDSms\Handler\RenderException;
 use Xenon\LaravelBDSms\Helper\Helper;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
 
 class SmsBangladesh extends AbstractProvider
 {
     private string $apiEndpoint = 'https://panel.smsbangladesh.com/api';
 
-    /**
-     * SmsBangladesh Constructor
-     * @param Sender $sender
-     * @version v1.0.32
-     * @since v1.0.31
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * @return false|string
@@ -33,10 +21,6 @@ class SmsBangladesh extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries = $this->senderObject->getTries();
-        $backoff = $this->senderObject->getBackoff();
 
         $formParams = [
             "user" => $config['user'],
@@ -54,20 +38,9 @@ class SmsBangladesh extends AbstractProvider
             $formParams['to'] = implode(',', $tempMobile);
         }
 
-        $requestObject = new Request($this->apiEndpoint, [], $queue, [], $queueName, $tries, $backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint);
         $requestObject->setFormParams($formParams);
-        $response = $requestObject->post(false, 60);
-        if ($queue) {
-            return true;
-        }
-
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post(false, 60));
     }
 
     /**

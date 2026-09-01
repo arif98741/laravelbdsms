@@ -14,9 +14,6 @@ namespace Xenon\LaravelBDSms\Provider;
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\ParameterException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
-
 /**
  * TwentyFourBulksSMS Class
  * api endpoint https://24bulksms.com/24bulksms/api/api-sms-send
@@ -25,14 +22,6 @@ class Twenty4BulkSms extends AbstractProvider
 {
     private string $apiEndpoint = 'https://24bulksms.com/24bulksms/api/api-sms-send';
 
-    /**
-     * Twenty4BulkSms constructor.
-     * @param Sender $sender
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * Send Request To Api and Send Message
@@ -43,10 +32,6 @@ class Twenty4BulkSms extends AbstractProvider
         $number = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -62,19 +47,9 @@ class Twenty4BulkSms extends AbstractProvider
         $headers = [
             'Content-Type' => 'application/json',
         ];
-        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($this->apiEndpoint, $query);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $number;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**

@@ -103,7 +103,9 @@ SMS::via(Ssl::class)->shootWithQueue("01XXXXXXXXX",'test sms');
 
 # Log Generate
 You can generate log for every sms api request and save in database or file. For doing this. Follow below points
-1. Laravelbdsms stores log in two drivers(`database, file`). `database` is default. You can change it from _config/sms.php_
+1. Laravelbdsms stores log in three drivers(`database, file, discord`). `database` is default. You can
+   change it from _config/sms.php_. `log_driver` takes one driver or a list of them, so a log can go to
+   several places at once: `'log_driver' => ['database', 'discord'],`
 2. Find and make true `'sms_log' => true,`
 3. Be confirm you have completed **step-2** and **step-3**
 4. For `database` driver
@@ -111,6 +113,12 @@ You can generate log for every sms api request and save in database or file. For
    2. Run command `php artisan migrate`. This will create `lbs_log` table in your database
 5. For `file` driver
     1. Change log driver to `log_driver =>'file'` from `config/sms.php`
+6. For `discord` driver
+    1. Change log driver to `log_driver => ['discord']` from `config/sms.php`
+    2. Create an incoming webhook in your discord channel from _Channel Settings > Integrations > Webhooks_
+    3. Put it in your .env as `SMS_LOG_DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...`
+    4. Each log arrives as an embed with a small table. Credential values are never sent, only the key names
+    5. A missing or unreachable webhook never fails the sms, it is reported in `storage/logs/laravel.log`
 
 Otherwise, if you want more control, you can use the underlying sender object. This will not touch any laravel facade or
 service provider.
@@ -212,6 +220,7 @@ echo $status = $sender->send();
 | QuickSms            | api_key, senderid, type,scheduledDateTime                         | -                | Done           | not tested yet in live                                   | -       |
 | RedmoITSms          | api_token, sender_id                                              | -                | Support closed | -                                                        |
 | Reve SMS            | apikey, secretkey , callerID                                      | -                | Done           | Use AjuraTech provider for the Reve SMS                      | -       |
+| Robi                | username, password                                                | -                | Done           | not tested yet in live                                       | -       |
 | SendMySms           | user, closed                                                      | -                | Done           | tested in live                                           |
 | SmartLabSMS         | user, password, sender                                            | -                | Done           | -                                                        | -       |
 | Sms4BD              | publickey, privatekey, type,sender, delay                         | -                | Done           | -                                                        | -       |

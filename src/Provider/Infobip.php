@@ -4,21 +4,9 @@ namespace Xenon\LaravelBDSms\Provider;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Xenon\LaravelBDSms\Handler\RenderException;
-use Xenon\LaravelBDSms\Request;
-use Xenon\LaravelBDSms\Sender;
 
 class Infobip extends AbstractProvider
 {
-    /**
-     * Infobip Constructor
-     * @param Sender $sender
-     * @version v1.0.32
-     * @since v1.0.31
-     */
-    public function __construct(Sender $sender)
-    {
-        $this->senderObject = $sender;
-    }
 
     /**
      * @param $config
@@ -46,10 +34,6 @@ class Infobip extends AbstractProvider
         $mobile = $this->senderObject->getMobile();
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
-        $queue = $this->senderObject->getQueue();
-        $queueName = $this->senderObject->getQueueName();
-        $tries=$this->senderObject->getTries();
-        $backoff=$this->senderObject->getBackoff();
 
         $url = $config['base_url'] . "/sms/2/text/single";
         $headers = $this->getHeaders($config);
@@ -59,20 +43,10 @@ class Infobip extends AbstractProvider
             'text' => $text
         ];
 
-        $requestObject = new Request($url, $query, $queue, [], $queueName,$tries,$backoff);
+        $requestObject = $this->makeRequest($url, $query);
         $requestObject->setHeaders($headers)
             ->setContentTypeJson(true);
-        $response = $requestObject->post();
-        if ($queue) {
-            return true;
-        }
-
-        $body = $response->getBody();
-        $smsResult = $body->getContents();
-
-        $data['number'] = $mobile;
-        $data['message'] = $text;
-        return $this->generateReport($smsResult, $data)->getContent();
+        return $this->respond($requestObject->post());
     }
 
     /**
