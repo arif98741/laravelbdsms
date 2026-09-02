@@ -70,10 +70,39 @@ abstract class AbstractProvider implements ProviderRoadmap
             return true;
         }
 
-        return $this->generateReport($response->getBody()->getContents(), [
+        //read once: the body is a stream, and a second getContents() returns ''
+        $body = $response->getBody()->getContents();
+
+        //recorded rather than returned, so the report this method hands back is
+        //byte for byte what it has always been
+        $this->senderObject->setAcceptance($this->accepted($body));
+
+        return $this->generateReport($body, [
             'number' => $number ?? $this->senderObject->getMobile(),
             'message' => $message ?? $this->senderObject->getMessage(),
         ])->getContent();
+    }
+
+    /**
+     * Whether the gateway accepted the message, read from its own response body.
+     *
+     * The report from send() only tells a caller that the request completed; a
+     * gateway answering 'sender id not registered' looks exactly like a delivered
+     * message. Callers were left to parse each provider's body themselves, so a
+     * rejection would silently pass for success — and an OTP job would mark itself
+     * done having delivered nothing.
+     *
+     * Null means 'cannot tell', which is the default and still the case for most
+     * providers: overriding this is opt-in per provider. Null must be treated as
+     * 'no verdict', never as failure — reporting a send that did go out as failed
+     * would be the worse error of the two.
+     *
+     * @param string $body raw response body as the gateway returned it
+     * @return bool|null true accepted, false rejected, null no verdict available
+     */
+    public function accepted(string $body): ?bool
+    {
+        return null;
     }
 
     public function getData()

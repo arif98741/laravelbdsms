@@ -19,6 +19,11 @@ class BulkSmsBD extends AbstractProvider
     private string $apiEndpoint = 'https://bulksmsbd.net/api/smsapi';
 
     /**
+     * BulkSmsBD's 'SMS Submitted Successfully' code.
+     */
+    private const SMS_SUBMITTED = 202;
+
+    /**
      * Send Request To Api and Send Message
      * @throws GuzzleException|RenderException
      */
@@ -46,6 +51,43 @@ class BulkSmsBD extends AbstractProvider
 
         $requestObject = $this->makeRequest($this->apiEndpoint, $query);
         return $this->respond($requestObject->get());
+    }
+
+    /**
+     * BulkSmsBD answers `{"response_code":202,"success_message":"","error_message":""}`
+     * on acceptance and the same shape with a 1xxx code on rejection, so its verdict
+     * can be read without guessing.
+     *
+     * Only 202 is documented as success and only 1xxx as errors; anything else
+     * returns null rather than false. An unfamiliar code is far more likely to be a
+     * success this list has not seen than a silent failure, and reporting a message
+     * that did go out as failed is the worse of the two mistakes.
+     *
+     * @param string $body
+     * @return bool|null
+     * @since v2.0.1.0-beta
+     */
+    public function accepted(string $body): ?bool
+    {
+        $payload = json_decode($body, true);
+
+        if (!is_array($payload) || !isset($payload['response_code'])) {
+            return null;
+        }
+
+        $code = (int)$payload['response_code'];
+
+        if ($code === self::SMS_SUBMITTED) {
+            return true;
+        }
+
+        //1001 invalid number, 1002 sender id not correct, 1007 balance insufficient,
+        //1032 ip not whitelisted, and the rest of the documented family
+        if ($code >= 1000 && $code < 1100) {
+            return false;
+        }
+
+        return null;
     }
 
     /**

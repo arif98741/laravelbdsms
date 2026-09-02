@@ -58,6 +58,15 @@ class Sender
      */
     private bool $queue = false;
 
+    /**
+     * Verdict of the most recent send: true accepted, false rejected, null when
+     * the provider cannot report one. Reset by every send(), because this class
+     * is a singleton and a stale verdict would be read as the new send's.
+     *
+     * @var bool|null
+     */
+    private ?bool $acceptance = null;
+
 
     /**
      * @var Sender|null
@@ -265,6 +274,10 @@ class Sender
      */
     public function send()
     {
+        //first thing, before any guard below can throw: this class is a singleton,
+        //so a verdict left over from the previous send would otherwise be read as
+        //this one's by a caller that checks getAcceptance() after catching
+        $this->acceptance = null;
 
         if (!is_array($this->getConfig())) {
             throw  new ParameterException('config must be an array');
@@ -290,6 +303,33 @@ class Sender
         }
 
         return $response;
+    }
+
+    /**
+     * Whether the gateway accepted the message just sent.
+     *
+     * Null means no verdict is available — the provider does not implement
+     * AbstractProvider::accepted(), or the send was queued and there is no
+     * response yet. Treat null as 'unknown' and not as failure.
+     *
+     * @return bool|null
+     * @since v2.0.1.0-beta
+     */
+    public function getAcceptance(): ?bool
+    {
+        return $this->acceptance;
+    }
+
+    /**
+     * Recorded by AbstractProvider::respond() as it reads the response body.
+     *
+     * @param bool|null $acceptance
+     * @return void
+     * @since v2.0.1.0-beta
+     */
+    public function setAcceptance(?bool $acceptance): void
+    {
+        $this->acceptance = $acceptance;
     }
 
     /**
