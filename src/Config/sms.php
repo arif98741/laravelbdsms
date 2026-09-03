@@ -34,6 +34,7 @@ use Xenon\LaravelBDSms\Provider\Esms;
 use Xenon\LaravelBDSms\Provider\Grameenphone;
 use Xenon\LaravelBDSms\Provider\GreenWeb;
 use Xenon\LaravelBDSms\Provider\Infobip;
+use Xenon\LaravelBDSms\Provider\Khudebarta;
 use Xenon\LaravelBDSms\Provider\Lpeek;
 use Xenon\LaravelBDSms\Provider\MDL;
 use Xenon\LaravelBDSms\Provider\Metronet;
@@ -200,6 +201,12 @@ return [
             'user' => env('SMS_INFOBIP_USER', ''),
             'password' => env('SMS_INFOBIP_PASSWORD', ''),
             'from' => env('SMS_INFOBIP_FROM', ''),
+        ],
+        Khudebarta::class => [
+            'api_key' => env('SMS_KHUDEBARTA_API_KEY', ''),
+            'sender_id' => env('SMS_KHUDEBARTA_SENDER_ID', ''),
+            'bypass_optout' => env('SMS_KHUDEBARTA_BYPASS_OPTOUT', true),
+            'callback_url' => env('SMS_KHUDEBARTA_CALLBACK_URL', ''),
         ],
         Lpeek::class => [
             'acode' => env('SMS_LPEEK_ACODE', ''),

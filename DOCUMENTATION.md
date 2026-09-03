@@ -180,6 +180,14 @@ SMS_INFOBIP_PASSWORD=your_password
 SMS_INFOBIP_FROM=your_sender
 ```
 
+#### Khudebarta
+```env
+SMS_KHUDEBARTA_API_KEY=your_api_key
+SMS_KHUDEBARTA_SENDER_ID=your_sender_id
+SMS_KHUDEBARTA_BYPASS_OPTOUT=true
+SMS_KHUDEBARTA_CALLBACK_URL=https://example.com/callback/handler
+```
+
 #### MimSms
 ```env
 SMS_MIM_SMS_SENDER_NAME=your_sender
@@ -538,7 +546,7 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 
 ## 8. Supported Providers
 
-### Complete Provider List (52 Providers)
+### Complete Provider List (53 Providers)
 
 | # | Provider Class | Description |
 |---|----------------|-------------|
@@ -550,49 +558,51 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 | 6 | `BoomCast` | BoomCast SMS with masking |
 | 7 | `Brilliant` | Brilliant SMS |
 | 8 | `BulkSmsBD` | Bulk SMS BD |
-| 9 | `CustomGateway` | Custom API integration |
-| 10 | `DianaHost` | Diana Host SMS |
-| 11 | `DianaSms` | Diana SMS Provider |
-| 12 | `DhorolaSms` | Dhorola SMS |
-| 13 | `DnsBd` | DNS BD SMS |
-| 14 | `DurjoySoft` | DurjoySoft SMS |
-| 15 | `EAmarseba` | E-Amarseba SMS |
-| 16 | `ElitBuzz` | ElitBuzz SMS |
-| 17 | `Esms` | ESMS Provider |
-| 18 | `Grameenphone` | Grameenphone Operator |
-| 19 | `GreenWeb` | GreenWeb Token-based SMS |
-| 20 | `Infobip` | Infobip International |
-| 21 | `Lpeek` | Lpeek SMS |
-| 22 | `MDL` | MDL SMS |
-| 23 | `Metronet` | Metronet SMS |
-| 24 | `MimSms` | Mim SMS with campaigns |
-| 25 | `Mobireach` | Mobireach SMS |
-| 26 | `Mobishasra` | Mobishasra SMS |
-| 27 | `Muthofun` | Muthofun SMS |
-| 28 | `NovocomBd` | Novocom BD SMS |
-| 29 | `Onnorokom` | Onnorokom SMS |
-| 30 | `QuickSms` | Quick SMS |
-| 31 | `RedmoItSms` | Redmo IT SMS |
-| 32 | `Robi` | Robi SMS |
-| 33 | `SendMySms` | Send My SMS |
-| 34 | `SmartLabSms` | SmartLab SMS |
-| 35 | `Sms4BD` | SMS4BD |
-| 36 | `SmsBangladesh` | SMS Bangladesh |
-| 37 | `SmsinBD` | SMS in BD |
-| 38 | `SmsNet24` | SMS Net 24 |
-| 39 | `SmsNetBD` | SMS Net BD |
-| 40 | `SMSNoc` | SMS NOC |
-| 41 | `SmsQ` | SMS Q |
-| 42 | `SongBird` | SongBird SMS |
-| 43 | `Ssl` | SSL Wireless (Default) |
-| 44 | `Tense` | Tense SMS |
-| 45 | `TmssIct` | TMSS ICT SMS (`/api/v001/sent_sms`) |
-| 46 | `TruboSms` | Trubo SMS |
-| 47 | `Twenty4BulkSms` | 24 Bulk SMS |
-| 48 | `TwentyFourBulkSmsBD` | 24 Bulk SMS BD |
-| 49 | `Viatech` | Viatech SMS |
-| 50 | `WinText` | WinText SMS |
-| 51 | `ZamanIt` | Zaman IT SMS |
+| 9 | `BulkSmsDhaka` | Bulk SMS Dhaka |
+| 10 | `CustomGateway` | Custom API integration |
+| 11 | `DhorolaSms` | Dhorola SMS |
+| 12 | `DianaHost` | Diana Host SMS |
+| 13 | `DianaSms` | Diana SMS Provider |
+| 14 | `DnsBd` | DNS BD SMS |
+| 15 | `DurjoySoft` | DurjoySoft SMS |
+| 16 | `EAmarseba` | E-Amarseba SMS |
+| 17 | `ElitBuzz` | ElitBuzz SMS |
+| 18 | `Esms` | ESMS Provider |
+| 19 | `Grameenphone` | Grameenphone Operator |
+| 20 | `GreenWeb` | GreenWeb Token-based SMS |
+| 21 | `Infobip` | Infobip International |
+| 22 | `Khudebarta` | Khudebarta SMS (Bearer token, json body) |
+| 23 | `Lpeek` | Lpeek SMS |
+| 24 | `MDL` | MDL SMS |
+| 25 | `Metronet` | Metronet SMS |
+| 26 | `MimSms` | Mim SMS with campaigns |
+| 27 | `Mobireach` | Mobireach SMS |
+| 28 | `Mobishasra` | Mobishasra SMS |
+| 29 | `Muthofun` | Muthofun SMS |
+| 30 | `NovocomBd` | Novocom BD SMS |
+| 31 | `Onnorokom` | Onnorokom SMS |
+| 32 | `QuickSms` | Quick SMS |
+| 33 | `RedmoItSms` | Redmo IT SMS |
+| 34 | `Robi` | Robi SMS |
+| 35 | `SendMySms` | Send My SMS |
+| 36 | `SmartLabSms` | SmartLab SMS |
+| 37 | `Sms4BD` | SMS4BD |
+| 38 | `SmsBangladesh` | SMS Bangladesh |
+| 39 | `SmsinBD` | SMS in BD |
+| 40 | `SmsNet24` | SMS Net 24 |
+| 41 | `SmsNetBD` | SMS Net BD |
+| 42 | `SMSNoc` | SMS NOC |
+| 43 | `SmsQ` | SMS Q |
+| 44 | `SongBird` | SongBird SMS |
+| 45 | `Ssl` | SSL Wireless (Default) |
+| 46 | `Tense` | Tense SMS |
+| 47 | `TmssIct` | TMSS ICT SMS (`/api/v001/sent_sms`) |
+| 48 | `TruboSms` | Trubo SMS |
+| 49 | `Twenty4BulkSms` | 24 Bulk SMS |
+| 50 | `TwentyFourBulkSmsBD` | 24 Bulk SMS BD |
+| 51 | `Viatech` | Viatech SMS |
+| 52 | `WinText` | WinText SMS |
+| 53 | `ZamanIt` | Zaman IT SMS |
 
 ### Provider Configuration Examples
 
@@ -639,6 +649,35 @@ SMS_INFOBIP_FROM=YourBrand
 use Xenon\LaravelBDSms\Provider\Infobip;
 
 SMS::via(Infobip::class)->shoot('017XXXXXXXXX', 'Message');
+```
+
+#### Khudebarta
+
+Endpoint: `POST https://api.sms.to/sms/send`. Authenticates with a bearer token and sends a json body.
+Recipients are normalised to E.164 (`017XXXXXXXX`, `88017XXXXXXXX` and `+88017XXXXXXXX` are all accepted);
+a number that already carries a different country code is left untouched, so international sends work too.
+
+`callback_url` is sent only when it is configured, and `bypass_optout` defaults to `true` when the key is absent.
+
+```env
+SMS_KHUDEBARTA_API_KEY=your_api_key
+SMS_KHUDEBARTA_SENDER_ID=YourBrand
+SMS_KHUDEBARTA_BYPASS_OPTOUT=true
+SMS_KHUDEBARTA_CALLBACK_URL=https://example.com/callback/handler
+```
+
+```php
+use Xenon\LaravelBDSms\Provider\Khudebarta;
+use Xenon\LaravelBDSms\Facades\SMS;
+use Xenon\LaravelBDSms\Sender;
+
+SMS::via(Khudebarta::class)->shoot('017XXXXXXXX', 'Message');
+
+// Khudebarta reports whether the gateway accepted the message. The verdict
+// lives on the sender, which the SMS facade does not proxy, so read it there.
+if (Sender::getInstance()->getAcceptance() === false) {
+    // the gateway rejected it -- null would mean no verdict, not failure
+}
 ```
 
 #### TMSS ICT
@@ -1616,6 +1655,12 @@ SMS_INFOBIP_FROM=
 
 # GreenWeb
 SMS_GREEN_WEB_TOKEN=
+
+# Khudebarta
+SMS_KHUDEBARTA_API_KEY=
+SMS_KHUDEBARTA_SENDER_ID=
+SMS_KHUDEBARTA_BYPASS_OPTOUT=true
+SMS_KHUDEBARTA_CALLBACK_URL=
 
 # MimSms
 SMS_MIM_SMS_SENDER_NAME=

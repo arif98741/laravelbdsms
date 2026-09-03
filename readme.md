@@ -393,6 +393,7 @@ listed there.
 | Esms                | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
 | Grameenphone        | username, password, messagetype                                   | -                | Done           | not tested yet in live                                   | -       |
 | Infobip             | user, password                                                    | -                | Done           | not tested yet in live                                   | -       |
+| Khudebarta          | api_key, sender_id                                                | -                | Done           | not tested yet in live                                   | -       |
 | Lpeek               | acode, apiKey, requestID, masking                                 | -                | Done           | -                                                        | -       |
 | MDL                 | api_key, type, senderid                                           | -                | Done           | not tested yet in live                                   | -       |
 | Metronet            | api_key, mask                                                     |                  | Done           | -                                                        | -       |
