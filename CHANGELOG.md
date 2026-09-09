@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [V2.0.3.0](https://github.com/arif98741/laravelbdsms/releases/tag/V2.0.3.0) - 2026-09-09 09:03:19+00:00
+
+🔥 New Provider **ZendSms** added
+**Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V2.0.2.0...V2.0.3.0
+
 ## [V2.0.2.0](https://github.com/arif98741/laravelbdsms/releases/tag/V2.0.2.0) - 2026-09-03 19:54:13+00:00
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V2.0.1.0...V2.0.2.0
