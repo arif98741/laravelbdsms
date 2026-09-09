@@ -212,6 +212,13 @@ SMS_ONNOROKOM_MASK=your_mask
 SMS_ONNOROKOM_CAMPAIGN_NAME=campaign
 ```
 
+#### ZendSms
+```env
+SMS_ZENDSMS_API_KEY=your_api_key
+SMS_ZENDSMS_SENDER_ID=8809639338853
+SMS_ZENDSMS_CLIENT_REF=order-1234
+```
+
 ---
 
 ## 4. Quick Start
@@ -603,6 +610,7 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 | 51 | `Viatech` | Viatech SMS |
 | 52 | `WinText` | WinText SMS |
 | 53 | `ZamanIt` | Zaman IT SMS |
+| 54 | `ZendSms` | ZendSms (Bearer token, json body) |
 
 ### Provider Configuration Examples
 
@@ -701,6 +709,35 @@ SMS::via(TmssIct::class)->shoot('017XXXXXXXX', 'Hello from TMSS ICT');
 
 // multiple recipients (comma-separated)
 SMS::via(TmssIct::class)->shoot('017XXXXXXXX,018XXXXXXXX', 'Bulk message');
+```
+
+#### ZendSms
+
+Endpoint: `POST https://api.zendsms.com/api/v1/send-sms`. Authenticates with a bearer token and sends a json
+body of `recipient`, `sender_id` and `message`. Numbers are sent exactly as given, in the local
+`017XXXXXXXX` form the gateway's own examples use, so nothing is rewritten.
+
+`client_ref` is your own correlation reference and is sent only when configured. A list of numbers is joined
+with commas into the single `recipient` field, which has not been confirmed against a live account.
+
+```env
+SMS_ZENDSMS_API_KEY=sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+SMS_ZENDSMS_SENDER_ID=8809639338853
+SMS_ZENDSMS_CLIENT_REF=order-1234
+```
+
+```php
+use Xenon\LaravelBDSms\Provider\ZendSms;
+use Xenon\LaravelBDSms\Facades\SMS;
+use Xenon\LaravelBDSms\Sender;
+
+SMS::via(ZendSms::class)->shoot('01733499574', 'hi there');
+
+// ZendSms reports whether the gateway accepted the message. The verdict lives
+// on the sender, which the SMS facade does not proxy, so read it there.
+if (Sender::getInstance()->getAcceptance() === false) {
+    // the gateway rejected it -- null would mean no verdict, not failure
+}
 ```
 
 ---
@@ -1661,6 +1698,11 @@ SMS_KHUDEBARTA_API_KEY=
 SMS_KHUDEBARTA_SENDER_ID=
 SMS_KHUDEBARTA_BYPASS_OPTOUT=true
 SMS_KHUDEBARTA_CALLBACK_URL=
+
+# ZendSms
+SMS_ZENDSMS_API_KEY=
+SMS_ZENDSMS_SENDER_ID=
+SMS_ZENDSMS_CLIENT_REF=
 
 # MimSms
 SMS_MIM_SMS_SENDER_NAME=

@@ -425,6 +425,7 @@ listed there.
 | Viatech             | api_key, mask                                                     | -                | Done           | -                                                        | -       |
 | WinText             | token, messagetype, ismasking, masking                            | -                | Done           | -                                                        | -       |
 | ZamanIT             | api_key, senderid,type                                            | -                | Done           | -                                                        | -       |
+| ZendSms             | api_key, sender_id, client_ref                                    | -                | Done           | not tested yet in live                                   | -       |
 
 ## Known limitations
 

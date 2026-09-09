@@ -66,6 +66,7 @@ use Xenon\LaravelBDSms\Provider\TwentyFourBulkSmsBD;
 use Xenon\LaravelBDSms\Provider\Viatech;
 use Xenon\LaravelBDSms\Provider\WinText;
 use Xenon\LaravelBDSms\Provider\ZamanIt;
+use Xenon\LaravelBDSms\Provider\ZendSms;
 use Xenon\LaravelBDSms\Provider\EAmarseba;
 
 return [
@@ -370,6 +371,11 @@ return [
             'api_key' => env('SMS_ZAMANIT_API_KEY', ''),
             'type' => env('SMS_ZAMANIT_TYPE', ''),
             'senderid' => env('SMS_ZAMANIT_SENDER_ID', ''),
+        ],
+        ZendSms::class => [
+            'api_key' => env('SMS_ZENDSMS_API_KEY', ''),
+            'sender_id' => env('SMS_ZENDSMS_SENDER_ID', ''),
+            'client_ref' => env('SMS_ZENDSMS_CLIENT_REF', ''), //optional gateway reference
         ],
     ]
 ];
