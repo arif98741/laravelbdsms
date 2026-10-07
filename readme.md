@@ -405,6 +405,7 @@ listed there.
 | QuickSms            | api_key, senderid, type,scheduledDateTime                         | -                | Done           | not tested yet in live                                   | -       |
 | RedmoITSms          | api_token, sender_id                                              | -                | Support closed | -                                                        |
 | Reve SMS            | apikey, secretkey , callerID                                      | -                | Done           | Use AjuraTech provider for the Reve SMS                      | -       |
+| RhSmsBd             | api_token                                                         | -                | Done           | not tested yet in live                                   | -       |
 | Robi                | username, password                                                | -                | Done           | not tested yet in live                                       | -       |
 | SendMySms           | user, closed                                                      | -                | Done           | tested in live                                           |
 | SmartLabSMS         | user, password, sender                                            | -                | Done           | -                                                        | -       |

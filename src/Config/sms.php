@@ -29,6 +29,7 @@ use Xenon\LaravelBDSms\Provider\DianaHost;
 use Xenon\LaravelBDSms\Provider\DianaSms;
 use Xenon\LaravelBDSms\Provider\DnsBd;
 use Xenon\LaravelBDSms\Provider\DurjoySoft;
+use Xenon\LaravelBDSms\Provider\EAmarseba;
 use Xenon\LaravelBDSms\Provider\ElitBuzz;
 use Xenon\LaravelBDSms\Provider\Esms;
 use Xenon\LaravelBDSms\Provider\Grameenphone;
@@ -46,6 +47,7 @@ use Xenon\LaravelBDSms\Provider\NovocomBd;
 use Xenon\LaravelBDSms\Provider\Onnorokom;
 use Xenon\LaravelBDSms\Provider\QuickSms;
 use Xenon\LaravelBDSms\Provider\RedmoItSms;
+use Xenon\LaravelBDSms\Provider\RhSmsBd;
 use Xenon\LaravelBDSms\Provider\Robi;
 use Xenon\LaravelBDSms\Provider\SendMySms;
 use Xenon\LaravelBDSms\Provider\SmartLabSms;
@@ -67,7 +69,6 @@ use Xenon\LaravelBDSms\Provider\Viatech;
 use Xenon\LaravelBDSms\Provider\WinText;
 use Xenon\LaravelBDSms\Provider\ZamanIt;
 use Xenon\LaravelBDSms\Provider\ZendSms;
-use Xenon\LaravelBDSms\Provider\EAmarseba;
 
 return [
     /*
@@ -270,6 +271,9 @@ return [
             'sender_id' => env('SMS_REDMOIT_SENDER_ID', ''),
             'api_token' => env('SMS_REDMOIT_API_TOKEN', ''),
             'type' => env('SMS_REDMOIT_TYPE', 'string'),
+        ],
+        RhSmsBd::class => [
+            'api_token' => env('SMS_RHSMSBD_API_TOKEN', ''),
         ],
         Robi::class => [
             'username' => env('SMS_ROBI_USERNAME', ''),

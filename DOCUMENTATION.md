@@ -219,6 +219,11 @@ SMS_ZENDSMS_SENDER_ID=8809639338853
 SMS_ZENDSMS_CLIENT_REF=order-1234
 ```
 
+#### RhSmsBd
+```env
+SMS_RHSMSBD_API_TOKEN=your_api_token
+```
+
 ---
 
 ## 4. Quick Start
@@ -553,7 +558,7 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 
 ## 8. Supported Providers
 
-### Complete Provider List (53 Providers)
+### Complete Provider List (55 Providers)
 
 | # | Provider Class | Description |
 |---|----------------|-------------|
@@ -611,6 +616,7 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 | 52 | `WinText` | WinText SMS |
 | 53 | `ZamanIt` | Zaman IT SMS |
 | 54 | `ZendSms` | ZendSms (Bearer token, json body) |
+| 55 | `RhSmsBd` | RH SMS BD (api token, form body) |
 
 ### Provider Configuration Examples
 
@@ -734,6 +740,33 @@ use Xenon\LaravelBDSms\Sender;
 SMS::via(ZendSms::class)->shoot('01733499574', 'hi there');
 
 // ZendSms reports whether the gateway accepted the message. The verdict lives
+// on the sender, which the SMS facade does not proxy, so read it there.
+if (Sender::getInstance()->getAcceptance() === false) {
+    // the gateway rejected it -- null would mean no verdict, not failure
+}
+```
+
+#### RhSmsBd
+
+Endpoint: `POST https://rhsmsbd.top/api/v1/send`. Authenticates with an `api_token` sent in a form body
+alongside `phone` and `message`. Numbers are sent exactly as given, in the local `017XXXXXXXX` form the
+gateway's own examples use, so nothing is rewritten.
+
+A list of numbers is joined with commas into the single `phone` field, which has not been confirmed against
+a live account.
+
+```env
+SMS_RHSMSBD_API_TOKEN=your_api_token
+```
+
+```php
+use Xenon\LaravelBDSms\Provider\RhSmsBd;
+use Xenon\LaravelBDSms\Facades\SMS;
+use Xenon\LaravelBDSms\Sender;
+
+SMS::via(RhSmsBd::class)->shoot('017XXXXXXXX', 'Message');
+
+// RhSmsBd reports whether the gateway accepted the message. The verdict lives
 // on the sender, which the SMS facade does not proxy, so read it there.
 if (Sender::getInstance()->getAcceptance() === false) {
     // the gateway rejected it -- null would mean no verdict, not failure
@@ -1703,6 +1736,9 @@ SMS_KHUDEBARTA_CALLBACK_URL=
 SMS_ZENDSMS_API_KEY=
 SMS_ZENDSMS_SENDER_ID=
 SMS_ZENDSMS_CLIENT_REF=
+
+# RhSmsBd
+SMS_RHSMSBD_API_TOKEN=
 
 # MimSms
 SMS_MIM_SMS_SENDER_NAME=

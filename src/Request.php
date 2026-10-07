@@ -77,7 +77,8 @@ class Request extends Controller
         } else {
 
             try {
-                return $client->request('get', $this->requestUrl, $requestOptions);
+                //uppercase on purpose: guzzle 8 sends the method exactly as given
+                return $client->request('GET', $this->requestUrl, $requestOptions);
             } catch (GuzzleException|ClientException $e) {
                 throw new RenderException($e->getMessage());
             }
@@ -104,7 +105,8 @@ class Request extends Controller
             if ($this->getQueue()) {
                 dispatch(new SendSmsJob($requestOptions))->onQueue($this->queueName);
             } else {
-                return $client->request('post', $this->requestUrl, $requestOptions);
+                //uppercase on purpose: guzzle 8 sends the method exactly as given
+                return $client->request('POST', $this->requestUrl, $requestOptions);
             }
 
         } catch (GuzzleException|ClientException $e) {

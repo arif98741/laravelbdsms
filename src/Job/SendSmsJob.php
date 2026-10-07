@@ -80,7 +80,7 @@ class SendSmsJob implements ShouldQueue
             'timeout' => $this->jobDetails['timeout'],
         ]);
         try {
-            $response = $client->request('post', '', $this->jobDetails);
+            $response = $client->request('POST', '', $this->jobDetails);
             $body = $response->getBody();
             $smsResult = $body->getContents();
             $log = [
