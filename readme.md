@@ -378,6 +378,7 @@ listed there.
 | AjuraTech           | apikey, secretkey , callerID                                      | -                | Done           | Uses Reve SMS API (smpp.revesms.com)                    | -       |
 | Adn                 | api_key, api_secret, messsage_type, request_type                  | -                | Done           | -                                                        | -       |
 | Alpha               | api_key                                                           | Yes              | Done           | -                                                        | -       |
+| Automas             | api_key, senderid                                                 | Yes              | Done           | not tested yet in live                                   | -       |
 | Banglalink          | userID, passwd , sender                                           | -                | Done           | -                                                        | -       |
 | BDBulkSMS           | token                                                             | -                | Done           | -                                                        | -       |
 | BoomCast            | masking  , userName ,   password                                  | -                | Done           | -                                                        | -       |

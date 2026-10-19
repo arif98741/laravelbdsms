@@ -17,6 +17,7 @@
 use Xenon\LaravelBDSms\Provider\Adn;
 use Xenon\LaravelBDSms\Provider\AjuraTech;
 use Xenon\LaravelBDSms\Provider\Alpha;
+use Xenon\LaravelBDSms\Provider\Automas;
 use Xenon\LaravelBDSms\Provider\Banglalink;
 use Xenon\LaravelBDSms\Provider\BDBulkSms;
 use Xenon\LaravelBDSms\Provider\BoomCast;
@@ -124,6 +125,12 @@ return [
         ],
         Alpha::class => [
             'api_key' => env('SMS_ALPHA_SMS_API_KEY'),
+        ],
+        Automas::class => [
+            'api_key' => env('SMS_AUTOMAS_API_KEY', ''),
+            'senderid' => env('SMS_AUTOMAS_SENDER_ID', ''),
+            'type' => env('SMS_AUTOMAS_TYPE', 'text'),
+            'scheduledDateTime' => env('SMS_AUTOMAS_SCHEDULED_DATE_TIME', ''), //empty sends immediately
         ],
         Banglalink::class => [
             'userID' => env('SMS_BANGLALINK_USERID', ''),

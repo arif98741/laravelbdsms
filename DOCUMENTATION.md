@@ -224,6 +224,12 @@ SMS_ZENDSMS_CLIENT_REF=order-1234
 SMS_RHSMSBD_API_TOKEN=your_api_token
 ```
 
+#### Automas
+```env
+SMS_AUTOMAS_API_KEY=your_api_key
+SMS_AUTOMAS_SENDER_ID=8809617632463
+```
+
 ---
 
 ## 4. Quick Start
@@ -558,7 +564,7 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 
 ## 8. Supported Providers
 
-### Complete Provider List (55 Providers)
+### Complete Provider List (56 Providers)
 
 | # | Provider Class | Description |
 |---|----------------|-------------|
@@ -617,6 +623,7 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 | 53 | `ZamanIt` | Zaman IT SMS |
 | 54 | `ZendSms` | ZendSms (Bearer token, json body) |
 | 55 | `RhSmsBd` | RH SMS BD (api token, form body) |
+| 56 | `Automas` | Automas SMS (api key, json body) |
 
 ### Provider Configuration Examples
 
@@ -767,6 +774,39 @@ use Xenon\LaravelBDSms\Sender;
 SMS::via(RhSmsBd::class)->shoot('017XXXXXXXX', 'Message');
 
 // RhSmsBd reports whether the gateway accepted the message. The verdict lives
+// on the sender, which the SMS facade does not proxy, so read it there.
+if (Sender::getInstance()->getAcceptance() === false) {
+    // the gateway rejected it -- null would mean no verdict, not failure
+}
+```
+
+#### Automas
+
+Endpoint: `POST https://api.automas.com.bd/smsapiv4`. Sends a json body of `api_key`, `senderid`, `type`,
+`scheduledDateTime`, `msg` and `contacts`. Numbers are sent exactly as given; the gateway accepts both the
+local `017XXXXXXXX` and the `88017XXXXXXXX` form.
+
+A list of numbers is joined with `+` into the single `contacts` field, as the gateway's own bulk example does.
+`scheduledDateTime` left empty sends immediately.
+
+```env
+SMS_AUTOMAS_API_KEY=your_api_key
+SMS_AUTOMAS_SENDER_ID=8809617632463
+SMS_AUTOMAS_TYPE=text
+SMS_AUTOMAS_SCHEDULED_DATE_TIME=
+```
+
+```php
+use Xenon\LaravelBDSms\Provider\Automas;
+use Xenon\LaravelBDSms\Facades\SMS;
+use Xenon\LaravelBDSms\Sender;
+
+SMS::via(Automas::class)->shoot('017XXXXXXXX', 'Message');
+SMS::via(Automas::class)->shoot(['017XXXXXXXX', '018XXXXXXXX'], 'Bulk message');
+
+// Automas reports whether the gateway accepted the message: true when every
+// recipient came back with status 0, false when none did, and null for a
+// partly failed bulk send or a body it does not recognise. The verdict lives
 // on the sender, which the SMS facade does not proxy, so read it there.
 if (Sender::getInstance()->getAcceptance() === false) {
     // the gateway rejected it -- null would mean no verdict, not failure
@@ -1739,6 +1779,12 @@ SMS_ZENDSMS_CLIENT_REF=
 
 # RhSmsBd
 SMS_RHSMSBD_API_TOKEN=
+
+# Automas
+SMS_AUTOMAS_API_KEY=
+SMS_AUTOMAS_SENDER_ID=
+SMS_AUTOMAS_TYPE=text
+SMS_AUTOMAS_SCHEDULED_DATE_TIME=
 
 # MimSms
 SMS_MIM_SMS_SENDER_NAME=
