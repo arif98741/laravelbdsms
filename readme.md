@@ -392,6 +392,7 @@ listed there.
 | EAmarseba          | x-app-key, x-app-secret, is_masking, masking_name                 | -                | Done           | -                                                        | -       |
 | ElitBuzz            | api_key, type, senderid, type                                     | -                | Done           | not tested yet in live                                   | -       |
 | Esms                | api_token, sender_id                                              | -                | Done           | -                                                        | -       |
+| GotiSms             | api_key, senderId, category, title                                | -                | Done           | not tested yet in live                                   | -       |
 | Grameenphone        | username, password, messagetype                                   | -                | Done           | not tested yet in live                                   | -       |
 | Infobip             | user, password                                                    | -                | Done           | not tested yet in live                                   | -       |
 | Khudebarta          | api_key, sender_id                                                | -                | Done           | not tested yet in live                                   | -       |

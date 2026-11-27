@@ -33,6 +33,7 @@ use Xenon\LaravelBDSms\Provider\DurjoySoft;
 use Xenon\LaravelBDSms\Provider\EAmarseba;
 use Xenon\LaravelBDSms\Provider\ElitBuzz;
 use Xenon\LaravelBDSms\Provider\Esms;
+use Xenon\LaravelBDSms\Provider\GotiSms;
 use Xenon\LaravelBDSms\Provider\Grameenphone;
 use Xenon\LaravelBDSms\Provider\GreenWeb;
 use Xenon\LaravelBDSms\Provider\Infobip;
@@ -196,6 +197,12 @@ return [
         Esms::class => [
             'sender_id' => env('SMS_ESMS_SENDER_ID', ''),
             'api_token' => env('SMS_ESMS_API_TOKEN', ''),
+        ],
+        GotiSms::class => [
+            'api_key' => env('SMS_GOTISMS_API_KEY', ''),
+            'senderId' => env('SMS_GOTISMS_SENDER_ID', 'NON-MASKING'),
+            'category' => env('SMS_GOTISMS_CATEGORY', 'transactional'), //transactional or otp
+            'title' => env('SMS_GOTISMS_TITLE', ''), //optional
         ],
         Grameenphone::class => [
             'username' => env('SMS_GRAMEENPHONE_USERNAME', ''),

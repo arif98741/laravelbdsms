@@ -230,6 +230,12 @@ SMS_AUTOMAS_API_KEY=your_api_key
 SMS_AUTOMAS_SENDER_ID=8809617632463
 ```
 
+#### GotiSms
+```env
+SMS_GOTISMS_API_KEY=gs_live_your_key_here
+SMS_GOTISMS_SENDER_ID=NON-MASKING
+```
+
 ---
 
 ## 4. Quick Start
@@ -564,7 +570,7 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 
 ## 8. Supported Providers
 
-### Complete Provider List (56 Providers)
+### Complete Provider List (57 Providers)
 
 | # | Provider Class | Description |
 |---|----------------|-------------|
@@ -624,6 +630,7 @@ $logs = LaravelBDSmsLog::where('provider', 'like', '%Ssl%')
 | 54 | `ZendSms` | ZendSms (Bearer token, json body) |
 | 55 | `RhSmsBd` | RH SMS BD (api token, form body) |
 | 56 | `Automas` | Automas SMS (api key, json body) |
+| 57 | `GotiSms` | GotiSMS (Bearer token, json body) |
 
 ### Provider Configuration Examples
 
@@ -808,6 +815,44 @@ SMS::via(Automas::class)->shoot(['017XXXXXXXX', '018XXXXXXXX'], 'Bulk message');
 // recipient came back with status 0, false when none did, and null for a
 // partly failed bulk send or a body it does not recognise. The verdict lives
 // on the sender, which the SMS facade does not proxy, so read it there.
+if (Sender::getInstance()->getAcceptance() === false) {
+    // the gateway rejected it -- null would mean no verdict, not failure
+}
+```
+
+#### GotiSms
+
+Endpoint: `POST https://api.gotisms.com/api/messages/send` with `Authorization: Bearer <api_key>`. Sends a json
+body of `recipients` (array), `senderId`, `message`, `category` and the optional `title`. Numbers may be
+`017XXXXXXXX`, `88017XXXXXXXX` or `+88017XXXXXXXX`; the gateway normalises and de-duplicates them. Up to
+1,000 recipients per request.
+
+`category` must be `transactional` or `otp`. Promotional messages need GotiSMS's campaign approval flow,
+which this provider does not cover. Use `NON-MASKING` as `senderId` unless you have an approved masked
+sender (see `GET /api/sender-ids/usable`).
+
+Every send carries a fresh `Idempotency-Key`, so if a queued job is retried the gateway returns the
+original result and does not charge again. Non-2xx answers (400 validation, 401 bad key or blocked IP,
+403, 409, 429 rate limit) are raised as a `RenderException`.
+
+```env
+SMS_GOTISMS_API_KEY=gs_live_your_key_here
+SMS_GOTISMS_SENDER_ID=NON-MASKING
+SMS_GOTISMS_CATEGORY=transactional
+SMS_GOTISMS_TITLE=
+```
+
+```php
+use Xenon\LaravelBDSms\Provider\GotiSms;
+use Xenon\LaravelBDSms\Facades\SMS;
+use Xenon\LaravelBDSms\Sender;
+
+SMS::via(GotiSms::class)->shoot('017XXXXXXXX', 'Your OTP is 4821');
+SMS::via(GotiSms::class)->shoot('017XXXXXXXX,018XXXXXXXX', 'Bulk message');
+
+// GotiSms reports whether the gateway accepted the message: true when every
+// recipient was accepted, false when all were rejected, and null for a partly
+// rejected bulk send or a body it does not recognise.
 if (Sender::getInstance()->getAcceptance() === false) {
     // the gateway rejected it -- null would mean no verdict, not failure
 }
@@ -1785,6 +1830,12 @@ SMS_AUTOMAS_API_KEY=
 SMS_AUTOMAS_SENDER_ID=
 SMS_AUTOMAS_TYPE=text
 SMS_AUTOMAS_SCHEDULED_DATE_TIME=
+
+# GotiSms
+SMS_GOTISMS_API_KEY=
+SMS_GOTISMS_SENDER_ID=NON-MASKING
+SMS_GOTISMS_CATEGORY=transactional
+SMS_GOTISMS_TITLE=
 
 # MimSms
 SMS_MIM_SMS_SENDER_NAME=
