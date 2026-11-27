@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [V2.0.6.0](https://github.com/arif98741/laravelbdsms/releases/tag/V2.0.6.0) - 2026-11-27 20:11:32+00:00
+
+*No description*
+
+### Feature
+
+- GotiSms:
+  - add GotiSms provider integration and update documentation ([db4e77b](https://github.com/arif98741/laravelbdsms/commit/db4e77bf5bc456aef5823bd7b832406060832743))
+
 ## [V2.0.5.0](https://github.com/arif98741/laravelbdsms/releases/tag/V2.0.5.0) - 2026-10-19 19:30:32+00:00
 
 **Full Changelog**: https://github.com/arif98741/laravelbdsms/compare/V2.0.4.0...V2.0.5.0
